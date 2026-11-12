@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "User profile containing aspirant account data and study metrics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User display name", "maxLength": 100 },
+        "photoURL": { "type": "string", "description": "Avatar URL", "maxLength": 500 },
+        "streakDays": { "type": "number", "description": "Consecutive days study streak" },
+        "solvedCount": { "type": "number", "description": "Total questions solved" },
+        "createdAt": { "type": "string", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["uid", "email"]
+    },
+    "userMistake": {
+      "title": "UserMistake",
+      "description": "Mistake record saved in the Mistake Vault with SRS intervals",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Mistake unique ID" },
+        "questionId": { "type": "string", "description": "Question ID" },
+        "selectedAnswer": { "type": "string", "enum": ["A", "B", "C", "D"] },
+        "correctAnswer": { "type": "string", "enum": ["A", "B", "C", "D"] },
+        "timeSpentSeconds": { "type": "number" },
+        "reason": { "type": "string", "enum": ["Conceptual Gap", "Misread Question", "Calculation/Time Panic"] },
+        "timestamp": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "nextReviewDate": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["id", "questionId", "selectedAnswer", "correctAnswer", "reason", "timestamp", "reviewCount", "nextReviewDate"]
+    },
+    "paper2Submission": {
+      "title": "Paper2Submission",
+      "description": "Descriptive Paper 2 essay, report, or argument submission",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "topicType": { "type": "string", "enum": ["ESSAY", "ARGUMENT", "REPORT", "PRECIS"] },
+        "prompt": { "type": "string", "maxLength": 500 },
+        "content": { "type": "string", "maxLength": 10000 },
+        "wordCount": { "type": "number" },
+        "timeSpentSeconds": { "type": "number" },
+        "submittedAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "topicType", "prompt", "content", "wordCount", "submittedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "Primary user profile document"
+    },
+    "/users/{userId}/mistakes/{mistakeId}": {
+      "schema": "userMistake",
+      "description": "User's mistake vault records tracked by spaced repetition"
+    },
+    "/users/{userId}/submissions/{submissionId}": {
+      "schema": "paper2Submission",
+      "description": "User's evaluated subjective Paper 2 submissions"
+    }
+  }
+}

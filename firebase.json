@@ -1,0 +1,8 @@
+{
+  "firestore": {
+    "databaseId": "ai-studio-dutydeckupsccapf-11de2bb8-3d03-41f4-b9b1-31ec81e6ffef",
+    "rules": "firestore.rules",
+    "edition": "ENTERPRISE",
+    "dataAccessMode": "FIRESTORE_NATIVE"
+  }
+}
