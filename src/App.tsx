@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Outlet, useNavigate, useLocation, useParams, Navigate, Link } from 'react-router-dom';
 import { Navbar, NavTab } from './components/Navbar';
 import { OverviewDashboard } from './components/OverviewDashboard';
 import { CpoSpeedMode } from './components/CpoSpeedMode';
@@ -8,12 +9,106 @@ import { AiTopicBreakdown } from './components/AiTopicBreakdown';
 import { MistakeVault } from './components/MistakeVault';
 import { AnalyticsPanel } from './components/AnalyticsPanel';
 import { LearningHub } from './components/LearningHub';
+import { LoginPage } from './components/LoginPage';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { useAuth } from './context/AuthContext';
 import { INITIAL_QUESTION_BANK } from './data/questionBank';
 import { Question, MistakeRecord, MistakeReason, Paper2Submission, ChapterProgress } from './types';
 import { calculateNextSrsDate } from './utils/srsVault';
+import { ShieldAlert, Compass } from 'lucide-react';
+
+// Wrapper for LoginPage to automatically redirect authenticated users
+const LoginPageWrapper: React.FC = () => {
+  const { user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = (location.state as any)?.from?.pathname || '/';
+
+  if (user) {
+    return <Navigate to={from} replace />;
+  }
+
+  return <LoginPage onSuccess={() => navigate(from, { replace: true })} />;
+};
+
+// 404 Route Not Found Component
+const NotFoundPage: React.FC = () => {
+  return (
+    <div className="py-16 text-center space-y-4">
+      <div className="w-16 h-16 mx-auto rounded-2xl bg-[#FBEAE8] dark:bg-[#2C1816] flex items-center justify-center text-[#C25345]">
+        <ShieldAlert className="w-8 h-8" />
+      </div>
+      <h2 className="text-2xl font-bold text-[#1E252B] dark:text-white">
+        Sector Not Found (404)
+      </h2>
+      <p className="text-sm text-[#5C646B] dark:text-slate-400 max-w-md mx-auto">
+        The tactical deck or module you requested does not exist or has been relocated in the DutyDeck command structure.
+      </p>
+      <div className="pt-2">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#36624B] hover:bg-[#2A4F3C] text-white rounded-xl text-xs font-semibold shadow-xs"
+        >
+          <Compass className="w-4 h-4" />
+          <span>Return to Dual Overview Command</span>
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+// Protected Layout with Navigation Bar and Footer
+const ProtectedAppLayout: React.FC<{
+  vaultCount: number;
+  completedQuestionsCount: number;
+  streakDays: number;
+}> = ({ vaultCount, completedQuestionsCount, streakDays }) => {
+  return (
+    <ProtectedRoute>
+      <div className="min-h-screen bg-[#F7F8F5] dark:bg-[#121816] text-[#1E252B] dark:text-[#E6EAE8] flex flex-col font-sans transition-colors">
+        {/* Sticky Top Navigation */}
+        <Navbar
+          vaultCount={vaultCount}
+          completedQuestionsCount={completedQuestionsCount}
+          streakDays={streakDays}
+        />
+
+        {/* Main View Area */}
+        <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 w-full pb-12">
+          <Outlet />
+        </main>
+
+        {/* Subtle Footer */}
+        <footer className="border-t border-[#E2E6DD] dark:border-slate-800 bg-[#FFFFFF] dark:bg-[#121816] py-6 text-center text-xs text-[#5C646B] dark:text-slate-400">
+          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[#1E252B] dark:text-white">DutyDeck</span>
+              <span>&bull; Dual-Target Multi-Page Preparation Suite for UPSC CAPF AC & SSC CPO</span>
+            </div>
+            <div className="text-[11px] font-mono">
+              Nordic Botanical Theme &bull; 15-Minute Section Gates &bull; Elimination Scratchpad
+            </div>
+          </div>
+        </footer>
+      </div>
+    </ProtectedRoute>
+  );
+};
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<NavTab>('OVERVIEW');
+  const navigate = useNavigate();
+
+  // Mapping from NavTab to multi-page URL routes
+  const tabPathMap: Record<NavTab, string> = {
+    OVERVIEW: '/',
+    LEARNING: '/learning',
+    ANALYTICS: '/analytics',
+    CPO_SPEED: '/cpo-speed',
+    CAPF_ELIMINATION: '/capf-elimination',
+    PAPER_2: '/paper-2',
+    AI_TUTOR: '/ai-tutor',
+    MISTAKE_VAULT: '/mistake-vault',
+  };
 
   // Question Bank (seeded + dynamic AI generated questions)
   const [questions, setQuestions] = useState<Question[]>(() => {
@@ -33,7 +128,6 @@ export default function App() {
       const saved = localStorage.getItem('dutydeck_mistakes');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
-    // Default seed mistake for instant demonstration of the vault
     return [
       {
         id: 'seed-m1',
@@ -44,7 +138,7 @@ export default function App() {
         reason: 'Misread Question',
         timestamp: Date.now() - 3600000,
         reviewCount: 0,
-        nextReviewDate: Date.now() - 1000, // Due for review today
+        nextReviewDate: Date.now() - 1000,
         notes: 'Confused 1-month approval with 2-month approval in Art 352',
       },
     ];
@@ -145,7 +239,6 @@ export default function App() {
       return [newRecord, ...prev];
     });
 
-    // Mark as attempted
     if (!solvedQuestionIds.includes(questionId)) {
       setSolvedQuestionIds((prev) => [...prev, questionId]);
     }
@@ -188,7 +281,7 @@ export default function App() {
   // Handler: Select topic for AI tutor from other views
   const handleSelectTopicForAi = (title: string, subject: string, standardRef: string) => {
     setAiTutorTopic({ title, subject, standardRef });
-    setActiveTab('AI_TUTOR');
+    navigate('/ai-tutor');
   };
 
   // Handler: Toggle Chapter Completion
@@ -210,115 +303,147 @@ export default function App() {
   // Handler: Open specific chapter in study hub
   const handleOpenChapter = (chapterId: string) => {
     setSelectedLearningChapterId(chapterId);
-    setActiveTab('LEARNING');
+    navigate(`/learning/${chapterId}`);
+  };
+
+  // Navigation redirect handler for legacy tab props
+  const handleNavigateByTab = (tab: NavTab) => {
+    const targetPath = tabPathMap[tab] || '/';
+    navigate(targetPath);
+  };
+
+  // Route sub-component for LearningHub with path parameter support
+  const LearningHubRoute: React.FC = () => {
+    const { chapterId } = useParams<{ chapterId?: string }>();
+    return (
+      <LearningHub
+        progressMap={chapterProgress}
+        onToggleChapterCompleted={handleToggleChapterCompleted}
+        onNavigateToDrill={(track) => navigate(track === 'CPO_SPEED' ? '/cpo-speed' : '/capf-elimination')}
+        onSelectTopicForAi={handleSelectTopicForAi}
+        selectedChapterId={chapterId || selectedLearningChapterId}
+      />
+    );
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F8F5] dark:bg-[#121816] text-[#1E252B] dark:text-[#E6EAE8] flex flex-col font-sans transition-colors">
-      {/* Top Sticky Navigation */}
-      <Navbar
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        vaultCount={mistakes.length}
-        completedQuestionsCount={solvedQuestionIds.length}
-        streakDays={4}
-      />
+    <Routes>
+      {/* Public Authentication Gate (Cadet Login) */}
+      <Route path="/login" element={<LoginPageWrapper />} />
 
-      {/* Main View Area */}
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 w-full">
-        {activeTab === 'OVERVIEW' && (
-          <OverviewDashboard
-            onNavigate={setActiveTab}
-            questions={questions}
-            mistakes={mistakes}
-            submissions={submissions}
-            solvedQuestionIds={solvedQuestionIds}
-            onSelectTopicForAi={handleSelectTopicForAi}
-            onOpenChapter={handleOpenChapter}
-          />
-        )}
-
-        {activeTab === 'LEARNING' && (
-          <LearningHub
-            progressMap={chapterProgress}
-            onToggleChapterCompleted={handleToggleChapterCompleted}
-            onNavigateToDrill={(track) => setActiveTab(track)}
-            onSelectTopicForAi={handleSelectTopicForAi}
-            selectedChapterId={selectedLearningChapterId}
-          />
-        )}
-
-        {activeTab === 'CPO_SPEED' && (
-          <CpoSpeedMode
-            questions={questions}
-            onSaveMistake={handleSaveMistake}
-            onSelectTopicForAi={handleSelectTopicForAi}
-          />
-        )}
-
-        {activeTab === 'CAPF_ELIMINATION' && (
-          <CapfEliminationMode
-            questions={questions}
-            onSaveMistake={handleSaveMistake}
-            onSelectTopicForAi={handleSelectTopicForAi}
-          />
-        )}
-
-        {activeTab === 'PAPER_2' && (
-          <Paper2Lab
-            onSaveSubmission={handleSaveSubmission}
-            submissions={submissions}
-          />
-        )}
-
-        {activeTab === 'AI_TUTOR' && (
-          <AiTopicBreakdown
-            initialTopic={aiTutorTopic.title}
-            initialSubject={aiTutorTopic.subject}
-            initialRef={aiTutorTopic.standardRef}
-            mistakes={mistakes}
-            solvedQuestionIds={solvedQuestionIds}
-            allQuestions={questions}
-            onSaveMistake={handleSaveMistake}
-            onAddQuestionsToBank={handleAddQuestionsToBank}
-          />
-        )}
-
-        {activeTab === 'MISTAKE_VAULT' && (
-          <MistakeVault
-            mistakes={mistakes}
-            questions={questions}
-            onUpdateMistakeReview={handleUpdateMistakeReview}
-            onClearMistake={handleClearMistake}
-            onSelectTopicForAi={handleSelectTopicForAi}
-          />
-        )}
-
-        {activeTab === 'ANALYTICS' && (
-          <AnalyticsPanel
-            questions={questions}
-            mistakes={mistakes}
-            submissions={submissions}
-            solvedQuestionIds={solvedQuestionIds}
-            onNavigate={setActiveTab}
-            onSelectTopicForAi={handleSelectTopicForAi}
+      {/* Protected Multi-Page Application Layout */}
+      <Route
+        element={
+          <ProtectedAppLayout
+            vaultCount={mistakes.length}
+            completedQuestionsCount={solvedQuestionIds.length}
             streakDays={4}
           />
-        )}
-      </main>
-
-      {/* Subtle Footer */}
-      <footer className="border-t border-[#E2E6DD] dark:border-slate-800 bg-[#FFFFFF] dark:bg-[#121816] py-6 text-center text-xs text-[#5C646B] dark:text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-[#1E252B] dark:text-white">DutyDeck</span>
-            <span>&bull; Dual-Target Preparation Engine for UPSC CAPF AC & SSC CPO</span>
-          </div>
-          <div className="text-[11px] font-mono">
-            Nordic Botanical Theme &bull; 15-Minute Section Gates &bull; Elimination Scratchpad
-          </div>
-        </div>
-      </footer>
-    </div>
+        }
+      >
+        <Route
+          index
+          element={
+            <OverviewDashboard
+              onNavigate={handleNavigateByTab}
+              questions={questions}
+              mistakes={mistakes}
+              submissions={submissions}
+              solvedQuestionIds={solvedQuestionIds}
+              onSelectTopicForAi={handleSelectTopicForAi}
+              onOpenChapter={handleOpenChapter}
+            />
+          }
+        />
+        <Route
+          path="dashboard"
+          element={
+            <OverviewDashboard
+              onNavigate={handleNavigateByTab}
+              questions={questions}
+              mistakes={mistakes}
+              submissions={submissions}
+              solvedQuestionIds={solvedQuestionIds}
+              onSelectTopicForAi={handleSelectTopicForAi}
+              onOpenChapter={handleOpenChapter}
+            />
+          }
+        />
+        <Route path="learning" element={<LearningHubRoute />} />
+        <Route path="learning/:chapterId" element={<LearningHubRoute />} />
+        <Route
+          path="cpo-speed"
+          element={
+            <CpoSpeedMode
+              questions={questions}
+              onSaveMistake={handleSaveMistake}
+              onSelectTopicForAi={handleSelectTopicForAi}
+            />
+          }
+        />
+        <Route
+          path="capf-elimination"
+          element={
+            <CapfEliminationMode
+              questions={questions}
+              onSaveMistake={handleSaveMistake}
+              onSelectTopicForAi={handleSelectTopicForAi}
+            />
+          }
+        />
+        <Route
+          path="paper-2"
+          element={
+            <Paper2Lab
+              onSaveSubmission={handleSaveSubmission}
+              submissions={submissions}
+            />
+          }
+        />
+        <Route
+          path="ai-tutor"
+          element={
+            <AiTopicBreakdown
+              initialTopic={aiTutorTopic.title}
+              initialSubject={aiTutorTopic.subject}
+              initialRef={aiTutorTopic.standardRef}
+              mistakes={mistakes}
+              solvedQuestionIds={solvedQuestionIds}
+              allQuestions={questions}
+              onSaveMistake={handleSaveMistake}
+              onAddQuestionsToBank={handleAddQuestionsToBank}
+            />
+          }
+        />
+        <Route
+          path="mistake-vault"
+          element={
+            <MistakeVault
+              mistakes={mistakes}
+              questions={questions}
+              onUpdateMistakeReview={handleUpdateMistakeReview}
+              onClearMistake={handleClearMistake}
+              onSelectTopicForAi={handleSelectTopicForAi}
+            />
+          }
+        />
+        <Route
+          path="analytics"
+          element={
+            <AnalyticsPanel
+              questions={questions}
+              mistakes={mistakes}
+              submissions={submissions}
+              solvedQuestionIds={solvedQuestionIds}
+              onNavigate={handleNavigateByTab}
+              onSelectTopicForAi={handleSelectTopicForAi}
+              streakDays={4}
+            />
+          }
+        />
+        {/* 404 Catch-All */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }

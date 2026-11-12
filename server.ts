@@ -765,8 +765,9 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, () => {
-    console.log(`DutyDeck Full-Stack Server running on port ${PORT}`);
+  const portNum = Number(PORT) || 3000;
+  app.listen(portNum, '0.0.0.0', () => {
+    console.log(`DutyDeck Full-Stack Server running on http://0.0.0.0:${portNum}`);
   });
 }
 

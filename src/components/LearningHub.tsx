@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   BookOpen,
   CheckCircle,
@@ -52,6 +52,12 @@ export const LearningHub: React.FC<LearningHubProps> = ({
   const [activeChapterId, setActiveChapterId] = useState<string>(() => {
     return initialSelectedId || LEARNING_CHAPTERS[0]?.id || '';
   });
+
+  useEffect(() => {
+    if (initialSelectedId && LEARNING_CHAPTERS.some((c) => c.id === initialSelectedId)) {
+      setActiveChapterId(initialSelectedId);
+    }
+  }, [initialSelectedId]);
 
   // Track checked key concepts in the reading view
   const [checkedConcepts, setCheckedConcepts] = useState<Record<string, boolean>>({});

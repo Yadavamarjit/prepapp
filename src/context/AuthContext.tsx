@@ -8,13 +8,23 @@ const NCERT_API = import.meta.env.VITE_NCERT_API_URL || 'http://localhost:8000';
 const JWT_KEY   = 'ncert_jwt';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
+export interface AppUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+  isGuest?: boolean;
+}
+
 interface AuthContextType {
-  user:        User | null;
+  user:        AppUser | null;
   ncertJwt:    string | null;   // JWT for ncert-mcp API calls
   loading:     boolean;
   signIn:      () => Promise<void>;
+  signInAsGuest: (name?: string, email?: string) => Promise<void>;
   signOutUser: () => Promise<void>;
   authError:   string | null;
+  clearAuthError: () => void;
   /** Make an authenticated fetch to the ncert-mcp API */
   ncertFetch:  (path: string, init?: RequestInit) => Promise<Response>;
 }
@@ -25,10 +35,14 @@ const AuthContext = createContext<AuthContextType>({
   ncertJwt:    null,
   loading:     true,
   signIn:      async () => {},
+  signInAsGuest: async () => {},
   signOutUser: async () => {},
   authError:   null,
+  clearAuthError: () => {},
   ncertFetch:  () => Promise.reject(new Error('AuthProvider not mounted')),
 });
+
+const GUEST_SESSION_KEY = 'dutydeck_guest_session';
 
 // ── Exchange Firebase ID token → ncert-mcp JWT ────────────────────────────────
 async function exchangeForNcertJwt(firebaseUser: User): Promise<string | null> {
@@ -40,33 +54,40 @@ async function exchangeForNcertJwt(firebaseUser: User): Promise<string | null> {
       body:    JSON.stringify({ id_token: idToken }),
     });
     if (!res.ok) {
-      console.warn('[ncert-auth] token exchange failed', res.status, await res.text());
       return null;
     }
     const data = await res.json();
     return data.access_token as string;
   } catch (err) {
-    console.warn('[ncert-auth] token exchange error:', err);
     return null;
   }
 }
 
 // ── Provider ──────────────────────────────────────────────────────────────────
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user,     setUser]     = useState<User | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
   const [ncertJwt, setNcertJwt] = useState<string | null>(
     () => localStorage.getItem(JWT_KEY)
   );
-  const [loading,   setLoading]   = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [authError, setAuthError] = useState<string | null>(null);
 
-  // ── Firebase auth state listener ──────────────────────────────────────────
+  // ── Firebase auth state listener & guest session check ────────────────────────
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-
       if (currentUser) {
-        // If we don't have a JWT yet (or it's stale), exchange for one
+        // Real authenticated Firebase user
+        const appUser: AppUser = {
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          isGuest: false,
+        };
+        setUser(appUser);
+        localStorage.removeItem(GUEST_SESSION_KEY);
+
+        // Optional exchange for ncert token
         const stored = localStorage.getItem(JWT_KEY);
         if (!stored) {
           const jwt = await exchangeForNcertJwt(currentUser);
@@ -77,25 +98,47 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
           setNcertJwt(stored);
         }
+        setLoading(false);
       } else {
-        // Signed out — clear JWT
+        // Check if there is an active guest officer session
+        const storedGuest = localStorage.getItem(GUEST_SESSION_KEY);
+        if (storedGuest) {
+          try {
+            const parsed = JSON.parse(storedGuest);
+            if (parsed?.uid) {
+              setUser(parsed);
+              setLoading(false);
+              return;
+            }
+          } catch (e) {}
+        }
+
+        // Signed out — clear user & JWT
+        setUser(null);
         localStorage.removeItem(JWT_KEY);
         setNcertJwt(null);
+        setLoading(false);
       }
-
-      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  // ── Sign In ───────────────────────────────────────────────────────────────
+  // ── Sign In with Google ───────────────────────────────────────────────────
   const handleSignIn = async () => {
     setAuthError(null);
     try {
       const firebaseUser = await signInWithGoogle();
+      const appUser: AppUser = {
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        displayName: firebaseUser.displayName,
+        photoURL: firebaseUser.photoURL,
+        isGuest: false,
+      };
+      setUser(appUser);
+      localStorage.removeItem(GUEST_SESSION_KEY);
 
-      // Immediately exchange for ncert-mcp JWT after popup succeeds
       const jwt = await exchangeForNcertJwt(firebaseUser);
       if (jwt) {
         localStorage.setItem(JWT_KEY, jwt);
@@ -103,15 +146,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (err: any) {
       if (err?.code === 'auth/popup-closed-by-user') return;
-      setAuthError(err?.message || 'Google sign-in could not be completed.');
+      if (err?.code === 'auth/cancelled-popup-request') return;
+      console.warn('Firebase Sign-In warning:', err);
+      setAuthError(err?.message || 'Google sign-in could not be completed. You can also sign in with Officer Demo Pass.');
+    }
+  };
+
+  // ── Instant Officer / Guest Sign In ──────────────────────────────────────
+  const handleSignInAsGuest = async (
+    name: string = 'Officer Cadet (Aspirant)',
+    email: string = 'cadet.aspirant@dutydeck.upsc.gov.in'
+  ) => {
+    setAuthError(null);
+    const guestUser: AppUser = {
+      uid: `officer-${Date.now().toString(36)}`,
+      email,
+      displayName: name,
+      photoURL: null,
+      isGuest: true,
+    };
+    try {
+      localStorage.setItem(GUEST_SESSION_KEY, JSON.stringify(guestUser));
+      setUser(guestUser);
+    } catch (e) {
+      console.error('Failed to store guest session:', e);
     }
   };
 
   // ── Sign Out ──────────────────────────────────────────────────────────────
   const handleSignOut = async () => {
     try {
-      await logOut();
-      // Also tell the backend (best-effort, JWT is stateless)
+      await logOut().catch(() => {});
+      localStorage.removeItem(GUEST_SESSION_KEY);
       const jwt = localStorage.getItem(JWT_KEY);
       if (jwt) {
         fetch(`${NCERT_API}/auth/logout`, {
@@ -121,12 +187,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       localStorage.removeItem(JWT_KEY);
       setNcertJwt(null);
+      setUser(null);
     } catch (err: any) {
       console.error('Sign out error:', err);
+      localStorage.removeItem(GUEST_SESSION_KEY);
+      setUser(null);
     }
   };
 
-  // ── ncertFetch helper — auto-attaches Bearer JWT ──────────────────────────
+  // ── ncertFetch helper ─────────────────────────────────────────────────────
   const ncertFetch = useCallback(
     async (path: string, init: RequestInit = {}): Promise<Response> => {
       const jwt = localStorage.getItem(JWT_KEY);
@@ -136,21 +205,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       headers.set('Authorization', `Bearer ${jwt}`);
 
       const res = await fetch(`${NCERT_API}${path}`, { ...init, headers });
-
-      // If JWT expired, try to refresh once and retry
-      if (res.status === 401 && user) {
-        const fresh = await exchangeForNcertJwt(user);
-        if (fresh) {
-          localStorage.setItem(JWT_KEY, fresh);
-          setNcertJwt(fresh);
-          headers.set('Authorization', `Bearer ${fresh}`);
-          return fetch(`${NCERT_API}${path}`, { ...init, headers });
-        }
-      }
-
       return res;
     },
-    [user]
+    []
   );
 
   return (
@@ -159,9 +216,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         user,
         ncertJwt,
         loading,
-        signIn:      handleSignIn,
-        signOutUser: handleSignOut,
+        signIn:        handleSignIn,
+        signInAsGuest: handleSignInAsGuest,
+        signOutUser:   handleSignOut,
         authError,
+        clearAuthError: () => setAuthError(null),
         ncertFetch,
       }}
     >
