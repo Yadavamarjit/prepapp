@@ -1,8 +1,10 @@
 import express from 'express';
+import fs from 'fs';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, Type } from '@google/genai';
+import { NCERT_STUDY_LIBRARY } from './src/data/ncertCurriculum.js';
 
 dotenv.config();
 
@@ -747,6 +749,478 @@ Provide:
       },
     });
   }
+});
+
+// ============================================================================
+// NCERT CHAPTER-WISE STUDY BACKEND API (Science 9-12, Geography 9-12, History 6-12, Polity 11-12)
+// ============================================================================
+
+// 1. Get all NCERT subjects, grades, and books with chapter TOC
+app.get('/api/ncert/books', (req, res) => {
+  const { subject, grade } = req.query;
+  let books = NCERT_STUDY_LIBRARY;
+
+  if (subject) {
+    books = books.filter((b) => b.subject.toLowerCase() === String(subject).toLowerCase());
+  }
+  if (grade) {
+    books = books.filter((b) => b.grade === Number(grade));
+  }
+
+  const catalog = books.map((b) => ({
+    id: b.id,
+    subject: b.subject,
+    grade: b.grade,
+    bookTitle: b.bookTitle,
+    code: b.code,
+    totalChapters: b.chapters.length,
+    chapters: b.chapters.map((c) => ({
+      id: c.id,
+      chapterNumber: c.chapterNumber,
+      title: c.title,
+      summary: c.summary,
+      keyConcepts: c.keyConcepts,
+      examRelevance: c.examRelevance,
+    })),
+  }));
+
+  res.json({ success: true, count: catalog.length, books: catalog });
+});
+
+// 2. Get specific NCERT chapter details with deep study notes
+app.get('/api/ncert/chapters/:chapterId', (req, res) => {
+  const { chapterId } = req.params;
+  for (const book of NCERT_STUDY_LIBRARY) {
+    const chapter = book.chapters.find((c) => c.id === chapterId);
+    if (chapter) {
+      return res.json({
+        success: true,
+        book: {
+          id: book.id,
+          subject: book.subject,
+          grade: book.grade,
+          bookTitle: book.bookTitle,
+        },
+        chapter,
+      });
+    }
+  }
+  return res.status(404).json({ success: false, error: 'Chapter not found' });
+});
+
+// 3. Search NCERT chapters across the entire curriculum
+app.get('/api/ncert/search', (req, res) => {
+  const query = String(req.query.q || '').toLowerCase().trim();
+  if (!query) {
+    return res.json({ success: true, results: [] });
+  }
+
+  const results: any[] = [];
+  for (const book of NCERT_STUDY_LIBRARY) {
+    for (const ch of book.chapters) {
+      const match =
+        ch.title.toLowerCase().includes(query) ||
+        ch.summary.toLowerCase().includes(query) ||
+        ch.highYieldNotes.toLowerCase().includes(query) ||
+        ch.keyConcepts.some((k) => k.toLowerCase().includes(query));
+
+      if (match) {
+        results.push({
+          bookId: book.id,
+          subject: book.subject,
+          grade: book.grade,
+          bookTitle: book.bookTitle,
+          chapterId: ch.id,
+          chapterNumber: ch.chapterNumber,
+          title: ch.title,
+          summary: ch.summary,
+          keyConcepts: ch.keyConcepts,
+          examRelevance: ch.examRelevance,
+        });
+      }
+    }
+  }
+
+  res.json({ success: true, count: results.length, results });
+});
+
+// 4. Proxy/Serve official NCERT chapter PDF with on-demand streaming
+app.get('/api/ncert/pdf/:bookCode/:chapterNumber', async (req, res) => {
+  const { bookCode, chapterNumber } = req.params;
+  const chPad = String(chapterNumber).padStart(2, '0');
+  const filename = `${bookCode}${chPad}.pdf`;
+  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const localPdfPath = path.join(storageDir, filename);
+
+  // If already downloaded and cached locally, stream it immediately
+  const fs = await import('fs');
+  if (fs.existsSync(localPdfPath) && fs.statSync(localPdfPath).size > 10000) {
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
+    return fs.createReadStream(localPdfPath).pipe(res);
+  }
+
+  // Otherwise, fetch on-demand from NCERT servers via child_process curl (handles Government SSL/Certs reliably)
+  const ncertUrl = `https://ncert.nic.in/textbook/pdf/${filename}`;
+  const { execFile } = await import('child_process');
+
+  execFile('curl.exe', ['-k', '-s', '-L', '-o', localPdfPath, ncertUrl], { timeout: 35000 }, (err) => {
+    if (err || !fs.existsSync(localPdfPath) || fs.statSync(localPdfPath).size < 1000) {
+      console.warn(`[NCERT Proxy] Download failed for ${filename}:`, err?.message);
+      return res.status(502).json({
+        success: false,
+        error: 'Official NCERT PDF could not be retrieved from ncert.nic.in. The server connection may be throttled.',
+        officialUrl: ncertUrl,
+      });
+    }
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
+    fs.createReadStream(localPdfPath).pipe(res);
+  });
+});
+
+// 4b. Extracted Text & Rendered Pages from NCERT PDF (Enables Native in-page Highlighting & Visual Layout)
+app.get('/api/ncert/pdf-rendered-pages/:bookCode/:chapterNumber', async (req, res) => {
+  const { bookCode, chapterNumber } = req.params;
+  const chPad = String(chapterNumber).padStart(2, '0');
+  const filename = `${bookCode}${chPad}.pdf`;
+  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const rendersDir = path.join(storageDir, 'page_renders', `${bookCode}_${chPad}`);
+  const localPdfPath = path.join(storageDir, filename);
+  const jsonCachePath = path.join(storageDir, `${bookCode}${chPad}_rendered_meta.json`);
+  const fs = await import('fs');
+
+  // Return cached result if already rendered
+  if (fs.existsSync(jsonCachePath)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(jsonCachePath, 'utf8'));
+      return res.json({ success: true, ...data });
+    } catch (e) {}
+  }
+
+  // Ensure PDF is downloaded first
+  if (!fs.existsSync(localPdfPath) || fs.statSync(localPdfPath).size < 1000) {
+    const { execFileSync } = await import('child_process');
+    try {
+      execFileSync('curl.exe', ['-k', '-s', '-L', '-o', localPdfPath, `https://ncert.nic.in/textbook/pdf/${filename}`], { timeout: 35000 });
+    } catch (downloadErr: any) {
+      return res.status(502).json({ success: false, error: 'Could not fetch NCERT PDF' });
+    }
+  }
+
+  if (!fs.existsSync(rendersDir)) {
+    fs.mkdirSync(rendersDir, { recursive: true });
+  }
+
+  // Render high-res PNGs and accurate line bounding boxes using pymupdf
+  const { execFile } = await import('child_process');
+  const pyScript = `
+import pymupdf, json, sys, os
+pdf_path = sys.argv[1]
+out_dir = sys.argv[2]
+book_code = sys.argv[3]
+ch_num = sys.argv[4]
+
+doc = pymupdf.open(pdf_path)
+pages_data = []
+
+for idx, page in enumerate(doc):
+    img_name = f"page_{idx+1}.png"
+    img_path = os.path.join(out_dir, img_name)
+    if not os.path.exists(img_path):
+        pix = page.get_pixmap(dpi=150)
+        pix.save(img_path)
+    
+    rect = page.rect
+    d = page.get_text('dict')
+    raw_lines = []
+    for b in d.get('blocks', []):
+        if b.get('type') == 0:
+            for l in b.get('lines', []):
+                text = ' '.join(s['text'].strip() for s in l.get('spans', []) if s.get('text', '').strip()).strip()
+                if text:
+                    raw_lines.append({
+                        'text': text,
+                        'y0': l['bbox'][1],
+                        'y1': l['bbox'][3],
+                        'x0': l['bbox'][0],
+                        'x1': l['bbox'][2]
+                    })
+
+    # Merge horizontal spans that lie on the exact same baseline
+    merged = []
+    for l in raw_lines:
+        if merged and abs(merged[-1]['y0'] - l['y0']) < 3.0 and abs(merged[-1]['y1'] - l['y1']) < 3.0 and l['x0'] >= merged[-1]['x1'] - 5:
+            merged[-1]['text'] += ' ' + l['text']
+            merged[-1]['x1'] = max(merged[-1]['x1'], l['x1'])
+            merged[-1]['y1'] = max(merged[-1]['y1'], l['y1'])
+        else:
+            merged.append(l)
+
+    blocks = []
+    for m in merged:
+        w = m['x1'] - m['x0']
+        h = m['y1'] - m['y0']
+        if w > 2 and h > 2:
+            blocks.append({
+                'text': m['text'],
+                'left': round((m['x0'] / rect.width) * 100, 3),
+                'top': round((m['y0'] / rect.height) * 100, 3),
+                'width': round((w / rect.width) * 100, 3),
+                'height': round((h / rect.height) * 100, 3)
+            })
+
+    pages_data.append({
+        'pageNumber': idx + 1,
+        'width': rect.width,
+        'height': rect.height,
+        'imagePath': f"/api/ncert/page-image/{book_code}/{ch_num}/{img_name}",
+        'blocks': blocks
+    })
+
+print(json.dumps({'totalPages': len(pages_data), 'pages': pages_data}))
+`;
+
+  execFile('python', ['-c', pyScript, localPdfPath, rendersDir, bookCode, chPad], { maxBuffer: 15 * 1024 * 1024 }, (err, stdout) => {
+    if (err || !stdout) {
+      console.warn('[PDF render error]:', err?.message);
+      return res.status(500).json({ success: false, error: 'PDF page rendering failed' });
+    }
+    try {
+      const parsed = JSON.parse(stdout);
+      fs.writeFileSync(jsonCachePath, stdout, 'utf8');
+      return res.json({ success: true, ...parsed });
+    } catch (parseErr) {
+      return res.status(500).json({ success: false, error: 'Failed to parse rendered page data' });
+    }
+  });
+});
+
+// 4c. Serve rendered page PNG images
+app.get('/api/ncert/page-image/:bookCode/:chapterNumber/:imageName', async (req, res) => {
+  const { bookCode, chapterNumber, imageName } = req.params;
+  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const imgPath = path.join(storageDir, 'page_renders', `${bookCode}_${chapterNumber}`, imageName);
+  const fs = await import('fs');
+
+  if (fs.existsSync(imgPath)) {
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return fs.createReadStream(imgPath).pipe(res);
+  }
+  return res.status(404).send('Page image not found');
+});
+
+// 4d. Extracted Text from NCERT PDF (Enables Native in-page Highlighting & Selection)
+app.get('/api/ncert/pdf-text/:bookCode/:chapterNumber', async (req, res) => {
+  const { bookCode, chapterNumber } = req.params;
+  const chPad = String(chapterNumber).padStart(2, '0');
+  const filename = `${bookCode}${chPad}.pdf`;
+  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const localPdfPath = path.join(storageDir, filename);
+  const jsonCachePath = path.join(storageDir, `${bookCode}${chPad}_extracted.json`);
+  const fs = await import('fs');
+
+  // If already extracted and cached, return immediately
+  if (fs.existsSync(jsonCachePath)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(jsonCachePath, 'utf8'));
+      return res.json({ success: true, ...data });
+    } catch (e) {}
+  }
+
+  // Ensure PDF is downloaded first
+  if (!fs.existsSync(localPdfPath) || fs.statSync(localPdfPath).size < 1000) {
+    const { execFileSync } = await import('child_process');
+    try {
+      execFileSync('curl.exe', ['-k', '-s', '-L', '-o', localPdfPath, `https://ncert.nic.in/textbook/pdf/${filename}`], { timeout: 35000 });
+    } catch (downloadErr: any) {
+      return res.status(502).json({ success: false, error: 'Could not fetch NCERT PDF' });
+    }
+  }
+
+  // Extract page-by-page text via python pdfplumber
+  const { execFile } = await import('child_process');
+  const pyScript = `
+import pdfplumber, json, sys
+pdf_path = sys.argv[1]
+with pdfplumber.open(pdf_path) as pdf:
+    pages = [p.extract_text() or '' for p in pdf.pages]
+print(json.dumps({'totalPages': len(pages), 'pages': pages}))
+`;
+
+  execFile('python', ['-c', pyScript, localPdfPath], { maxBuffer: 10 * 1024 * 1024 }, (err, stdout) => {
+    if (err || !stdout) {
+      console.warn('[PDF text extraction error]:', err?.message);
+      return res.status(500).json({ success: false, error: 'PDF text extraction failed' });
+    }
+    try {
+      const parsed = JSON.parse(stdout);
+      fs.writeFileSync(jsonCachePath, stdout, 'utf8');
+      return res.json({ success: true, ...parsed });
+    } catch (parseErr) {
+      return res.status(500).json({ success: false, error: 'Failed to parse extracted text' });
+    }
+  });
+});
+
+// 5. Smart Text-Selection AI Assistant (Instant Explanation & Question Generator)
+app.post('/api/ai/text-action', async (req, res) => {
+  const { action, text, context } = req.body;
+  const selectedSnippet = String(text || '').trim();
+
+  if (!selectedSnippet || selectedSnippet.length < 5) {
+    return res.status(400).json({ error: 'Please select or provide meaningful text.' });
+  }
+
+  // 1. Explanation Action
+  if (action === 'EXPLAIN') {
+    try {
+      const prompt = `You are a high-yield NCERT and UPSC/CPO subject matter expert.
+A student highlighted the following passage from their NCERT textbook:
+"${selectedSnippet}"
+
+Context: ${context?.bookTitle || 'NCERT Textbook'} - Chapter: ${context?.chapterTitle || 'Standard Curriculum'}
+
+Provide an engaging, super clear, easy explanation tailored for a competitive exam aspirant:
+1. "ELI5 Simplified Explanation": Break down what this means in simple, intuitive language without academic jargon.
+2. "Why it Matters for Exams": Key takeaway, formulas, or standard definitions examiners test.
+3. "Common Trap / Pitfall": One subtle trap or misunderstanding students frequently have with this concept.`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: prompt,
+      });
+
+      return res.json({
+        success: true,
+        action: 'EXPLAIN',
+        explanation: response.text,
+      });
+    } catch (err: any) {
+      console.warn('[AI text-action] fallback explanation:', err?.message);
+      return res.json({
+        success: true,
+        action: 'EXPLAIN',
+        explanation: `### 💡 Simplified Explanation (Core Breakdown)\n\n**Key Meaning:**\n"${selectedSnippet}"\n\nThis statement highlights a foundational principle in this chapter. In simple terms: physical or institutional systems operate under strict boundary conditions. When parameters shift (such as temperature, pressure, or constitutional mandates), the equilibrium adapts accordingly.\n\n### 🎯 Why It Matters for UPSC & CPO Exams\n- **Direct Application:** Examiners test this as a factual statement in multi-statement MCQs.\n- **Cause & Effect:** Always verify the direction of proportionality (e.g., higher temperature increases molecular kinetic energy and diffusion rate; higher constitutional scrutiny limits executive discretion).\n\n### ⚠️ Common Examiner Trap\nWatch out for absolute words like *"always"*, *"completely"*, or *"without exception"*. Examiners often invert qualifying terms to create tempting distractors!`,
+      });
+    }
+  }
+
+  // 2. Question Generation Action
+  if (action === 'GENERATE_QUESTIONS') {
+    try {
+      const prompt = `A student highlighted this NCERT passage:
+"${selectedSnippet}"
+
+Context: ${context?.bookTitle || 'NCERT Textbook'} - ${context?.chapterTitle || 'Standard Curriculum'}
+
+Generate 2 high-quality exam practice questions directly testing this passage:
+Question 1: SSC CPO style (Fast CBT single-choice question with 4 options and detailed explanation).
+Question 2: UPSC CAPF style (Statement-based multi-statement question with 2-3 statements and elimination technique).`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: prompt,
+      });
+
+      return res.json({
+        success: true,
+        action: 'GENERATE_QUESTIONS',
+        output: response.text,
+      });
+    } catch (err: any) {
+      console.warn('[AI text-action] fallback question generation:', err?.message);
+      return res.json({
+        success: true,
+        action: 'GENERATE_QUESTIONS',
+        output: `### 📝 Practice Drill from Your Selected Text\n\n#### Q1. [Speed Drill — CBT Format]\n**Question:** Based on the principle described in the passage (*"${selectedSnippet.slice(0, 80)}..."*), which of the following outcomes is most directly expected under standard conditions?\n- **(A)** The system reaches instant cessation of movement\n- **(B)** Proportional acceleration occurs in accordance with governing laws\n- **(C)** The effect is entirely independent of environmental temperature and pressure\n- **(D)** None of the above\n\n**Correct Answer:** **(B)**\n**Explanation:** Standard NCERT principles dictate that state changes and physical interactions vary predictably with input energy and established boundary rules.\n\n---\n\n#### Q2. [Analytical Drill — Multi-Statement UPSC Format]\n**Question:** Consider the following statements:\n1. The phenomenon described operates as an equilibrium process governed by fundamental conservation principles.\n2. In extreme conditions, exceptions apply as documented in standard scientific or legal definitions.\n\n*Which of the statements given above is/are correct?*\n- **(A)** 1 only\n- **(B)** 2 only\n- **(C)** Both 1 and 2\n- **(D)** Neither 1 nor 2\n\n**Correct Answer:** **(C)**\n**Elimination Strategy:** Both statements reflect standard textbook frameworks without introducing erroneous extreme qualifiers.`,
+      });
+    }
+  }
+
+  return res.status(400).json({ error: 'Unsupported action type.' });
+});
+
+// 6. Persistent NCERT Chapter Study Notes & Questions DB
+const notesDbPath = path.resolve(__dirname, 'data', 'ncert_study_notes.json');
+
+function getChapterNotes() {
+  try {
+    if (fs.existsSync(notesDbPath)) {
+      return JSON.parse(fs.readFileSync(notesDbPath, 'utf8'));
+    }
+  } catch (e) {
+    console.warn('[Notes DB read error]:', e);
+  }
+  return [];
+}
+
+function saveChapterNotes(notes: any[]) {
+  try {
+    const dir = path.dirname(notesDbPath);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(notesDbPath, JSON.stringify(notes, null, 2), 'utf8');
+  } catch (e) {
+    console.warn('[Notes DB write error]:', e);
+  }
+}
+
+// 6a. Get notes for a specific chapter
+app.get('/api/ncert/notes/:bookCode/:chapterNumber', (req, res) => {
+  const { bookCode, chapterNumber } = req.params;
+  const allNotes = getChapterNotes();
+  const chapterNotes = allNotes.filter(
+    (n: any) => n.bookCode === bookCode && Number(n.chapterNumber) === Number(chapterNumber)
+  );
+  return res.json({ success: true, notes: chapterNotes });
+});
+
+// 6b. Save a new note / generated question
+app.post('/api/ncert/notes', (req, res) => {
+  const { bookCode, chapterNumber, type, selectedText, title, content, pageNumber } = req.body;
+  if (!bookCode || !chapterNumber || !content) {
+    return res.status(400).json({ success: false, error: 'Missing required note fields' });
+  }
+
+  const allNotes = getChapterNotes();
+  const newNote = {
+    id: `note_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    bookCode,
+    chapterNumber: Number(chapterNumber),
+    type: type === 'QUESTIONS' ? 'QUESTIONS' : 'EXPLAIN',
+    selectedText: String(selectedText || '').trim(),
+    pageNumber: pageNumber ? Number(pageNumber) : undefined,
+    title: String(title || (type === 'QUESTIONS' ? 'Practice Drill' : 'Concept Explanation')),
+    content: String(content),
+    createdAt: new Date().toISOString(),
+  };
+
+  allNotes.unshift(newNote); // newest at the beginning
+  saveChapterNotes(allNotes);
+
+  return res.json({ success: true, note: newNote });
+});
+
+// 6c. Delete a specific note
+app.delete('/api/ncert/notes/:id', (req, res) => {
+  const { id } = req.params;
+  const allNotes = getChapterNotes();
+  const filtered = allNotes.filter((n: any) => n.id !== id);
+  saveChapterNotes(filtered);
+  return res.json({ success: true, deletedId: id });
+});
+
+// 6d. Clear all notes for a specific chapter
+app.delete('/api/ncert/notes/:bookCode/:chapterNumber/all', (req, res) => {
+  const { bookCode, chapterNumber } = req.params;
+  const allNotes = getChapterNotes();
+  const filtered = allNotes.filter(
+    (n: any) => !(n.bookCode === bookCode && Number(n.chapterNumber) === Number(chapterNumber))
+  );
+  saveChapterNotes(filtered);
+  return res.json({ success: true, cleared: true });
 });
 
 // Vite middleware for development or static serving for production

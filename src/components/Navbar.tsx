@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Derive current tab from route pathname if not explicitly passed
   const getTabFromPath = (path: string): NavTab => {
-    if (path.startsWith('/learning')) return 'LEARNING';
+    if (path.startsWith('/learning') || path.startsWith('/ncert')) return 'LEARNING';
     if (path.startsWith('/analytics')) return 'ANALYTICS';
     if (path.startsWith('/cpo-speed')) return 'CPO_SPEED';
     if (path.startsWith('/capf-elimination')) return 'CAPF_ELIMINATION';

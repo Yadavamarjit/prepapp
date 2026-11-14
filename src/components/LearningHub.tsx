@@ -26,6 +26,7 @@ import {
   filterLearningChapters,
   getRecommendedChapter,
 } from '../utils/learningProgress';
+import { NcertExplorer } from './NcertExplorer';
 
 interface LearningHubProps {
   progressMap: Record<string, ChapterProgress>;
@@ -47,6 +48,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [focusMode, setFocusMode] = useState<boolean>(false);
   const [fontSize, setFontSize] = useState<'sm' | 'base' | 'lg'>('base');
+  const [activeViewMode, setActiveViewMode] = useState<'NCERT_BAND' | 'STANDARD_TEXTBOOK'>('NCERT_BAND');
 
   // Active chapter being read
   const [activeChapterId, setActiveChapterId] = useState<string>(() => {
@@ -92,6 +94,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({
 
   const subjectsList: (Subject | 'ALL')[] = [
     'ALL',
+    'General Science',
     'Polity & Constitution',
     'Modern History',
     'Geography & Environment',
@@ -202,8 +205,41 @@ export const LearningHub: React.FC<LearningHubProps> = ({
         </div>
       )}
 
-      {/* 2. Filter & Search Controls Bar */}
+      {/* Mode Switcher: NCERT Chapter-wise Explorer vs Standard Textbook Lab */}
       {!focusMode && (
+        <div className="flex items-center gap-3 p-1.5 bg-[#F2F4F0] dark:bg-[#121816] rounded-xl border border-[#E2E6DD] dark:border-slate-800">
+          <button
+            onClick={() => setActiveViewMode('NCERT_BAND')}
+            className={`flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              activeViewMode === 'NCERT_BAND'
+                ? 'bg-[#36624B] text-white shadow-xs'
+                : 'text-[#5C646B] dark:text-slate-400 hover:text-[#1E252B]'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Class-wise NCERT Explorer (Science 9-12, Geo 9-12, Hist 6-12, Polity 11-12)</span>
+          </button>
+          <button
+            onClick={() => setActiveViewMode('STANDARD_TEXTBOOK')}
+            className={`flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              activeViewMode === 'STANDARD_TEXTBOOK'
+                ? 'bg-[#36624B] text-white shadow-xs'
+                : 'text-[#5C646B] dark:text-slate-400 hover:text-[#1E252B]'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span>Deep Reference Textbook Lessons (Laxmikanth, Spectrum, D.D. Basu)</span>
+          </button>
+        </div>
+      )}
+
+      {/* Render NCERT Explorer if selected */}
+      {activeViewMode === 'NCERT_BAND' && (
+        <NcertExplorer onSelectTopicForAi={onSelectTopicForAi} />
+      )}
+
+      {/* 2. Filter & Search Controls Bar */}
+      {activeViewMode === 'STANDARD_TEXTBOOK' && !focusMode && (
         <div className="bg-white dark:bg-[#1A2420] p-4 rounded-xl border border-[#E2E6DD] dark:border-slate-800 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Box */}
           <div className="relative w-full md:w-96">
@@ -265,6 +301,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({
       )}
 
       {/* 3. Main Workspace: Two-Column Split (Catalog & Reading Desk) */}
+      {activeViewMode === 'STANDARD_TEXTBOOK' && (
       <div className={`grid grid-cols-1 ${focusMode ? 'lg:grid-cols-1 max-w-4xl mx-auto' : 'lg:grid-cols-12'} gap-6 items-start`}>
         
         {/* Left Column: Chapter Syllabus Catalog (Hidden in Focus Mode) */}
@@ -721,6 +758,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({
         </div>
 
       </div>
+      )}
     </div>
   );
 };

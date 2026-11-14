@@ -9,6 +9,7 @@ import { AiTopicBreakdown } from './components/AiTopicBreakdown';
 import { MistakeVault } from './components/MistakeVault';
 import { AnalyticsPanel } from './components/AnalyticsPanel';
 import { LearningHub } from './components/LearningHub';
+import { NcertExplorer } from './components/NcertExplorer';
 import { LoginPage } from './components/LoginPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
@@ -371,6 +372,12 @@ export default function App() {
         />
         <Route path="learning" element={<LearningHubRoute />} />
         <Route path="learning/:chapterId" element={<LearningHubRoute />} />
+        
+        {/* Dedicated Direct-Access NCERT Routes (Class / Subject / Chapter URL accessible on refresh) */}
+        <Route path="ncert" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
+        <Route path="ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
+        <Route path="ncert/:bookCode/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
+        <Route path="learning/ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
         <Route
           path="cpo-speed"
           element={

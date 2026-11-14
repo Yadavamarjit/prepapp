@@ -683,4 +683,87 @@ export const LEARNING_CHAPTERS: LearningChapter[] = [
       },
     ],
   },
+
+  // -------------------------------------------------------------
+  // 7. GENERAL SCIENCE (NCERT Classes 9–12 High-Yield Foundation)
+  // -------------------------------------------------------------
+  {
+    id: 'sci-chap-1',
+    subject: 'General Science',
+    ncertBook: 'NCERT Class 9 & 10 Science (Core Physics, Chemistry & Biology)',
+    chapterNumber: 1,
+    chapterTitle: 'Light, Electricity, Acids-Bases & Fundamental Cellular Life',
+    readTimeMinutes: 22,
+    examRelevance: ['UPSC_CAPF', 'SSC_CPO'],
+    weightage: 'Very High',
+    coreConcepts: [
+      'Optics: Concave vs Convex mirrors & lenses, power of lens in Dioptres',
+      'Human Eye: Myopia (concave lens) vs Hypermetropia (convex lens)',
+      'Acids, Bases & Salts: pH scale, Bleaching powder (CaOCl2), Plaster of Paris (CaSO4·½H2O)',
+      'Cell Biology: Mitochondria & Chloroplasts as semi-autonomous organelles with own DNA/ribosomes',
+    ],
+    summaryOverview:
+      'General Science forms a decisive pillar in both UPSC CAPF AC (25–30 questions) and SSC CPO CBT (50 questions general awareness). Questions rigorously test fundamental Class 9–12 NCERT principles regarding ray optics, everyday chemistry, and human physiology.',
+    sections: [
+      {
+        heading: '1. Optics & Vision Defects (NCERT Class 10 Ch. 9 & 10)',
+        content:
+          'Ray optics questions frequently test image formation rules. Concave mirrors form virtual, erect, and magnified images only when the object is placed between Pole and Focus (dentist mirror). Convex mirrors always produce virtual, erect, diminished images with wide field of view (rear-view mirror).',
+        tableData: {
+          headers: ['Vision Defect', 'Eye Anatomy Issue', 'Corrective Lens'],
+          rows: [
+            ['Myopia (Near-sightedness)', 'Eyeball too long / excessive curvature', 'Concave lens (diverging) with negative power'],
+            ['Hypermetropia (Far-sightedness)', 'Eyeball too short / focal length too long', 'Convex lens (converging) with positive power'],
+            ['Presbyopia (Old age vision)', 'Weakening of ciliary muscles', 'Bifocal lens (upper concave, lower convex)'],
+            ['Astigmatism', 'Irregular curvature of cornea', 'Cylindrical lens'],
+          ],
+        },
+        keyTakeaway:
+          'Power of lens P = 1 / f (in metres). Unit is Dioptre (D). A lens of focal length -50 cm has power P = 1 / (-0.5) = -2 D (Myopic correction).',
+      },
+      {
+        heading: '2. Chemical Compounds in Daily Life (NCERT Class 10 Ch. 2)',
+        content:
+          'Examiners regularly test commercial chemical formulas and water of crystallization:',
+        bulletPoints: [
+          'Bleaching Powder: CaOCl2 (formed by action of chlorine on dry slaked lime Ca(OH)2).',
+          'Baking Soda: Sodium hydrogen carbonate (NaHCO3), non-corrosive basic salt.',
+          'Washing Soda: Na2CO3·10H2O (10 molecules of water of crystallisation).',
+          'Plaster of Paris: CaSO4·½H2O (produced by heating Gypsum CaSO4·2H2O at 373 K).',
+        ],
+      },
+      {
+        heading: '3. Cell Biology & Tissues (NCERT Class 9 Ch. 5 & 6)',
+        content:
+          'Mitochondria and Plastids are termed semi-autonomous organelles because they possess their own circular DNA and 70S ribosomes, capable of self-replication and protein synthesis. In animal tissues, Ligaments connect Bone to Bone (elastic), while Tendons connect Muscle to Bone (high tensile strength).',
+        keyTakeaway:
+          'Ligaments = Bone to Bone. Tendons = Muscle to Bone.',
+      },
+    ],
+    upscCapfAnalyticalAngle:
+      'In CAPF Paper 1, questions often involve multi-statement comparisons: e.g., "Mitochondria have double membranes and their own DNA (TRUE)", "Viruses have their own ribosomes (FALSE: viruses lack cellular machinery and depend on host cells)".',
+    sscCpoSpeedShortcut:
+      'CPO Speed Formula: Dioptre calculation. P = 100 / f (when f is in centimetres). Negative power always indicates Myopia (Concave); positive power indicates Hypermetropia (Convex).',
+    examinerTraps: [
+      'Confusing Plaster of Paris formula (CaSO4·½H2O) with Gypsum (CaSO4·2H2O).',
+      'Confusing Tendon (Muscle to Bone) with Ligament (Bone to Bone).',
+    ],
+    highYieldMnemonics: [
+      'Mnemonic for Ligaments vs Tendons: "BBL" (Bone-Bone: Ligament) and "MTB" (Muscle-Tendon-Bone).',
+      'Mnemonic for Vision: "My-Cave" (Myopia corrected by Concave).',
+    ],
+    comprehensionQuiz: [
+      {
+        question: 'Which of the following cellular organelles possesses its own DNA and ribosomes?',
+        options: [
+          'Golgi apparatus',
+          'Lysosome',
+          'Mitochondria',
+          'Endoplasmic reticulum',
+        ],
+        correctIndex: 2,
+        explanation: 'Mitochondria and chloroplasts are semi-autonomous organelles containing their own circular DNA and 70S ribosomes.',
+      },
+    ],
+  },
 ];
