@@ -19,6 +19,7 @@ import { calculateCbtScore, formatTimer, isSpeedWarning } from '../utils/cbtEngi
 
 interface CpoSpeedModeProps {
   questions: Question[];
+  onQuestionAttempted?: (questionId: string) => void;
   onSaveMistake: (questionId: string, selected: 'A' | 'B' | 'C' | 'D', reason: MistakeReason, timeSpent: number) => void;
   onSelectTopicForAi?: (topicTitle: string, subject: string, standardRef: string) => void;
 }
@@ -26,6 +27,7 @@ interface CpoSpeedModeProps {
 export const CpoSpeedMode: React.FC<CpoSpeedModeProps> = ({
   questions,
   onSaveMistake,
+  onQuestionAttempted,
   onSelectTopicForAi,
 }) => {
   // Filter for CPO Speed relevant questions (Quant, Reasoning, English, Speed difficulty)
@@ -69,6 +71,13 @@ export const CpoSpeedMode: React.FC<CpoSpeedModeProps> = ({
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [isSubmitted, currentIndex]);
+
+  useEffect(() => {
+    if (!isSubmitted) return;
+    Object.entries(answers).forEach(([id, answer]) => {
+      if (answer) onQuestionAttempted?.(id);
+    });
+  }, [isSubmitted, answers, onQuestionAttempted]);
 
   // Save time spent on question when navigating
   const recordCurrentQuestionTime = () => {
@@ -151,7 +160,7 @@ export const CpoSpeedMode: React.FC<CpoSpeedModeProps> = ({
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-12">
       {/* Top Sectional CBT Bar */}
-      <div className="bg-[#FFFFFF] dark:bg-[#1A2420] p-4 rounded-xl border border-[#E2E6DD] dark:border-slate-800 flex flex-wrap items-center justify-between gap-4 sticky top-16 z-20 shadow-xs">
+      <div className="bg-[#FFFFFF] dark:bg-[#1A2420] p-4 rounded-xl border border-[#E2E6DD] dark:border-slate-800 flex flex-wrap items-center justify-between gap-4 sticky top-[88px] z-20 shadow-xs">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-[#D97746]/10 text-[#D97746] flex items-center justify-center font-bold">
             <Zap className="w-5 h-5" />
@@ -159,10 +168,10 @@ export const CpoSpeedMode: React.FC<CpoSpeedModeProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm text-[#1E252B] dark:text-white">
-                SSC CPO Paper 1 CBT Sprint
+                CPO timed test
               </span>
               <span className="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-[#EEF0EA] dark:bg-slate-800 text-[#5C646B] dark:text-slate-300">
-                15-Min Section Gate
+                15 minutes
               </span>
             </div>
             <div className="text-xs text-[#5C646B] dark:text-slate-400">
@@ -353,7 +362,7 @@ export const CpoSpeedMode: React.FC<CpoSpeedModeProps> = ({
                   {answers[currentQ.id] !== currentQ.correctAnswer && (
                     <div className="mt-4 pt-3 border-t border-[#EEF0EA] dark:border-slate-800">
                       <div className="text-xs font-semibold text-[#1E252B] dark:text-white mb-2">
-                        Why did you miss this? (Logged to Mistake Vault):
+                        What went wrong? Save it for revision:
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {(['Conceptual Gap', 'Misread Question', 'Calculation/Time Panic'] as MistakeReason[]).map((r) => {

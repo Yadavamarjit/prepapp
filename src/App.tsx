@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, Outlet, useNavigate, useLocation, useParams, Navigate, Link } from 'react-router-dom';
-import { Navbar, NavTab } from './components/Navbar';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Routes, Route, Outlet, useNavigate, useLocation, Navigate, Link } from 'react-router-dom';
+import { Navbar } from './components/Navbar';
 import { OverviewDashboard } from './components/OverviewDashboard';
 import { CpoSpeedMode } from './components/CpoSpeedMode';
 import { CapfEliminationMode } from './components/CapfEliminationMode';
 import { Paper2Lab } from './components/Paper2Lab';
 import { AiTopicBreakdown } from './components/AiTopicBreakdown';
 import { MistakeVault } from './components/MistakeVault';
-import { AnalyticsPanel } from './components/AnalyticsPanel';
+import { PracticeHome, RevisionHome, ProgressPage, SectionNavigation } from './components/StudySections';
 import { LearningHub } from './components/LearningHub';
+import { BooksLibrary } from './components/BooksLibrary';
+import { CalculationCoach } from './components/CalculationCoach';
+import { CapfSyllabus } from './components/CapfSyllabus';
+import { CurrentAffairs } from './components/CurrentAffairs';
+import { AFFAIR_PROGRESS_KEY, parseAffairProgress, type AffairProgress } from './utils/currentAffairs';
+import { LearnReels } from './components/LearnReels';
+import { buildReelRecallCards, parseReelsProgress, REELS_STORAGE_KEY, type ReelsProgress } from './utils/learningReels';
 import { NcertExplorer } from './components/NcertExplorer';
+import { DailyReview } from './components/DailyReview';
+import { LEARNING_CHAPTERS } from './data/learningLibrary';
+import { buildRecallCards, parseRecallProgress, RECALL_STORAGE_KEY, scheduleRecall, getDueRecallCards } from './utils/dailyReview';
+import type { RecallRating } from './utils/dailyReview';
 import { LoginPage } from './components/LoginPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
@@ -40,10 +51,10 @@ const NotFoundPage: React.FC = () => {
         <ShieldAlert className="w-8 h-8" />
       </div>
       <h2 className="text-2xl font-bold text-[#1E252B] dark:text-white">
-        Sector Not Found (404)
+        Page not found
       </h2>
       <p className="text-sm text-[#5C646B] dark:text-slate-400 max-w-md mx-auto">
-        The tactical deck or module you requested does not exist or has been relocated in the DutyDeck command structure.
+        This page may have moved. Go back to your study plan to continue.
       </p>
       <div className="pt-2">
         <Link
@@ -51,65 +62,29 @@ const NotFoundPage: React.FC = () => {
           className="inline-flex items-center gap-2 px-4 py-2 bg-[#36624B] hover:bg-[#2A4F3C] text-white rounded-xl text-xs font-semibold shadow-xs"
         >
           <Compass className="w-4 h-4" />
-          <span>Return to Dual Overview Command</span>
+          <span>Back to Today</span>
         </Link>
       </div>
     </div>
   );
 };
 
-// Protected Layout with Navigation Bar and Footer
-const ProtectedAppLayout: React.FC<{
-  vaultCount: number;
-  completedQuestionsCount: number;
-  streakDays: number;
-}> = ({ vaultCount, completedQuestionsCount, streakDays }) => {
-  return (
-    <ProtectedRoute>
-      <div className="min-h-screen bg-[#F7F8F5] dark:bg-[#121816] text-[#1E252B] dark:text-[#E6EAE8] flex flex-col font-sans transition-colors">
-        {/* Sticky Top Navigation */}
-        <Navbar
-          vaultCount={vaultCount}
-          completedQuestionsCount={completedQuestionsCount}
-          streakDays={streakDays}
-        />
-
-        {/* Main View Area */}
-        <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 w-full pb-12">
-          <Outlet />
-        </main>
-
-        {/* Subtle Footer */}
-        <footer className="border-t border-[#E2E6DD] dark:border-slate-800 bg-[#FFFFFF] dark:bg-[#121816] py-6 text-center text-xs text-[#5C646B] dark:text-slate-400">
-          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-[#1E252B] dark:text-white">DutyDeck</span>
-              <span>&bull; Dual-Target Multi-Page Preparation Suite for UPSC CAPF AC & SSC CPO</span>
-            </div>
-            <div className="text-[11px] font-mono">
-              Nordic Botanical Theme &bull; 15-Minute Section Gates &bull; Elimination Scratchpad
-            </div>
-          </div>
-        </footer>
+function ProtectedAppLayout() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return <ProtectedRoute>
+    <div className="min-h-screen bg-[#F7F7F2] text-[#30392D] dark:bg-[#121816] dark:text-[#E6EAE8]">
+      <a href="#study-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:p-3 focus:text-black">Skip to content</a>
+      <Navbar />
+      <div className="lg:ml-56">
+        <main id="study-content" className="mx-auto min-h-[calc(100vh-72px)] max-w-6xl px-5 pb-28 pt-7 sm:px-8 lg:px-10 lg:pb-12 lg:pt-10"><SectionNavigation /><Outlet /></main>
       </div>
-    </ProtectedRoute>
-  );
-};
+    </div>
+  </ProtectedRoute>;
+}
 
 export default function App() {
   const navigate = useNavigate();
-
-  // Mapping from NavTab to multi-page URL routes
-  const tabPathMap: Record<NavTab, string> = {
-    OVERVIEW: '/',
-    LEARNING: '/learning',
-    ANALYTICS: '/analytics',
-    CPO_SPEED: '/cpo-speed',
-    CAPF_ELIMINATION: '/capf-elimination',
-    PAPER_2: '/paper-2',
-    AI_TUTOR: '/ai-tutor',
-    MISTAKE_VAULT: '/mistake-vault',
-  };
 
   // Question Bank (seeded + dynamic AI generated questions)
   const [questions, setQuestions] = useState<Question[]>(() => {
@@ -129,20 +104,7 @@ export default function App() {
       const saved = localStorage.getItem('dutydeck_mistakes');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
-    return [
-      {
-        id: 'seed-m1',
-        questionId: 'capf-pol-01',
-        selectedAnswer: 'A',
-        correctAnswer: 'B',
-        timeSpentSeconds: 62,
-        reason: 'Misread Question',
-        timestamp: Date.now() - 3600000,
-        reviewCount: 0,
-        nextReviewDate: Date.now() - 1000,
-        notes: 'Confused 1-month approval with 2-month approval in Art 352',
-      },
-    ];
+    return [];
   });
 
   // Paper 2 Submissions history
@@ -160,7 +122,7 @@ export default function App() {
       const saved = localStorage.getItem('dutydeck_solved');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
-    return ['cpo-quant-01', 'capf-pol-03'];
+    return [];
   });
 
   // NCERT & Standard Textbook Academy Chapter Progress
@@ -169,15 +131,55 @@ export default function App() {
       const saved = localStorage.getItem('dutydeck_chapter_progress');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
-    return {
-      'pol-chap-1': {
-        chapterId: 'pol-chap-1',
-        isCompleted: true,
-        completedAt: Date.now() - 86400000,
-      },
-    };
+    return {};
   });
-  const [selectedLearningChapterId, setSelectedLearningChapterId] = useState<string | undefined>(undefined);
+  const [recallProgress, setRecallProgress] = useState(() => {
+    try { return parseRecallProgress(localStorage.getItem(RECALL_STORAGE_KEY)); }
+    catch { return {}; }
+  });
+  const [recallStorageError, setRecallStorageError] = useState(false);
+  const [reelsProgress, setReelsProgress] = useState(() => {
+    try { return parseReelsProgress(localStorage.getItem(REELS_STORAGE_KEY)); }
+    catch { return parseReelsProgress(null); }
+  });
+  const [reelsStorageError, setReelsStorageError] = useState(false);
+  const [affairProgress, setAffairProgress] = useState(() => { try { return parseAffairProgress(localStorage.getItem(AFFAIR_PROGRESS_KEY)); } catch { return parseAffairProgress(null); } });
+  const [affairStorageError, setAffairStorageError] = useState(false);
+  const handleAffairChange = (next: AffairProgress) => {
+    setAffairProgress(next);
+    try { localStorage.setItem(AFFAIR_PROGRESS_KEY, JSON.stringify(next)); setAffairStorageError(false); } catch { setAffairStorageError(true); }
+  };
+  const handleReelsChange = (next: ReelsProgress) => {
+    setReelsProgress(next);
+    try {
+      localStorage.setItem(REELS_STORAGE_KEY, JSON.stringify(next));
+      setReelsStorageError(false);
+    } catch { setReelsStorageError(true); }
+  };
+  const recallCards = useMemo(() => [
+    ...buildRecallCards(LEARNING_CHAPTERS, chapterProgress, questions, solvedQuestionIds, mistakes),
+    ...buildReelRecallCards(reelsProgress),
+    ...affairProgress.cards,
+  ], [chapterProgress, questions, solvedQuestionIds, mistakes, reelsProgress, affairProgress]);
+
+  const handleRecallReview = (id: string, rating: RecallRating): boolean => {
+    const now = Date.now();
+    if (!recallCards.some(card => card.id === id) || recallProgress[id]?.dueAt > now) return false;
+    const next = { ...recallProgress, [id]: scheduleRecall(recallProgress[id], rating, now) };
+    try {
+      localStorage.setItem(RECALL_STORAGE_KEY, JSON.stringify(next));
+      setRecallProgress(next);
+      setRecallStorageError(false);
+      return true;
+    } catch {
+      setRecallStorageError(true);
+      return false;
+    }
+  };
+
+  const handleQuestionAttempted = useCallback((questionId: string) => {
+    setSolvedQuestionIds(previous => previous.includes(questionId) ? previous : [...previous, questionId]);
+  }, []);
 
   // Selected topic passed directly to AI Tutor
   const [aiTutorTopic, setAiTutorTopic] = useState<{
@@ -293,6 +295,7 @@ export default function App() {
       return {
         ...prev,
         [chapterId]: {
+          ...current,
           chapterId,
           isCompleted: isNowCompleted,
           completedAt: isNowCompleted ? Date.now() : undefined,
@@ -301,31 +304,21 @@ export default function App() {
     });
   };
 
-  // Handler: Open specific chapter in study hub
-  const handleOpenChapter = (chapterId: string) => {
-    setSelectedLearningChapterId(chapterId);
-    navigate(`/learning/${chapterId}`);
+  const [reviewNow, setReviewNow] = useState(Date.now);
+  useEffect(() => {
+    const timer = window.setInterval(() => setReviewNow(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+  const dueCount = getDueRecallCards(recallCards, recallProgress, Math.max(reviewNow, Date.now())).length;
+  const reviewedToday = recallCards.filter(card => recallProgress[card.id] && new Date(recallProgress[card.id].lastReviewedAt).toDateString() === new Date().toDateString()).length;
+  const saveChapterNotes = (id: string, notes: string): boolean => {
+    const next = { ...chapterProgress, [id]: { ...chapterProgress[id], chapterId: id, isCompleted: chapterProgress[id]?.isCompleted || false, notes } };
+    try { localStorage.setItem('dutydeck_chapter_progress', JSON.stringify(next)); }
+    catch { return false; }
+    setChapterProgress(next);
+    return true;
   };
-
-  // Navigation redirect handler for legacy tab props
-  const handleNavigateByTab = (tab: NavTab) => {
-    const targetPath = tabPathMap[tab] || '/';
-    navigate(targetPath);
-  };
-
-  // Route sub-component for LearningHub with path parameter support
-  const LearningHubRoute: React.FC = () => {
-    const { chapterId } = useParams<{ chapterId?: string }>();
-    return (
-      <LearningHub
-        progressMap={chapterProgress}
-        onToggleChapterCompleted={handleToggleChapterCompleted}
-        onNavigateToDrill={(track) => navigate(track === 'CPO_SPEED' ? '/cpo-speed' : '/capf-elimination')}
-        onSelectTopicForAi={handleSelectTopicForAi}
-        selectedChapterId={chapterId || selectedLearningChapterId}
-      />
-    );
-  };
+  const learningPage = <LearningHub progressMap={chapterProgress} onToggleChapterCompleted={handleToggleChapterCompleted} onSelectTopicForAi={handleSelectTopicForAi} onSaveNotes={saveChapterNotes} />;
 
   return (
     <Routes>
@@ -335,43 +328,34 @@ export default function App() {
       {/* Protected Multi-Page Application Layout */}
       <Route
         element={
-          <ProtectedAppLayout
-            vaultCount={mistakes.length}
-            completedQuestionsCount={solvedQuestionIds.length}
-            streakDays={4}
-          />
+          <ProtectedAppLayout />
         }
       >
         <Route
           index
           element={
-            <OverviewDashboard
-              onNavigate={handleNavigateByTab}
-              questions={questions}
-              mistakes={mistakes}
-              submissions={submissions}
-              solvedQuestionIds={solvedQuestionIds}
-              onSelectTopicForAi={handleSelectTopicForAi}
-              onOpenChapter={handleOpenChapter}
-            />
+            <OverviewDashboard chapterProgress={chapterProgress} dueCount={dueCount} reviewedToday={reviewedToday} questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} />
           }
         />
         <Route
           path="dashboard"
           element={
-            <OverviewDashboard
-              onNavigate={handleNavigateByTab}
-              questions={questions}
-              mistakes={mistakes}
-              submissions={submissions}
-              solvedQuestionIds={solvedQuestionIds}
-              onSelectTopicForAi={handleSelectTopicForAi}
-              onOpenChapter={handleOpenChapter}
-            />
+            <OverviewDashboard chapterProgress={chapterProgress} dueCount={dueCount} reviewedToday={reviewedToday} questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} />
           }
         />
-        <Route path="learning" element={<LearningHubRoute />} />
-        <Route path="learning/:chapterId" element={<LearningHubRoute />} />
+        <Route path="practice" element={<PracticeHome />} />
+        <Route path="current-affairs" element={<CurrentAffairs progress={affairProgress} onChange={handleAffairChange} storageError={affairStorageError} />} />
+        <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} />} />
+        <Route path="calculation-coach" element={<CalculationCoach />} />
+        <Route path="reels" element={<LearnReels progress={reelsProgress} onChange={handleReelsChange} storageError={reelsStorageError} />} />
+        <Route path="reels/:courseId/:chapterNumber" element={<LearnReels progress={reelsProgress} onChange={handleReelsChange} storageError={reelsStorageError} />} />
+        <Route path="books" element={<BooksLibrary />} />
+        <Route path="books/:bookCode" element={<BooksLibrary />} />
+        <Route path="books/:bookCode/:chapterNumber" element={<BooksLibrary />} />
+        <Route path="revision" element={<RevisionHome dueCount={dueCount} mistakeCount={mistakes.length} reviewedToday={reviewedToday} />} />
+        <Route path="learning" element={learningPage} />
+        <Route path="daily-review" element={<DailyReview cards={recallCards} progress={recallProgress} onReview={handleRecallReview} storageError={recallStorageError} />} />
+        <Route path="learning/:chapterId" element={learningPage} />
         
         {/* Dedicated Direct-Access NCERT Routes (Class / Subject / Chapter URL accessible on refresh) */}
         <Route path="ncert" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
@@ -384,6 +368,7 @@ export default function App() {
             <CpoSpeedMode
               questions={questions}
               onSaveMistake={handleSaveMistake}
+              onQuestionAttempted={handleQuestionAttempted}
               onSelectTopicForAi={handleSelectTopicForAi}
             />
           }
@@ -394,6 +379,7 @@ export default function App() {
             <CapfEliminationMode
               questions={questions}
               onSaveMistake={handleSaveMistake}
+              onQuestionAttempted={handleQuestionAttempted}
               onSelectTopicForAi={handleSelectTopicForAi}
             />
           }
@@ -418,6 +404,7 @@ export default function App() {
               solvedQuestionIds={solvedQuestionIds}
               allQuestions={questions}
               onSaveMistake={handleSaveMistake}
+              onQuestionAttempted={handleQuestionAttempted}
               onAddQuestionsToBank={handleAddQuestionsToBank}
             />
           }
@@ -437,15 +424,7 @@ export default function App() {
         <Route
           path="analytics"
           element={
-            <AnalyticsPanel
-              questions={questions}
-              mistakes={mistakes}
-              submissions={submissions}
-              solvedQuestionIds={solvedQuestionIds}
-              onNavigate={handleNavigateByTab}
-              onSelectTopicForAi={handleSelectTopicForAi}
-              streakDays={4}
-            />
+            <ProgressPage chapterProgress={chapterProgress} questions={questions} mistakes={mistakes} submissions={submissions} solvedQuestionIds={solvedQuestionIds} reviewedToday={reviewedToday} />
           }
         />
         {/* 404 Catch-All */}

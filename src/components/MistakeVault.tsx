@@ -105,14 +105,14 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-bold text-lg text-[#1E252B] dark:text-white font-sans">
-                Mistake Vault & Spaced Repetition (SRS)
+                Your mistakes
               </h2>
               <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-[#C25345] text-white">
                 Error Log
               </span>
             </div>
             <p className="text-xs text-[#5C646B] dark:text-slate-400 mt-0.5">
-              Automated error classification and targeted spaced review (1-day, 3-day, 7-day intervals).
+              Revisit difficult questions, understand the explanation, and try again.
             </p>
           </div>
         </div>
@@ -144,7 +144,7 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
           </span>
           {[
             { id: 'ALL' as MistakeVaultFilter, label: `All Mistakes (${mistakes.length})` },
-            { id: 'DUE_FOR_REVIEW' as MistakeVaultFilter, label: 'Due for Review (SRS)' },
+            { id: 'DUE_FOR_REVIEW' as MistakeVaultFilter, label: 'Due for review' },
             { id: 'CONCEPTUAL_GAP' as MistakeVaultFilter, label: 'Conceptual Gaps Only' },
             { id: 'REPEAT_MISTAKES' as MistakeVaultFilter, label: 'Missed Twice or More' },
             { id: 'TIME_PANIC' as MistakeVaultFilter, label: 'Calculation / Panic' },
@@ -233,7 +233,7 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
                     <button
                       onClick={() => onClearMistake(record.id)}
                       className="text-[#8B949E] hover:text-[#C25345] transition-colors"
-                      title="Clear from Vault"
+                      title="Remove from mistakes"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -374,7 +374,7 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <h3 className="font-bold text-base text-[#1E252B] dark:text-white">
-            Mistake Vault Clean!
+            No mistakes to review
           </h3>
           <p className="text-xs text-[#5C646B] max-w-md mx-auto">
             No questions match your current filter. Keep practicing CPO Speed drills or CAPF Elimination sets to build your error taxonomy log.

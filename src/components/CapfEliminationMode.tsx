@@ -17,6 +17,7 @@ import { deduceEliminableOptions, checkSingleRemainingOption } from '../utils/el
 
 interface CapfEliminationModeProps {
   questions: Question[];
+  onQuestionAttempted?: (questionId: string) => void;
   onSaveMistake: (questionId: string, selected: 'A' | 'B' | 'C' | 'D', reason: MistakeReason, timeSpent: number) => void;
   onSelectTopicForAi?: (topicTitle: string, subject: string, standardRef: string) => void;
 }
@@ -24,6 +25,7 @@ interface CapfEliminationModeProps {
 export const CapfEliminationMode: React.FC<CapfEliminationModeProps> = ({
   questions,
   onSaveMistake,
+  onQuestionAttempted,
   onSelectTopicForAi,
 }) => {
   // Focus on UPSC CAPF multi-statement or analytical questions
@@ -94,6 +96,7 @@ export const CapfEliminationMode: React.FC<CapfEliminationModeProps> = ({
   };
 
   const handleRevealAnswer = () => {
+    if (userSelected) onQuestionAttempted?.(qId);
     setIsRevealed((prev) => ({ ...prev, [qId]: true }));
   };
 
@@ -119,7 +122,7 @@ export const CapfEliminationMode: React.FC<CapfEliminationModeProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-bold text-base text-[#1E252B] dark:text-white font-sans">
-                UPSC CAPF Paper 1 Elimination Engine
+                CAPF practice
               </h2>
               <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-[#36624B] text-white">
                 Multi-Statement Scratchpad
@@ -362,7 +365,7 @@ export const CapfEliminationMode: React.FC<CapfEliminationModeProps> = ({
             <div className="mt-6 p-5 rounded-xl bg-[#F7F8F5] dark:bg-[#121816] border border-[#EEF0EA] dark:border-slate-800 space-y-4 animate-fade-in">
               <div className="flex items-center justify-between pb-2 border-b border-[#EEF0EA] dark:border-slate-800">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#36624B] dark:text-[#88D4A8]">
-                  UPSC Master Solution & Book Citations
+                  Answer & explanation
                 </span>
                 <span className="text-xs font-mono font-semibold text-[#1E252B] dark:text-white">
                   Correct Answer: Option {currentQ.correctAnswer}
@@ -394,7 +397,7 @@ export const CapfEliminationMode: React.FC<CapfEliminationModeProps> = ({
               {userSelected !== currentQ.correctAnswer && (
                 <div className="pt-3 border-t border-[#EEF0EA] dark:border-slate-800">
                   <div className="text-xs font-semibold text-[#1E252B] dark:text-white mb-2">
-                    Classify this missed question into your Mistake Vault:
+                    What went wrong? Save it for revision:
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {(['Conceptual Gap', 'Misread Question', 'Calculation/Time Panic'] as MistakeReason[]).map((r) => {
@@ -409,7 +412,7 @@ export const CapfEliminationMode: React.FC<CapfEliminationModeProps> = ({
                               : 'bg-[#FFFFFF] dark:bg-[#1A2420] text-[#5C646B] border-[#E2E6DD] hover:bg-[#EEF0EA]'
                           }`}
                         >
-                          {isLogged ? `Saved to Vault: ${r}` : r}
+                          {isLogged ? `Saved: ${r}` : r}
                         </button>
                       );
                     })}

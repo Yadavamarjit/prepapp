@@ -171,3 +171,14 @@ test('Adaptive Prompt Instruction Builder formats correct directives', () => {
   assert.match(prompt1, /Do NOT provide a numbered statements array/);
 });
 
+
+
+test('Topic tuning excludes empty labels and other topics sharing the first word', () => {
+  const unrelated = [
+    { ...mockQuestions[0], id: 'other', microTopic: 'Emergency Response' },
+    { ...mockQuestions[0], id: 'empty', microTopic: '' },
+  ];
+  const result = calculateTopicProficiency('Emergency Provisions (Art 352, 356, 360)', [],
+    ['q-em-1', 'other', 'empty'], [...mockQuestions, ...unrelated]);
+  assert.equal(result.totalAttempts, 1);
+});

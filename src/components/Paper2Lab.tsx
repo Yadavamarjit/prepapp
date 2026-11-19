@@ -153,7 +153,7 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-bold text-base text-[#1E252B] dark:text-white font-sans">
-                CAPF Paper 2 Argument & Structure Lab
+                Writing practice
               </h2>
               <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-[#4B5A8E] text-white">
                 UPSC Rubric Grader
@@ -198,7 +198,7 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
           {/* Prompt Selector */}
           <div className="bg-[#FFFFFF] dark:bg-[#1A2420] p-4 rounded-xl border border-[#E2E6DD] dark:border-slate-800 shadow-sm space-y-3">
             <label className="text-xs font-bold uppercase tracking-wider text-[#5C646B] dark:text-slate-400 block">
-              Select UPSC Paper 2 Prompt:
+              Choose a writing prompt:
             </label>
 
             <select
@@ -380,7 +380,7 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
                   </div>
                   <div>
                     <h3 className="font-bold text-base text-[#1E252B] dark:text-white">
-                      UPSC CAPF Paper 2 Evaluation Report
+                      Writing feedback
                     </h3>
                     <p className="text-xs text-[#5C646B] dark:text-slate-400">
                       Standard official marking out of 20 marks

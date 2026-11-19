@@ -9,20 +9,12 @@ export function calculateTopicProficiency(
   solvedIds: string[],
   allQuestions: Question[]
 ): TopicProficiency {
-  // Normalize topic strings for fuzzy matching
-  const normTopic = topicTitle.toLowerCase();
-  
-  // Find questions relevant to this topic
+  // Ignore reference annotations, but never match on a shared first word or empty label.
+  const normalizeTopic = (value: string) => value.toLowerCase().replace(/\([^)]*\)/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const normTopic = normalizeTopic(topicTitle);
   const topicQuestions = allQuestions.filter((q) => {
-    const qTopic = (q.microTopic || '').toLowerCase();
-    const qSub = (q.subject || '').toLowerCase();
-    const qText = (q.questionText || '').toLowerCase();
-    return (
-      normTopic.includes(qTopic) ||
-      qTopic.includes(normTopic) ||
-      normTopic.split(' ')[0].toLowerCase().includes(qTopic.split(' ')[0]) ||
-      qText.includes(normTopic.slice(0, 10))
-    );
+    const qTopic = normalizeTopic(q.microTopic || '');
+    return Boolean(normTopic && qTopic && normTopic === qTopic);
   });
 
   const topicQuestionIds = new Set(topicQuestions.map((q) => q.id));

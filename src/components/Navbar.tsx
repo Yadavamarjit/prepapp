@@ -1,218 +1,48 @@
 import React from 'react';
-import { 
-  Compass, 
-  Zap, 
-  CheckSquare, 
-  PenTool, 
-  Sparkles, 
-  Archive, 
-  ShieldCheck, 
-  Flame,
-  TrendingUp,
-  LogOut,
-  BookOpen,
-  User as UserIcon
-} from 'lucide-react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { House, BookOpen, PencilLine, RotateCcw, ChartNoAxesCombined, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useStudyPreferences, type StudyExam } from '../context/StudyPreferences';
 
-export type NavTab = 'OVERVIEW' | 'LEARNING' | 'ANALYTICS' | 'CPO_SPEED' | 'CAPF_ELIMINATION' | 'PAPER_2' | 'AI_TUTOR' | 'MISTAKE_VAULT';
-
-interface NavbarProps {
-  activeTab?: NavTab;
-  onTabChange?: (tab: NavTab) => void;
-  vaultCount: number;
-  completedQuestionsCount: number;
-  streakDays: number;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({
-  activeTab: propActiveTab,
-  onTabChange,
-  vaultCount,
-  completedQuestionsCount,
-  streakDays,
-}) => {
-  const { user, loading, signOutUser } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // Derive current tab from route pathname if not explicitly passed
-  const getTabFromPath = (path: string): NavTab => {
-    if (path.startsWith('/learning') || path.startsWith('/ncert')) return 'LEARNING';
-    if (path.startsWith('/analytics')) return 'ANALYTICS';
-    if (path.startsWith('/cpo-speed')) return 'CPO_SPEED';
-    if (path.startsWith('/capf-elimination')) return 'CAPF_ELIMINATION';
-    if (path.startsWith('/paper-2')) return 'PAPER_2';
-    if (path.startsWith('/ai-tutor')) return 'AI_TUTOR';
-    if (path.startsWith('/mistake-vault')) return 'MISTAKE_VAULT';
-    return 'OVERVIEW';
-  };
-
-  const currentTab = propActiveTab || getTabFromPath(location.pathname);
-
-  const navItems = [
-    { id: 'OVERVIEW' as NavTab, path: '/', label: 'Dual Overview', icon: Compass },
-    { id: 'LEARNING' as NavTab, path: '/learning', label: 'NCERT Study Hub', icon: BookOpen, badge: 'Syllabus', highlight: true },
-    { id: 'ANALYTICS' as NavTab, path: '/analytics', label: 'Analytics & Matrix', icon: TrendingUp, badge: 'Live' },
-    { id: 'CPO_SPEED' as NavTab, path: '/cpo-speed', label: 'CPO Speed (15m)', icon: Zap, badge: 'CBT' },
-    { id: 'CAPF_ELIMINATION' as NavTab, path: '/capf-elimination', label: 'CAPF Elimination', icon: CheckSquare, badge: 'P1' },
-    { id: 'PAPER_2' as NavTab, path: '/paper-2', label: 'Paper 2 Lab', icon: PenTool, badge: 'Descriptive' },
-    { id: 'AI_TUTOR' as NavTab, path: '/ai-tutor', label: 'AI Syllabus Tutor', icon: Sparkles },
-    { id: 'MISTAKE_VAULT' as NavTab, path: '/mistake-vault', label: 'Mistake Vault & SRS', icon: Archive, count: vaultCount },
-  ];
-
-  const handleNavigate = (path: string, tabId: NavTab) => {
-    if (onTabChange) onTabChange(tabId);
-    navigate(path);
-  };
-
-  const handleSignOut = async () => {
-    await signOutUser();
-    navigate('/login');
-  };
-
-  return (
-    <header className="sticky top-0 z-40 bg-[#FFFFFF]/90 dark:bg-[#121816]/90 backdrop-blur-md border-b border-[#E2E6DD] dark:border-slate-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-2">
-          
-          {/* Logo & Brand Identity */}
-          <Link 
-            to="/"
-            onClick={() => onTabChange?.('OVERVIEW')}
-            className="flex items-center gap-3 cursor-pointer group flex-shrink-0"
-          >
-            <div className="w-10 h-10 rounded-xl bg-[#36624B] flex items-center justify-center text-white shadow-sm shadow-[#36624B]/20 group-hover:bg-[#2A4F3C] transition-all">
-              <ShieldCheck className="w-5 h-5 text-[#E3EFE8]" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-lg tracking-tight text-[#1E252B] dark:text-white font-sans">
-                  DutyDeck
-                </span>
-                <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-[#E3EFE8] text-[#36624B] dark:bg-[#1A2E24] dark:text-[#88D4A8] border border-[#36624B]/15 hidden sm:inline-block">
-                  CAPF AC × CPO
-                </span>
-              </div>
-              <p className="text-[11px] text-[#5C646B] dark:text-slate-400 font-medium hidden sm:block">
-                Multi-Page Dual-Target Objective & Subjective Engine
-              </p>
-            </div>
-          </Link>
-
-          {/* Quick Metrics Bar & User Session Section */}
-          <div className="flex items-center gap-3 text-xs">
-            {/* Routine and Solved metrics */}
-            <div className="hidden md:flex items-center gap-3">
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F7F8F5] dark:bg-[#1A2420] border border-[#E2E6DD] dark:border-slate-800 text-[#5C646B] dark:text-slate-300">
-                <Flame className="w-3.5 h-3.5 text-[#D97746]" />
-                <span className="font-semibold text-[#1E252B] dark:text-white">{streakDays}</span> Day Routine
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F7F8F5] dark:bg-[#1A2420] border border-[#E2E6DD] dark:border-slate-800 text-[#5C646B] dark:text-slate-300">
-                <span className="w-2 h-2 rounded-full bg-[#2E7D5B]"></span>
-                <span className="font-semibold text-[#1E252B] dark:text-white">{completedQuestionsCount}</span> Solved
-              </div>
-              {vaultCount > 0 && (
-                <button 
-                  onClick={() => handleNavigate('/mistake-vault', 'MISTAKE_VAULT')}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FBEAE8] text-[#C25345] border border-[#C25345]/20 cursor-pointer hover:bg-[#F8DED9] transition-all"
-                >
-                  <span className="font-semibold">{vaultCount}</span> in Vault
-                </button>
-              )}
-            </div>
-
-            {/* Authenticated User Profile & Sign Out Button */}
-            {loading ? (
-              <div className="w-8 h-8 rounded-full border-2 border-[#36624B] border-t-transparent animate-spin" />
-            ) : user ? (
-              <div className="flex items-center gap-2">
-                <div 
-                  className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#F7F8F5] dark:bg-[#1A2420] border border-[#E2E6DD] dark:border-slate-800 shadow-2xs"
-                  title={`Signed in as ${user.email || user.displayName}`}
-                >
-                  {user.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={user.displayName || 'Aspirant'}
-                      className="w-5 h-5 rounded-full object-cover border border-[#36624B]/30"
-                    />
-                  ) : (
-                    <div className="w-5 h-5 rounded-full bg-[#36624B] text-white flex items-center justify-center text-[10px] font-bold">
-                      {(user.displayName || user.email || 'A')[0].toUpperCase()}
-                    </div>
-                  )}
-                  <span className="text-xs font-semibold text-[#1E252B] dark:text-white max-w-[100px] sm:max-w-[130px] truncate">
-                    {user.displayName || user.email?.split('@')[0]}
-                  </span>
-                  {user.isGuest && (
-                    <span className="text-[9px] px-1 py-0.2 bg-[#36624B]/15 text-[#36624B] dark:text-[#88D4A8] rounded font-mono uppercase">
-                      Cadet
-                    </span>
-                  )}
-                </div>
-
-                <button
-                  onClick={handleSignOut}
-                  title="Sign Out (Lock Session)"
-                  className="p-1.5 rounded-lg text-[#5C646B] hover:text-[#C25345] hover:bg-[#FBEAE8] dark:hover:bg-[#2E1815] transition-all cursor-pointer border border-[#E2E6DD] dark:border-slate-800 flex items-center gap-1 text-xs"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Lock / Exit</span>
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => navigate('/login')}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#36624B] bg-[#36624B] hover:bg-[#2A4F3C] text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
-              >
-                <UserIcon className="w-3.5 h-3.5" />
-                <span>Cadet Login</span>
-              </button>
-            )}
-          </div>
+export type NavTab = 'OVERVIEW' | 'LEARNING' | 'ANALYTICS' | 'CPO_SPEED' | 'CAPF_ELIMINATION' | 'PAPER_2' | 'AI_TUTOR' | 'MISTAKE_VAULT' | 'DAILY_REVIEW';
+const items = [
+  { path: '/', label: 'Today', icon: House, matches: ['/', '/dashboard'] },
+  { path: '/books', label: 'Learn', icon: BookOpen, matches: ['/books', '/learning', '/ncert', '/reels', '/capf-syllabus', '/current-affairs'] },
+  { path: '/practice', label: 'Practice', icon: PencilLine, matches: ['/practice', '/calculation-coach', '/cpo-speed', '/capf-elimination', '/paper-2', '/ai-tutor'] },
+  { path: '/revision', label: 'Revision', icon: RotateCcw, matches: ['/revision', '/daily-review', '/mistake-vault'] },
+  { path: '/analytics', label: 'Progress', icon: ChartNoAxesCombined, matches: ['/analytics'] },
+];
+export function Navbar() {
+  const { user, signOutUser } = useAuth();
+  const { exam, setExam, dark, setDark } = useStudyPreferences();
+  const { pathname } = useLocation();
+  const active = (matches: string[]) => matches.some(path => path === '/' ? pathname === '/' : pathname === path || pathname.startsWith(path + '/'));
+  const current = items.find(item => active(item.matches))?.label || 'Study';
+  const links = (mobile = false) => items.map(({ path, label, icon: Icon, matches }) => <Link key={path} to={path} aria-current={active(matches) ? 'page' : undefined}
+    className={`${mobile ? 'flex-col gap-1 py-2 text-[11px]' : 'gap-3 rounded-lg px-3 py-3 text-sm'} flex items-center font-medium transition-colors ${active(matches) ? 'bg-[#E9EFE9] text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : 'text-[#686C65] hover:bg-[#EFEFE9] dark:text-slate-400 dark:hover:bg-[#202C25]'}`}>
+    <Icon size={mobile ? 19 : 18} strokeWidth={1.7} /><span>{label}</span>
+  </Link>);
+  return <>
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col border-r border-[#E4E4DB] bg-[#FAFAF6] p-5 lg:flex dark:border-slate-800 dark:bg-[#151D18]">
+      <Link to="/" className="mb-12 flex items-center gap-2.5 px-2 pt-3 text-xl font-semibold tracking-tight"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#315840] text-white"><BookOpen size={17} /></span>DutyDeck<span className="sr-only">home</span></Link>
+      <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#898D82]">Your workspace</p>
+      <nav aria-label="Main navigation" className="space-y-1">{links()}</nav>
+      <div className="mt-auto space-y-5 px-2">
+        <div className="border-t border-[#E4E4DB] pt-5 dark:border-slate-800"><p className="text-sm font-medium">A little, every day.</p><p className="mt-1 text-xs leading-5 text-[#777C71] dark:text-slate-400">Learn one concept. Recall it tomorrow.</p></div>
+        <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="truncate text-sm font-medium">{user?.displayName || user?.email?.split('@')[0] || 'Your account'}</p><p className="mt-0.5 text-xs text-[#777C71]">Study workspace</p></div><button type="button" onClick={() => void signOutUser()} className="rounded-lg p-2 hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" aria-label="Sign out"><LogOut size={16} /></button></div>
+      </div>
+    </aside>
+    <header className="sticky top-0 z-30 border-b border-[#E4E4DB] bg-[#F7F7F2]/95 backdrop-blur-sm lg:ml-56 dark:border-slate-800 dark:bg-[#121816]/95">
+      <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between gap-3 px-5 sm:px-8 lg:px-10">
+        <div className="flex items-center gap-3"><Link to="/" className="text-lg font-semibold tracking-tight lg:hidden">DutyDeck</Link><span className="hidden text-sm text-[#777C71] lg:block">Your workspace <span className="mx-2 text-[#BBBFB4]">/</span><span className="text-[#30392D] dark:text-slate-200">{current}</span></span></div>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <label htmlFor="study-exam" className="hidden text-xs text-[#777C71] sm:block">Preparing for</label>
+          <select id="study-exam" aria-label="Preparing for" value={exam} onChange={event => setExam(event.target.value as StudyExam)} className="max-w-36 rounded-lg border border-[#DDDFD5] bg-transparent px-2 py-2 text-xs font-medium dark:border-slate-700"><option value="BOTH">CAPF + CPO</option><option value="UPSC_CAPF">UPSC CAPF</option><option value="SSC_CPO">SSC CPO</option></select>
+          <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
+          <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>
         </div>
-
-        {/* Multi-Page Navigation Tabs */}
-        <nav className="flex space-x-1 sm:space-x-2 overflow-x-auto py-2 no-scrollbar border-t border-[#E2E6DD]/60 dark:border-slate-800/60">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = currentTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigate(item.path, item.id)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-150 cursor-pointer ${
-                  isActive
-                    ? 'bg-[#36624B] text-white shadow-sm shadow-[#36624B]/25'
-                    : item.highlight
-                    ? 'text-[#36624B] dark:text-[#88D4A8] bg-[#E3EFE8]/70 dark:bg-[#1A2E24]/60 hover:bg-[#E3EFE8]'
-                    : 'text-[#5C646B] dark:text-slate-300 hover:text-[#1E252B] dark:hover:text-white hover:bg-[#F2F4F0] dark:hover:bg-[#1A2420]'
-                }`}
-              >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : item.highlight ? 'text-[#36624B] dark:text-[#88D4A8]' : 'text-[#5C646B] dark:text-slate-400'}`} />
-                <span>{item.label}</span>
-                {item.badge && (
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-[#EEF0EA] dark:bg-slate-800 text-[#5C646B] dark:text-slate-400'
-                  }`}>
-                    {item.badge}
-                  </span>
-                )}
-                {item.count !== undefined && item.count > 0 && (
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                    isActive ? 'bg-white text-[#36624B]' : 'bg-[#C25345] text-white'
-                  }`}>
-                    {item.count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
       </div>
     </header>
-  );
-};
-
+    <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-[#E4E4DB] bg-[#FAFAF6] px-2 pb-[max(8px,env(safe-area-inset-bottom))] pt-1 lg:hidden dark:border-slate-800 dark:bg-[#151D18]">{links(true)}</nav>
+  </>;
+}
