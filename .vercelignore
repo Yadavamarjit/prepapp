@@ -1,6 +1,11 @@
 .git/
 .agents/
 .codex/
+.antigravity/
+.aistudio/
+.vscode/
+_old_nextjs_boilerplate/
+ncert-mcp/
 .ssh-known-hosts
 .env
 .env.*
@@ -10,10 +15,10 @@
 node_modules/
 dist/
 coverage/
-data/
-server/
-server.ts
-scripts/
+/data/
+/server/
+/server.ts
+/scripts/
 **/*.test.ts
 firestore.rules
 firebase-blueprint.json
