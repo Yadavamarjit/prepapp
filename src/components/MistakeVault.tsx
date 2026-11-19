@@ -378,7 +378,7 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
             No mistakes to review
           </h3>
           <p className="text-xs text-[#5C646B] max-w-md mx-auto">
-            No questions match your current filter. Keep practicing CPO Speed drills or CAPF Elimination sets to build your error taxonomy log.
+            No questions match your current filter. Practise CAPF elimination sets to add questions to your review list.
           </p>
         </div>
       )}

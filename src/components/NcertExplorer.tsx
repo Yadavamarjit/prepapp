@@ -331,7 +331,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
       const data = await res.json();
 
       if (data.success) {
-        const title = action === 'EXPLAIN' ? '💡 Concept Breakdown & Examiner Traps' : '🎯 Practice Drill (CPO & CAPF)';
+        const title = action === 'EXPLAIN' ? '💡 Concept Breakdown & Examiner Traps' : '🎯 CAPF Practice Drill';
         const content = action === 'EXPLAIN' ? data.explanation : data.output;
 
         // 2. Persist in Database

@@ -121,7 +121,7 @@ export function determineAdaptiveAssessment(proficiency: TopicProficiency): Adap
     return {
       level: 'Factual Recall',
       statementDepth: 1,
-      identifiedGap: 'Speed and direct factual recall accuracy (SSC CPO / High-speed CBT gate)',
+      identifiedGap: 'Speed and direct factual recall accuracy',
       trapTypeToInject: 'Subtle Qualifier',
       rationale: 'Targeting direct, single-statement factual recall. Eliminates multi-statement complexity to build rapid recall of key articles, amendments, and definitions.',
       learningIntervention: 'Direct factual retrieval: High-speed recall without multi-statement elimination overhead.',

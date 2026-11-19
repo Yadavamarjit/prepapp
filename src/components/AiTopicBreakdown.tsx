@@ -5,6 +5,8 @@ import { SYLLABUS_MODULES } from '../data/syllabusData';
 import { Question, MistakeRecord, MistakeReason, AdaptiveAssessment, QuestionComplexityTier } from '../types';
 import { calculateTopicProficiency, determineAdaptiveAssessment } from '../utils/adaptiveEngine';
 
+const capfModules = SYLLABUS_MODULES.map(module => ({ ...module, subtopics: module.subtopics.filter(topic => topic.examFocus.includes('CAPF')) })).filter(module => module.subtopics.length);
+
 interface AiTopicBreakdownProps {
   initialTopic?: string;
   initialSubject?: string;
@@ -132,7 +134,7 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
           topic: selectedTopic,
           subject: selectedSubject,
           standardRef: standardRef,
-          examFocus: examTrackChoice === 'BOTH' ? ['CAPF', 'CPO'] : [examTrackChoice === 'UPSC_CAPF' ? 'CAPF' : 'CPO'],
+          examFocus: ['CAPF'],
         }),
       });
 
@@ -216,16 +218,16 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
         <div><label htmlFor="tutor-subject" className="mb-2 block text-xs font-medium">Subject</label><select id="tutor-subject" value={selectedSubject} onChange={event => {
           const subject = event.target.value;
           setSelectedSubject(subject);
-          const topic = SYLLABUS_MODULES.find(module => module.subject === subject)?.subtopics[0];
+          const topic = capfModules.find(module => module.subject === subject)?.subtopics[0];
           if (topic) { setSelectedTopic(topic.title); setStandardRef(topic.standardRef); }
-        }} className="study-input !py-3">{SYLLABUS_MODULES.map(module => <option key={module.id} value={module.subject}>{module.subject}</option>)}</select></div>
+        }} className="study-input !py-3">{capfModules.map(module => <option key={module.id} value={module.subject}>{module.subject}</option>)}</select></div>
         <div><label htmlFor="tutor-topic" className="mb-2 block text-xs font-medium">Topic</label><select id="tutor-topic" value={selectedTopic} onChange={event => {
           setSelectedTopic(event.target.value);
-          const topic = SYLLABUS_MODULES.find(module => module.subject === selectedSubject)?.subtopics.find(item => item.title === event.target.value);
+          const topic = capfModules.find(module => module.subject === selectedSubject)?.subtopics.find(item => item.title === event.target.value);
           if (topic) setStandardRef(topic.standardRef);
         }} className="study-input !py-3">
-          {!SYLLABUS_MODULES.find(module => module.subject === selectedSubject)?.subtopics.some(item => item.title === selectedTopic) && <option value={selectedTopic}>{selectedTopic}</option>}
-          {SYLLABUS_MODULES.find(module => module.subject === selectedSubject)?.subtopics.map(topic => <option key={topic.id} value={topic.title}>{topic.title}</option>)}
+          {!capfModules.find(module => module.subject === selectedSubject)?.subtopics.some(item => item.title === selectedTopic) && <option value={selectedTopic}>{selectedTopic}</option>}
+          {capfModules.find(module => module.subject === selectedSubject)?.subtopics.map(topic => <option key={topic.id} value={topic.title}>{topic.title}</option>)}
         </select></div>
       </div>
       <p className="text-xs leading-6 text-[#818879]">Reference: {standardRef}</p>

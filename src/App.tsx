@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Routes, Route, Outlet, useNavigate, useLocation, Navigate, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { OverviewDashboard } from './components/OverviewDashboard';
-import { CpoSpeedMode } from './components/CpoSpeedMode';
 import { CapfEliminationMode } from './components/CapfEliminationMode';
+import { CapfAnalytica } from './components/CapfAnalytica';
 import { Paper2Lab } from './components/Paper2Lab';
 import { AiTopicBreakdown } from './components/AiTopicBreakdown';
 import { MistakeVault } from './components/MistakeVault';
@@ -87,7 +87,7 @@ export default function App() {
   const navigate = useNavigate();
 
   // Question Bank (seeded + dynamic AI generated questions)
-  const [questions, setQuestions] = useState<Question[]>(() => {
+  const [savedQuestions, setQuestions] = useState<Question[]>(() => {
     try {
       const saved = localStorage.getItem('dutydeck_questions');
       if (saved) {
@@ -99,7 +99,7 @@ export default function App() {
   });
 
   // Mistake Vault records
-  const [mistakes, setMistakes] = useState<MistakeRecord[]>(() => {
+  const [savedMistakes, setMistakes] = useState<MistakeRecord[]>(() => {
     try {
       const saved = localStorage.getItem('dutydeck_mistakes');
       if (saved) return JSON.parse(saved);
@@ -117,13 +117,18 @@ export default function App() {
   });
 
   // Solved questions tracking
-  const [solvedQuestionIds, setSolvedQuestionIds] = useState<string[]>(() => {
+  const [savedSolvedIds, setSolvedQuestionIds] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('dutydeck_solved');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
     return [];
   });
+
+  const questions = useMemo(() => savedQuestions.filter(q => q.targetExam?.includes('UPSC_CAPF')), [savedQuestions]);
+  const capfIds = useMemo(() => new Set(questions.map(q => q.id)), [questions]);
+  const mistakes = useMemo(() => savedMistakes.filter(m => capfIds.has(m.questionId)), [savedMistakes, capfIds]);
+  const solvedQuestionIds = useMemo(() => savedSolvedIds.filter(id => capfIds.has(id)), [savedSolvedIds, capfIds]);
 
   // NCERT & Standard Textbook Academy Chapter Progress
   const [chapterProgress, setChapterProgress] = useState<Record<string, ChapterProgress>>(() => {
@@ -195,13 +200,13 @@ export default function App() {
   // Save to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('dutydeck_questions', JSON.stringify(questions));
-      localStorage.setItem('dutydeck_mistakes', JSON.stringify(mistakes));
+      localStorage.setItem('dutydeck_questions', JSON.stringify(savedQuestions));
+      localStorage.setItem('dutydeck_mistakes', JSON.stringify(savedMistakes));
       localStorage.setItem('dutydeck_submissions', JSON.stringify(submissions));
-      localStorage.setItem('dutydeck_solved', JSON.stringify(solvedQuestionIds));
+      localStorage.setItem('dutydeck_solved', JSON.stringify(savedSolvedIds));
       localStorage.setItem('dutydeck_chapter_progress', JSON.stringify(chapterProgress));
     } catch (e) {}
-  }, [questions, mistakes, submissions, solvedQuestionIds, chapterProgress]);
+  }, [savedQuestions, savedMistakes, submissions, savedSolvedIds, chapterProgress]);
 
   // Handler: Log Mistake to Vault
   const handleSaveMistake = (
@@ -344,6 +349,7 @@ export default function App() {
           }
         />
         <Route path="practice" element={<PracticeHome />} />
+        <Route path="practice/capf-analytica" element={<CapfAnalytica />} />
         <Route path="current-affairs" element={<CurrentAffairs progress={affairProgress} onChange={handleAffairChange} storageError={affairStorageError} />} />
         <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} />} />
         <Route path="calculation-coach" element={<CalculationCoach />} />
@@ -362,17 +368,7 @@ export default function App() {
         <Route path="ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
         <Route path="ncert/:bookCode/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
         <Route path="learning/ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
-        <Route
-          path="cpo-speed"
-          element={
-            <CpoSpeedMode
-              questions={questions}
-              onSaveMistake={handleSaveMistake}
-              onQuestionAttempted={handleQuestionAttempted}
-              onSelectTopicForAi={handleSelectTopicForAi}
-            />
-          }
-        />
+        <Route path="cpo-speed" element={<Navigate to="/practice" replace />} />
         <Route
           path="capf-elimination"
           element={

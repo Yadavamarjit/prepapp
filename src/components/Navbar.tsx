@@ -2,19 +2,19 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { House, BookOpen, PencilLine, RotateCcw, ChartNoAxesCombined, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { useStudyPreferences, type StudyExam } from '../context/StudyPreferences';
+import { useStudyPreferences } from '../context/StudyPreferences';
 
 export type NavTab = 'OVERVIEW' | 'LEARNING' | 'ANALYTICS' | 'CPO_SPEED' | 'CAPF_ELIMINATION' | 'PAPER_2' | 'AI_TUTOR' | 'MISTAKE_VAULT' | 'DAILY_REVIEW';
 const items = [
   { path: '/', label: 'Today', icon: House, matches: ['/', '/dashboard'] },
   { path: '/books', label: 'Learn', icon: BookOpen, matches: ['/books', '/learning', '/ncert', '/reels', '/capf-syllabus', '/current-affairs'] },
-  { path: '/practice', label: 'Practice', icon: PencilLine, matches: ['/practice', '/calculation-coach', '/cpo-speed', '/capf-elimination', '/paper-2', '/ai-tutor'] },
+  { path: '/practice', label: 'Practice', icon: PencilLine, matches: ['/practice', '/calculation-coach', '/capf-elimination', '/paper-2', '/ai-tutor'] },
   { path: '/revision', label: 'Revision', icon: RotateCcw, matches: ['/revision', '/daily-review', '/mistake-vault'] },
   { path: '/analytics', label: 'Progress', icon: ChartNoAxesCombined, matches: ['/analytics'] },
 ];
 export function Navbar() {
   const { user, signOutUser } = useAuth();
-  const { exam, setExam, dark, setDark } = useStudyPreferences();
+  const { dark, setDark } = useStudyPreferences();
   const { pathname } = useLocation();
   const active = (matches: string[]) => matches.some(path => path === '/' ? pathname === '/' : pathname === path || pathname.startsWith(path + '/'));
   const current = items.find(item => active(item.matches))?.label || 'Study';
@@ -36,8 +36,7 @@ export function Navbar() {
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between gap-3 px-5 sm:px-8 lg:px-10">
         <div className="flex items-center gap-3"><Link to="/" className="text-lg font-semibold tracking-tight lg:hidden">DutyDeck</Link><span className="hidden text-sm text-[#777C71] lg:block">Your workspace <span className="mx-2 text-[#BBBFB4]">/</span><span className="text-[#30392D] dark:text-slate-200">{current}</span></span></div>
         <div className="flex items-center gap-2 sm:gap-4">
-          <label htmlFor="study-exam" className="hidden text-xs text-[#777C71] sm:block">Preparing for</label>
-          <select id="study-exam" aria-label="Preparing for" value={exam} onChange={event => setExam(event.target.value as StudyExam)} className="max-w-36 rounded-lg border border-[#DDDFD5] bg-transparent px-2 py-2 text-xs font-medium dark:border-slate-700"><option value="BOTH">CAPF + CPO</option><option value="UPSC_CAPF">UPSC CAPF</option><option value="SSC_CPO">SSC CPO</option></select>
+          <span className="text-xs font-semibold">UPSC CAPF</span>
           <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
           <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>
         </div>

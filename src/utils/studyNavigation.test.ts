@@ -41,9 +41,10 @@ test('an invalid chapter route offers a way back instead of showing an unrelated
 
 test('practice overview distinguishes selected-topic practice from mixed exam practice', () => {
   const html = render(React.createElement(PracticeHome));
-  for (const path of ['/ai-tutor', '/cpo-speed', '/capf-elimination', '/paper-2']) assert.ok(html.includes(`href="${path}"`));
+  for (const path of ['/ai-tutor', '/practice/capf-analytica', '/capf-elimination', '/paper-2']) assert.ok(html.includes(`href="${path}"`));
   assert.ok(html.includes('Your selected topic only'));
   assert.ok(html.includes('Mixed topics'));
+  assert.doesNotMatch(html, /CPO/i);
 });
 
 test('revision overview exposes recall and mistakes with actual queue counts', () => {

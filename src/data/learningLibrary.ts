@@ -411,7 +411,7 @@ export const LEARNING_CHAPTERS: LearningChapter[] = [
       'Strategic Corridors: Siliguri Corridor ("Chicken’s Neck"), Sir Creek, Kalapani, Doklam',
     ],
     summaryOverview:
-      'Border management in India is partitioned among specialized Central Armed Police Forces under the Ministry of Home Affairs according to the "One Border, One Force" principle. Understanding frontier terrain, international boundary lines, and force jurisdictions is indispensable for both CAPF and CPO.',
+      'Border management in India is partitioned among specialized Central Armed Police Forces under the Ministry of Home Affairs according to the "One Border, One Force" principle. Understanding frontier terrain, international boundary lines, and force jurisdictions is indispensable for CAPF preparation.',
     sections: [
       {
         heading: '1. Land Boundaries of India by Length & Demarcation',
@@ -483,7 +483,7 @@ export const LEARNING_CHAPTERS: LearningChapter[] = [
   {
     id: 'quant-chap-1',
     subject: 'Quantitative Aptitude',
-    ncertBook: 'High-Speed Quantitative Handbook for SSC CPO & CAPF P1',
+    ncertBook: 'High-Speed Quantitative Handbook',
     chapterNumber: 1,
     chapterTitle: 'Compound vs Simple Interest: Derivations & 30-Second Delta Shortcuts',
     readTimeMinutes: 20,
@@ -497,7 +497,7 @@ export const LEARNING_CHAPTERS: LearningChapter[] = [
       'Effective Annual Rate (Successive Percentage formula: a + b + ab/100)',
     ],
     summaryOverview:
-      'In SSC CPO (50 Quant questions) and CAPF Paper 1, CI and SI problems are guaranteed high-weightage questions. Traditional long-division formulas take 3 minutes; utilizing the difference formula and fractional multipliers solves them in 25–40 seconds.',
+      'Practise compound and simple interest for CAPF Paper I. Traditional long-division formulas take 3 minutes; utilizing the difference formula and fractional multipliers solves them in 25–40 seconds.',
     sections: [
       {
         heading: '1. The Core 2-Year Difference Shortcut',
@@ -552,7 +552,7 @@ export const LEARNING_CHAPTERS: LearningChapter[] = [
   {
     id: 'reas-chap-1',
     subject: 'Reasoning & Intelligence',
-    ncertBook: 'Master Deductive Logic & Pattern Recognition for SSC CPO',
+    ncertBook: 'Master Deductive Logic & Pattern Recognition',
     chapterNumber: 1,
     chapterTitle: 'Syllogisms: Venn Diagrams, Either-Or Cases & Possibility Rules',
     readTimeMinutes: 16,
@@ -703,7 +703,7 @@ export const LEARNING_CHAPTERS: LearningChapter[] = [
       'Cell Biology: Mitochondria & Chloroplasts as semi-autonomous organelles with own DNA/ribosomes',
     ],
     summaryOverview:
-      'General Science forms a decisive pillar in both UPSC CAPF AC (25–30 questions) and SSC CPO CBT (50 questions general awareness). Questions rigorously test fundamental Class 9–12 NCERT principles regarding ray optics, everyday chemistry, and human physiology.',
+      'General Science is part of CAPF Paper I. Questions rigorously test fundamental Class 9–12 NCERT principles regarding ray optics, everyday chemistry, and human physiology.',
     sections: [
       {
         heading: '1. Optics & Vision Defects (NCERT Class 10 Ch. 9 & 10)',

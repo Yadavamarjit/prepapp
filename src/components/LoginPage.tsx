@@ -74,11 +74,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
           {/* Headline */}
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E252B] dark:text-white tracking-tight leading-tight">
-              Dual-Target Prep Suite for <br className="hidden sm:inline" />
-              <span className="text-[#36624B] dark:text-[#88D4A8]">UPSC CAPF (AC) & SSC CPO</span>
+              Prepare for <br className="hidden sm:inline" />
+              <span className="text-[#36624B] dark:text-[#88D4A8]">UPSC CAPF (AC)</span>
             </h1>
             <p className="text-sm sm:text-base text-[#5C646B] dark:text-slate-300 leading-relaxed font-normal">
-              High-yield defense & paramilitary officer examination suite. Lock in your credentials to access 15-minute CBT speed drills, multi-statement elimination algorithms, Paper 2 subjective argument grading, and spaced repetition mistake vaults.
+              Practise Paper I questions, review your mistakes, and develop your Paper II writing.
             </p>
           </div>
 
@@ -89,8 +89,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
                 <Zap className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-[#1E252B] dark:text-white">CPO 15-Min CBT Speed</h4>
-                <p className="text-[11px] text-[#5C646B] dark:text-slate-400 mt-0.5">Strict sectional clock with 36-sec/q pace & negative marking penalties.</p>
+                <h4 className="text-xs font-bold text-[#1E252B] dark:text-white">CAPF Analytica</h4>
+                <p className="text-[11px] text-[#5C646B] dark:text-slate-400 mt-0.5">Timed Paper I practice with a marks breakdown and targeted revision.</p>
               </div>
             </div>
 
@@ -274,7 +274,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="font-bold text-[#1E252B] dark:text-white">DutyDeck</span>
-            <span>&bull; UPSC CAPF AC & SSC CPO Dual Examination Architecture</span>
+            <span>&bull; UPSC CAPF Assistant Commandants</span>
           </div>
           <div className="text-[11px] font-mono">
             Auth Gate Active &bull; Multi-Page Routing &bull; Cloud Synchronized
