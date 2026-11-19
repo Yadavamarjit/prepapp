@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { MarkdownRenderer } from './MarkdownRenderer';
 import { generateBookStudyDraft, saveBookStudyDraft } from '../utils/bookStudyNotes';
@@ -31,7 +32,7 @@ export function BookStudyTools(props: Props) {
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true); setLoadError('');
-    fetch(`/api/ncert/notes/${props.bookCode}/${props.chapterNumber}`, { signal: controller.signal })
+    apiFetch(`/api/ncert/notes/${props.bookCode}/${props.chapterNumber}`, { signal: controller.signal })
       .then(async response => { const data = await response.json(); if (!response.ok || !data.success || !Array.isArray(data.notes)) throw new Error(); return data.notes as ChapterStudyNote[]; })
       .then(data => { if (!controller.signal.aborted) setNotes(previous => [...new Map([...data, ...previous].map(note => [note.id, note])).values()]); })
       .catch(() => { if (!controller.signal.aborted) setLoadError('Saved material could not be loaded. Retry to see your previous notes.'); })

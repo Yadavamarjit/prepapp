@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Clock3, CalendarDays } from 'lucide-react';
@@ -57,7 +58,7 @@ export function DailyPlan({ chapterProgress, questions, mistakes, dueCount }: { 
     }
     const timer = window.setTimeout(() => controller.abort(), 40_000);
     try {
-      const response = await fetch('/api/ai/daily-plan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal, body: JSON.stringify({ exam, budget: current?.budget || budget, completed, mistakes: counts, dueCount }) });
+      const response = await apiFetch('/api/ai/daily-plan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal, body: JSON.stringify({ exam, budget: current?.budget || budget, completed, mistakes: counts, dueCount }) });
       if (!(response.headers.get('content-type') || '').includes('application/json')) throw new Error('The AI planner endpoint is unavailable. Restart the app server to load the update.');
       const body = await response.json();
       if (!response.ok) throw new Error(body.error || 'OpenAI could not decide a plan. Try again.');

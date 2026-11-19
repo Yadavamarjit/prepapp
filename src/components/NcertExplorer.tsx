@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -234,7 +235,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   // Fetch persistent notes for the active chapter from DB
   const fetchChapterNotes = (bookCode: string, chNum: number) => {
     setNotesLoading(true);
-    fetch(`/api/ncert/notes/${bookCode}/${chNum}`)
+    apiFetch(`/api/ncert/notes/${bookCode}/${chNum}`)
       .then((r) => r.json())
       .then((d) => {
         if (d.success && Array.isArray(d.notes)) {
@@ -290,7 +291,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   useEffect(() => {
     if (viewMode === 'READER' && readingTab === 'OFFICIAL_PDF' && pdfDisplayMode === 'VISUAL_BOOK') {
       setPdfPagesLoading(true);
-      fetch(`/api/ncert/pdf-rendered-pages/${activeBook.code}/${activeChapter.chapterNumber}`)
+      apiFetch(`/api/ncert/pdf-rendered-pages/${activeBook.code}/${activeChapter.chapterNumber}`)
         .then((r) => r.json())
         .then((d) => {
           if (d.success && Array.isArray(d.pages)) {
@@ -313,7 +314,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
 
     try {
       // 1. Generate Explanation or Questions from AI
-      const res = await fetch('/api/ai/text-action', {
+      const res = await apiFetch('/api/ai/text-action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -334,7 +335,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
         const content = action === 'EXPLAIN' ? data.explanation : data.output;
 
         // 2. Persist in Database
-        const saveRes = await fetch('/api/ncert/notes', {
+        const saveRes = await apiFetch('/api/ncert/notes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -386,7 +387,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   const handleDeleteNote = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      const res = await fetch(`/api/ncert/notes/${id}`, { method: 'DELETE' });
+      const res = await apiFetch(`/api/ncert/notes/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) {
         setSavedNotes((prev) => prev.filter((n) => n.id !== id));
@@ -405,7 +406,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   const handleClearAllNotes = async () => {
     if (!window.confirm('Are you sure you want to clear all saved notes and questions for this chapter?')) return;
     try {
-      const res = await fetch(`/api/ncert/notes/${activeBook.code}/${activeChapter.chapterNumber}/all`, { method: 'DELETE' });
+      const res = await apiFetch(`/api/ncert/notes/${activeBook.code}/${activeChapter.chapterNumber}/all`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) {
         setSavedNotes([]);

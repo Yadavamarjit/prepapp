@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   PenTool, 
@@ -101,7 +102,7 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
     setEvalError(null);
 
     try {
-      const res = await fetch('/api/ai/evaluate-paper2', {
+      const res = await apiFetch('/api/ai/evaluate-paper2', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

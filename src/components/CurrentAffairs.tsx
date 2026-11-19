@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bookmark, ExternalLink, RefreshCw, ArrowRight } from 'lucide-react';
@@ -23,7 +24,7 @@ export function CurrentAffairs({ progress, onChange, storageError }: { progress:
   const load = async (signal?: AbortSignal) => {
     setLoading(true); setError('');
     try {
-      const response = await fetch('/api/current-affairs', { signal });
+      const response = await apiFetch('/api/current-affairs', { signal });
       if (!(response.headers.get('content-type') || '').includes('application/json')) throw new Error('Restart the app server to load the Current Affairs desk.');
       const body = await response.json(); if (!response.ok) throw new Error(body.error || 'Could not load stories.');
       setStories(body.stories); setCheckedAt(body.checkedAt || ''); setStatuses(body.statuses || []);
@@ -35,7 +36,7 @@ export function CurrentAffairs({ progress, onChange, storageError }: { progress:
     setSelected(story.id); if (story.lesson) return;
     setBusy(true); setError('');
     try {
-      const response = await fetch(`/api/current-affairs/${story.id}/learn`, { method: 'POST', signal: AbortSignal.timeout(60000) });
+      const response = await apiFetch(`/api/current-affairs/${story.id}/learn`, { method: 'POST', signal: AbortSignal.timeout(60000) });
       const body = await response.json(); if (!response.ok) throw new Error(body.error || 'This story could not be prepared.');
       setStories(previous => previous.map(item => item.id === story.id ? body.story : item));
       const current = latest.current;

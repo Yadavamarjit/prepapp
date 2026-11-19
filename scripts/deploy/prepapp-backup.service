@@ -1,0 +1,14 @@
+[Unit]
+Description=Snapshot DutyDeck application databases
+
+[Service]
+Type=oneshot
+User=prepapp
+Group=prepapp
+UMask=0077
+ExecStart=/usr/bin/python3 /opt/prepapp/current/backup.py
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/prepapp

@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { useStudyPreferences } from '../context/StudyPreferences';
 import { SYLLABUS_MODULES } from '../data/syllabusData';
@@ -124,7 +125,7 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
     setBreakdownError(null);
 
     try {
-      const res = await fetch('/api/ai/breakdown', {
+      const res = await apiFetch('/api/ai/breakdown', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -159,7 +160,7 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
     setGenerationError(null);
 
     try {
-      const res = await fetch('/api/ai/generate-questions', {
+      const res = await apiFetch('/api/ai/generate-questions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

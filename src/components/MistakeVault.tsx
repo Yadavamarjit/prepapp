@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useState } from 'react';
 import { 
   Archive, 
@@ -73,7 +74,7 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
     setDiagnosingId(record.id);
 
     try {
-      const res = await fetch('/api/ai/diagnose-mistake', {
+      const res = await apiFetch('/api/ai/diagnose-mistake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

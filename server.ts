@@ -3,10 +3,14 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { GoogleGenAI, Type } from '@google/genai';
+import { Type } from '@google/genai';
+import { createTutor } from './server/aiProvider';
 import { NCERT_STUDY_LIBRARY } from './src/data/ncertCurriculum.js';
 import { decideDailyPlan, parseDecisionRequest } from './server/aiDailyPlan';
 import { registerCurrentAffairs } from './server/currentAffairs';
+import { installSecurity } from './server/security';
+import { ensurePdf, validBookChapter, validateBookRequest, limitPdfWork } from './server/pdf';
+import { randomUUID } from 'node:crypto';
 
 dotenv.config();
 
@@ -16,8 +20,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json({ limit: '10mb' }));
-registerCurrentAffairs(app, path.resolve(__dirname, 'data'));
+const dataDirectory = path.resolve(process.env.DATA_DIR || path.join(__dirname, 'data'));
+const privateStore = installSecurity(app, dataDirectory);
+app.use(['/api/ncert/pdf/:bookCode/:chapterNumber', '/api/ncert/pdf-rendered-pages/:bookCode/:chapterNumber', '/api/ncert/pdf-text/:bookCode/:chapterNumber', '/api/ncert/page-image/:bookCode/:chapterNumber/:imageName'], validateBookRequest);
+app.use(['/api/ncert/pdf/:bookCode/:chapterNumber', '/api/ncert/pdf-rendered-pages/:bookCode/:chapterNumber', '/api/ncert/pdf-text/:bookCode/:chapterNumber'], limitPdfWork);
+registerCurrentAffairs(app, dataDirectory);
 
 let activePlanDecisions = 0;
 let lastPlanDecisionAt = 0;
@@ -36,14 +43,7 @@ app.post('/api/ai/daily-plan', async (req, res) => {
 });
 
 // Server-side initialization of Google GenAI SDK
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  httpOptions: {
-    headers: {
-      'User-Agent': 'aistudio-build',
-    },
-  },
-});
+const ai = createTutor();
 
 // Built-in High-Yield Curriculum Knowledge Engine (ensures instant zero-lag fallback if API key is unconfigured)
 const TOPIC_CURRICULUM_DATA: Record<string, any> = {
@@ -683,7 +683,7 @@ app.get('/api/ncert/pdf/:bookCode/:chapterNumber', async (req, res) => {
   const { bookCode, chapterNumber } = req.params;
   const chPad = String(chapterNumber).padStart(2, '0');
   const filename = `${bookCode}${chPad}.pdf`;
-  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const storageDir = path.join(dataDirectory, 'ncert_textbooks');
   const localPdfPath = path.join(storageDir, filename);
 
   // If already downloaded and cached locally, stream it immediately
@@ -695,23 +695,18 @@ app.get('/api/ncert/pdf/:bookCode/:chapterNumber', async (req, res) => {
   }
 
   // Otherwise, fetch on-demand from NCERT servers via child_process curl (handles Government SSL/Certs reliably)
-  const ncertUrl = `https://ncert.nic.in/textbook/pdf/${filename}`;
-  const { execFile } = await import('child_process');
-
-  execFile('curl.exe', ['--fail', '-s', '-L', '-o', localPdfPath, ncertUrl], { timeout: 35000 }, (err) => {
-    if (err || !isCachedPdf(localPdfPath)) {
-      console.warn(`[NCERT Proxy] Download failed for ${filename}:`, err?.message);
+  try {
+    await ensurePdf(localPdfPath, filename);
+  } catch {
       return res.status(502).json({
         success: false,
         error: 'Official NCERT PDF could not be retrieved from ncert.nic.in. The server connection may be throttled.',
-        officialUrl: ncertUrl,
+        officialUrl: `https://ncert.nic.in/textbook/pdf/${filename}`,
       });
-    }
-
+  }
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
     fs.createReadStream(localPdfPath).pipe(res);
-  });
 });
 
 // 4b. Extracted Text & Rendered Pages from NCERT PDF (Enables Native in-page Highlighting & Visual Layout)
@@ -719,7 +714,7 @@ app.get('/api/ncert/pdf-rendered-pages/:bookCode/:chapterNumber', async (req, re
   const { bookCode, chapterNumber } = req.params;
   const chPad = String(chapterNumber).padStart(2, '0');
   const filename = `${bookCode}${chPad}.pdf`;
-  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const storageDir = path.join(dataDirectory, 'ncert_textbooks');
   const rendersDir = path.join(storageDir, 'page_renders', `${bookCode}_${chPad}`);
   const localPdfPath = path.join(storageDir, filename);
   const jsonCachePath = path.join(storageDir, `${bookCode}${chPad}_rendered_meta.json`);
@@ -735,9 +730,8 @@ app.get('/api/ncert/pdf-rendered-pages/:bookCode/:chapterNumber', async (req, re
 
   // Ensure PDF is downloaded first
   if (!isCachedPdf(localPdfPath)) {
-    const { execFileSync } = await import('child_process');
     try {
-      execFileSync('curl.exe', ['--fail', '-s', '-L', '-o', localPdfPath, `https://ncert.nic.in/textbook/pdf/${filename}`], { timeout: 35000 });
+      await ensurePdf(localPdfPath, filename);
     } catch (downloadErr: any) {
       return res.status(502).json({ success: false, error: 'Could not fetch NCERT PDF' });
     }
@@ -761,6 +755,8 @@ book_code = sys.argv[3]
 ch_num = sys.argv[4]
 
 doc = pymupdf.open(pdf_path)
+if len(doc) > 120:
+    raise ValueError('Chapter exceeds page limit')
 pages_data = []
 
 for idx, page in enumerate(doc):
@@ -820,7 +816,7 @@ for idx, page in enumerate(doc):
 print(json.dumps({'totalPages': len(pages_data), 'pages': pages_data}))
 `;
 
-  execFile('python', ['-c', pyScript, localPdfPath, rendersDir, bookCode, chPad], { maxBuffer: 15 * 1024 * 1024 }, (err, stdout) => {
+  execFile(process.env.PYTHON_BIN || (process.platform === 'win32' ? 'python' : 'python3'), ['-c', pyScript, localPdfPath, rendersDir, bookCode, chPad], { timeout: 90000, maxBuffer: 15 * 1024 * 1024 }, (err, stdout) => {
     if (err || !stdout) {
       console.warn('[PDF render error]:', err?.message);
       return res.status(500).json({ success: false, error: 'PDF page rendering failed' });
@@ -838,7 +834,8 @@ print(json.dumps({'totalPages': len(pages_data), 'pages': pages_data}))
 // 4c. Serve rendered page PNG images
 app.get('/api/ncert/page-image/:bookCode/:chapterNumber/:imageName', async (req, res) => {
   const { bookCode, chapterNumber, imageName } = req.params;
-  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const storageDir = path.join(dataDirectory, 'ncert_textbooks');
+  if (!/^page_[1-9][0-9]{0,2}\.png$/.test(String(imageName))) return res.status(400).json({ error: 'Invalid page image' });
   const imgPath = path.join(storageDir, 'page_renders', `${bookCode}_${chapterNumber}`, imageName);
   const fs = await import('fs');
 
@@ -855,7 +852,7 @@ app.get('/api/ncert/pdf-text/:bookCode/:chapterNumber', async (req, res) => {
   const { bookCode, chapterNumber } = req.params;
   const chPad = String(chapterNumber).padStart(2, '0');
   const filename = `${bookCode}${chPad}.pdf`;
-  const storageDir = path.resolve(__dirname, 'data', 'ncert_textbooks');
+  const storageDir = path.join(dataDirectory, 'ncert_textbooks');
   const localPdfPath = path.join(storageDir, filename);
   const jsonCachePath = path.join(storageDir, `${bookCode}${chPad}_extracted.json`);
   const fs = await import('fs');
@@ -870,9 +867,8 @@ app.get('/api/ncert/pdf-text/:bookCode/:chapterNumber', async (req, res) => {
 
   // Ensure PDF is downloaded first
   if (!isCachedPdf(localPdfPath)) {
-    const { execFileSync } = await import('child_process');
     try {
-      execFileSync('curl.exe', ['--fail', '-s', '-L', '-o', localPdfPath, `https://ncert.nic.in/textbook/pdf/${filename}`], { timeout: 35000 });
+      await ensurePdf(localPdfPath, filename);
     } catch (downloadErr: any) {
       return res.status(502).json({ success: false, error: 'Could not fetch NCERT PDF' });
     }
@@ -884,11 +880,13 @@ app.get('/api/ncert/pdf-text/:bookCode/:chapterNumber', async (req, res) => {
 import pdfplumber, json, sys
 pdf_path = sys.argv[1]
 with pdfplumber.open(pdf_path) as pdf:
+    if len(pdf.pages) > 120:
+        raise ValueError('Chapter exceeds page limit')
     pages = [p.extract_text() or '' for p in pdf.pages]
 print(json.dumps({'totalPages': len(pages), 'pages': pages}))
 `;
 
-  execFile('python', ['-c', pyScript, localPdfPath], { maxBuffer: 10 * 1024 * 1024 }, (err, stdout) => {
+  execFile(process.env.PYTHON_BIN || (process.platform === 'win32' ? 'python' : 'python3'), ['-c', pyScript, localPdfPath], { timeout: 90000, maxBuffer: 10 * 1024 * 1024 }, (err, stdout) => {
     if (err || !stdout) {
       console.warn('[PDF text extraction error]:', err?.message);
       return res.status(500).json({ success: false, error: 'PDF text extraction failed' });
@@ -979,51 +977,23 @@ Question 2: UPSC CAPF style (Statement-based multi-statement question with 2-3 s
 });
 
 // 6. Persistent NCERT Chapter Study Notes & Questions DB
-const notesDbPath = path.resolve(__dirname, 'data', 'ncert_study_notes.json');
-
-function getChapterNotes() {
-  try {
-    if (fs.existsSync(notesDbPath)) {
-      return JSON.parse(fs.readFileSync(notesDbPath, 'utf8'));
-    }
-  } catch (e) {
-    console.warn('[Notes DB read error]:', e);
-  }
-  return [];
-}
-
-function saveChapterNotes(notes: any[]) {
-  try {
-    const dir = path.dirname(notesDbPath);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(notesDbPath, JSON.stringify(notes, null, 2), 'utf8');
-    return true;
-  } catch (e) {
-    console.warn('[Notes DB write error]:', e);
-    return false;
-  }
-}
-
 // 6a. Get notes for a specific chapter
 app.get('/api/ncert/notes/:bookCode/:chapterNumber', (req, res) => {
   const { bookCode, chapterNumber } = req.params;
-  const allNotes = getChapterNotes();
-  const chapterNotes = allNotes.filter(
-    (n: any) => n.bookCode === bookCode && Number(n.chapterNumber) === Number(chapterNumber)
-  );
+  if (!validBookChapter(bookCode, chapterNumber)) return res.status(400).json({ error: 'Invalid textbook or chapter' });
+  const chapterNotes = privateStore.list(res.locals.identity.uid, String(bookCode), Number(chapterNumber));
   return res.json({ success: true, notes: chapterNotes });
 });
 
 // 6b. Save a new note / generated question
 app.post('/api/ncert/notes', (req, res) => {
   const { bookCode, chapterNumber, type, selectedText, title, content, pageNumber } = req.body;
-  if (!bookCode || !chapterNumber || !content) {
+  if (!validBookChapter(bookCode, chapterNumber) || typeof content !== 'string' || !content.trim() || content.length > 24000 || (selectedText && (typeof selectedText !== 'string' || selectedText.length > 12000)) || (title && (typeof title !== 'string' || title.length > 200)) || (pageNumber && (!Number.isInteger(pageNumber) || pageNumber < 1 || pageNumber > 120))) {
     return res.status(400).json({ success: false, error: 'Missing required note fields' });
   }
 
-  const allNotes = getChapterNotes();
   const newNote = {
-    id: `note_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    id: `note_${randomUUID()}`,
     bookCode,
     chapterNumber: Number(chapterNumber),
     type: type === 'QUESTIONS' || type === 'GENERATE_QUESTIONS' ? 'QUESTIONS' : 'EXPLAIN',
@@ -1034,8 +1004,7 @@ app.post('/api/ncert/notes', (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  allNotes.unshift(newNote); // newest at the beginning
-  if (!saveChapterNotes(allNotes)) return res.status(503).json({ success: false, error: 'Could not save chapter notes. Please retry.' });
+  if (!privateStore.save(res.locals.identity.uid, newNote)) return res.status(429).json({ success: false, error: 'Your saved notes limit has been reached. Remove old notes to save more.' });
 
   return res.json({ success: true, note: newNote });
 });
@@ -1043,20 +1012,15 @@ app.post('/api/ncert/notes', (req, res) => {
 // 6c. Delete a specific note
 app.delete('/api/ncert/notes/:id', (req, res) => {
   const { id } = req.params;
-  const allNotes = getChapterNotes();
-  const filtered = allNotes.filter((n: any) => n.id !== id);
-  if (!saveChapterNotes(filtered)) return res.status(503).json({ success: false, error: 'Could not update chapter notes. Please retry.' });
+  if (!privateStore.delete(res.locals.identity.uid, String(id))) return res.status(404).json({ success: false, error: 'Note not found' });
   return res.json({ success: true, deletedId: id });
 });
 
 // 6d. Clear all notes for a specific chapter
 app.delete('/api/ncert/notes/:bookCode/:chapterNumber/all', (req, res) => {
   const { bookCode, chapterNumber } = req.params;
-  const allNotes = getChapterNotes();
-  const filtered = allNotes.filter(
-    (n: any) => !(n.bookCode === bookCode && Number(n.chapterNumber) === Number(chapterNumber))
-  );
-  if (!saveChapterNotes(filtered)) return res.status(503).json({ success: false, error: 'Could not update chapter notes. Please retry.' });
+  if (!validBookChapter(bookCode, chapterNumber)) return res.status(400).json({ error: 'Invalid textbook or chapter' });
+  privateStore.clear(res.locals.identity.uid, String(bookCode), Number(chapterNumber));
   return res.json({ success: true, cleared: true });
 });
 
@@ -1069,17 +1033,28 @@ async function startServer() {
       appType: 'spa',
     });
     app.use(vite.middlewares);
-  } else {
+  } else if (process.env.API_ONLY !== 'true') {
     app.use(express.static(path.resolve(__dirname, 'dist')));
     app.get('*', (_req, res) => {
       res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
     });
   }
 
-  const portNum = Number(PORT) || 3000;
-  app.listen(portNum, '0.0.0.0', () => {
-    console.log(`DutyDeck Full-Stack Server running on http://0.0.0.0:${portNum}`);
+  app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found' }));
+  app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const status = error?.type === 'entity.too.large' ? 413 : error instanceof SyntaxError ? 400 : 500;
+    console.error('[API request failed]', error?.type || error?.name || 'Unknown error');
+    if (!res.headersSent) res.status(status).json({ error: status === 413 ? 'Request body is too large' : status === 400 ? 'Invalid JSON request' : 'The request could not be completed' });
   });
+  const portNum = Number(PORT) || 3000;
+  const host = process.env.HOST || '127.0.0.1';
+  const server = app.listen(portNum, host, () => {
+    console.log(`DutyDeck server listening on ${host}:${portNum}`);
+  });
+  server.requestTimeout = 120000;
+  server.headersTimeout = 15000;
+  server.maxRequestsPerSocket = 1000;
+  process.on('SIGTERM', () => { server.close(() => process.exit(0)); setTimeout(() => process.exit(1), 10000).unref(); });
 }
 
 startServer();

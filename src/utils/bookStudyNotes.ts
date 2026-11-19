@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 export type StudyAction = 'EXPLAIN' | 'GENERATE_QUESTIONS';
 export interface ChapterStudyNote {
   id: string;
@@ -23,7 +24,7 @@ export interface StudyDraft {
 export async function generateBookStudyDraft(input: {
   action: StudyAction; text: string; bookCode: string; bookTitle: string;
   chapterNumber: number; chapterTitle: string; pageNumber: number; subject: string;
-}, request: typeof fetch = fetch, signal?: AbortSignal): Promise<StudyDraft> {
+}, request: typeof fetch = apiFetch, signal?: AbortSignal): Promise<StudyDraft> {
   const text = input.text.replace(/\s+/g, ' ').trim();
   if (text.length < 5) throw new Error('Select at least a short sentence from the textbook.');
   if (text.length > 12000) throw new Error('Select a shorter passage, up to 12,000 characters.');
@@ -40,7 +41,7 @@ export async function generateBookStudyDraft(input: {
     title: input.action === 'EXPLAIN' ? 'Easy explanation' : 'Practice questions', content };
 }
 
-export async function saveBookStudyDraft(draft: StudyDraft, request: typeof fetch = fetch, signal?: AbortSignal): Promise<ChapterStudyNote> {
+export async function saveBookStudyDraft(draft: StudyDraft, request: typeof fetch = apiFetch, signal?: AbortSignal): Promise<ChapterStudyNote> {
   const response = await request('/api/ncert/notes', { method: 'POST', signal,
     headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(draft) });
   const data = await response.json();

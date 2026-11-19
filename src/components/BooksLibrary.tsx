@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/api';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, BookOpen, Check, ExternalLink, Search } from 'lucide-react';
@@ -90,7 +91,7 @@ function BookReader({ book, chapter, progress, onPosition, onComplete }: {
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true); setError(''); setPages([]);
-    fetch(`/api/ncert/pdf-rendered-pages/${book.code}/${chapter.number}`, { signal: controller.signal })
+    apiFetch(`/api/ncert/pdf-rendered-pages/${book.code}/${chapter.number}`, { signal: controller.signal })
       .then(async response => { const data = await response.json(); if (!response.ok || !data.success || !Array.isArray(data.pages) || !data.pages.length) throw new Error('Chapter unavailable'); return data.pages as BookPage[]; })
       .then(data => { setPages(data); setPage(previous => Math.min(previous, data.length)); })
       .catch(() => { if (!controller.signal.aborted) setError('The original chapter could not be loaded. Retry, or open the PDF directly.'); })

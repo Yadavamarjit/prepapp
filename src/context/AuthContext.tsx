@@ -1,10 +1,11 @@
+import { clearApiSession } from '../lib/api';
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle, logOut } from '../lib/firebase';
 
 // ── Config ────────────────────────────────────────────────────────────────────
 // URL of the ncert-mcp FastAPI backend
-const NCERT_API = import.meta.env.VITE_NCERT_API_URL || 'http://localhost:8000';
+const NCERT_API = import.meta.env.VITE_NCERT_API_URL || '';
 const JWT_KEY   = 'ncert_jwt';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -46,6 +47,7 @@ const GUEST_SESSION_KEY = 'dutydeck_guest_session';
 
 // ── Exchange Firebase ID token → ncert-mcp JWT ────────────────────────────────
 async function exchangeForNcertJwt(firebaseUser: User): Promise<string | null> {
+  if (!NCERT_API) return null;
   try {
     const idToken = await firebaseUser.getIdToken(/* forceRefresh */ false);
     const res = await fetch(`${NCERT_API}/auth/google/firebase`, {
@@ -158,6 +160,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     email: string = 'cadet.aspirant@dutydeck.upsc.gov.in'
   ) => {
     setAuthError(null);
+    await clearApiSession();
     const guestUser: AppUser = {
       uid: `officer-${Date.now().toString(36)}`,
       email,
@@ -177,6 +180,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleSignOut = async () => {
     try {
       await logOut().catch(() => {});
+      await clearApiSession().catch(() => {});
       localStorage.removeItem(GUEST_SESSION_KEY);
       const jwt = localStorage.getItem(JWT_KEY);
       if (jwt) {
