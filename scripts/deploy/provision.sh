@@ -22,6 +22,8 @@ install -d -m 0750 -o caddy -g caddy /var/lib/caddy
 install -d -m 0755 /etc/caddy
 python3 -m venv /opt/prepapp/venv
 /opt/prepapp/venv/bin/python -m pip install --disable-pip-version-check --only-binary=:all: PyMuPDF pdfplumber
+chown -R root:prepapp /opt/prepapp/venv
+chmod -R g+rX,o-rwx /opt/prepapp/venv
 if ! test -f /etc/prepapp/backend.env; then
   python3 - <<'PY'
 import secrets

@@ -2,6 +2,14 @@
 
 The Vite frontend runs on Vercel. The Express API is intended for Oracle Linux 9 at `130.210.120.198`, behind Caddy at `https://api-130-210-120-198.sslip.io`. Deployment is not complete until HTTPS and the Vercel proxy have passed the checks below.
 
+## Server adjustments
+
+On this 1 GB instance, the UEK boot reserved 448 MB for kdump, leaving only 498 MB usable. With explicit owner approval, `stabilize-memory.sh` disabled kdump, released the reservation without a reboot, removed the reservation from future boot entries, and enabled bounded persistent journals. Usable memory returned to 946 MB. Full kernel crash dumps are unavailable under this configuration; system and app journals remain available.
+
+The PDF virtual environment must be root-owned with group read/execute access for `prepapp`. App code stays read-only to that account. When importing textbook archives, set cached files to the service account and restrict their permissions.
+
+NCERT served an incomplete Let's Encrypt chain. `configure-ncert-ca.sh` obtains official cross-signed certificates from letsencrypt.org, validates them against existing OS trust anchors, and configures an application-only bundle. It does not disable TLS verification or change global trust. The source can still time out independently; an existing original textbook cache is used when available.
+
 ## Build and verify
 
 Run `npm ci`, `npm run lint`, `node --import tsx --test src/utils/*.test.ts server/*.test.ts`, `npm run build`, and `npm run build:server`. Run `node scripts/deploy/verify-local.mjs` to check the production API locally with an original textbook PDF. It requires Python with PyMuPDF and pdfplumber installed.
