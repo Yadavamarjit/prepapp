@@ -33,14 +33,13 @@ import { ShieldAlert, Compass } from 'lucide-react';
 const LoginPageWrapper: React.FC = () => {
   const { user } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
   const from = (location.state as any)?.from?.pathname || '/';
 
   if (user) {
     return <Navigate to={from} replace />;
   }
 
-  return <LoginPage onSuccess={() => navigate(from, { replace: true })} />;
+  return <LoginPage />;
 };
 
 // 404 Route Not Found Component

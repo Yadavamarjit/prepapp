@@ -39,3 +39,21 @@ export function validAttempt(value: unknown): value is Attempt {
     !!a.answers && typeof a.answers === 'object' && Object.values(a.answers).every(r =>
       r && (!r.choice || option(r.choice)) && (!r.crossed || (Array.isArray(r.crossed) && r.crossed.every(option))));
 }
+
+export const attemptKey = (uid: string) => "capf-analytica-v1:" + uid;
+type RecordBook = { current: Attempt | null; scores: number[] };
+
+export function loadAttemptBook(key: string): RecordBook {
+  try {
+    const data = JSON.parse(localStorage.getItem(key) || 'null');
+    if (data && (data.current === null || validAttempt(data.current)) &&
+      Array.isArray(data.scores) && data.scores.every(Number.isFinite)) {
+      const a = data.current;
+      if (a && !a.finished && a.deadline <= Date.now()) {
+        return { current: { ...a, finished: true }, scores: a.drill ? data.scores : [...data.scores, report(a).net] };
+      }
+      return data;
+    }
+  } catch { /* Start a new record if this browser has no readable history. */ }
+  return { current: null, scores: [] };
+}

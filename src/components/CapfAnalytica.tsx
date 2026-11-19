@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Clock, Crosshair } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { paper, report, startAttempt, validAttempt, type Attempt, type Response } from '../utils/capfAttempt';
+import { paper, report, startAttempt, attemptKey, loadAttemptBook, type Attempt, type Response } from '../utils/capfAttempt';
 
 const panel = 'study-panel space-y-4 p-5 sm:p-7';
 const button = 'min-h-11 rounded-xl border border-current/30 px-4 py-2 font-medium';
 const primary = 'min-h-12 rounded-xl bg-[#315840] px-5 py-3 font-semibold text-white hover:bg-[#254532]';
-type RecordBook = { current: Attempt | null; scores: number[] };
-
-function load(key: string): RecordBook {
-  try {
-    const data = JSON.parse(localStorage.getItem(key) || 'null');
-    if (data && (data.current === null || validAttempt(data.current)) &&
-      Array.isArray(data.scores) && data.scores.every(Number.isFinite)) return data;
-  } catch { /* Start a new record if this browser has no readable history. */ }
-  return { current: null, scores: [] };
-}
-
 export function CapfAnalytica() {
   const { user } = useAuth();
-  return user && <Workspace key={user.uid} storageKey={'capf-analytica-v1:' + user.uid} />;
+  return user && <Workspace key={user.uid} storageKey={attemptKey(user.uid)} />;
 }
 
 function Workspace({ storageKey }: { storageKey: string }) {
-  const [book, setBook] = useState(() => load(storageKey));
+  const { state } = useLocation();
+  const [book, setBook] = useState(() => {
+    const saved = loadAttemptBook(storageKey);
+    if (state?.action === 'start' && !saved.current)
+      return { ...saved, current: startAttempt(paper.map(q => q.id), false) };
+    if (state?.action === 'retry' && saved.current?.finished && saved.current.deadline === state.deadline) {
+      const missed = report(saved.current).missed.map(q => q.id);
+      if (missed.length) return { ...saved, current: startAttempt(missed, true) };
+    }
+    return saved;
+  });
   const [saveError, setSaveError] = useState(false);
   const [now, setNow] = useState(Date.now);
   const [confirm, setConfirm] = useState(false);
@@ -111,7 +111,7 @@ function Workspace({ storageKey }: { storageKey: string }) {
         : <button className={button} onClick={() => setConfirm(true)}>Finish attempt</button>}
     </section>}
     {result && a && <>
-      <section className={panel}><h2 className="section-title">{a.drill ? 'Revision report' : 'Sectional report'}</h2>
+      <section className={panel + " workbook-result"}><h2 className="section-title">{a.drill ? 'Revision report' : 'Sectional report'}</h2>
         <p className="text-4xl font-semibold tabular-nums">{result.net.toFixed(2)} <small className="text-base">/ {a.ids.length * 2} marks</small></p>
         <p>{result.correct} correct · {result.wrong} wrong · {result.skipped} skipped</p>
         <p>{result.correct * 2} marks earned · {result.penalty.toFixed(2)} deducted</p>

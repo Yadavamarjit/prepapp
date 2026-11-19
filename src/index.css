@@ -160,3 +160,23 @@ button:not(:disabled), select { cursor: pointer; }
 .study-progress::-webkit-progress-bar { background: #EBEDE3; border-radius: 10px; }
 .study-progress::-webkit-progress-value { background: #80966E; border-radius: 10px; }
 .study-progress::-moz-progress-bar { background: #80966E; border-radius: 10px; }
+
+.workbook-cover {
+  background: #eaefdf;
+  color: #223e2c;
+  padding: clamp(1.35rem, 4vw, 2.6rem);
+  border-top: 3px solid #476849;
+  border-bottom: 1px solid #bdc9af;
+}
+.dark .workbook-cover { background: #25352b; color: #ecf1e8; border-color: #829577; }
+.workbook-label { font-size: .72rem; font-weight: 650; letter-spacing: .09em; text-transform: uppercase; }
+.workbook-button { display: flex; align-items: center; justify-content: space-between; gap: .75rem; width: 100%; min-height: 48px; padding: .8rem 1rem; background: #2d533d; color: white; border-radius: .5rem; font-weight: 600; }
+.workbook-button:hover { background: #21432f; }
+.workbook-button:disabled { opacity: .7; }
+.dark .workbook-button { background: #c7dfbc; color: #193420; }
+@media (prefers-reduced-motion: no-preference) {
+  .workbook-button { transition: transform 120ms ease, background-color 120ms ease; }
+  .workbook-button:active { transform: translateY(1px); }
+  .workbook-result { animation: workbook-reveal 180ms ease-out; }
+  @keyframes workbook-reveal { from { opacity: .45; } to { opacity: 1; } }
+}
