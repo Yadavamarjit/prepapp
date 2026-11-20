@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, ChevronDown, ListTree } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import science from '../../upsc_capf_science_chapterwise_pyqs.json';
@@ -53,24 +53,20 @@ export default function ChapterwisePyq() {
           <ListTree size={16} aria-hidden="true" /> Browse chapters
           <ChevronDown size={16} aria-hidden="true" className={`ml-auto ${menuOpen ? 'rotate-180' : ''}`} />
         </button>
-        <nav id="pyq-chapters" aria-label={`${subject.subjectName} chapters`} className={`${menuOpen ? 'block' : 'hidden'} space-y-2 p-3 md:block`}>
+        <nav id="pyq-chapters" aria-label={`${subject.subjectName} chapters`} className={`${menuOpen ? 'block' : 'hidden'} max-h-[min(50dvh,24rem)] space-y-2 overflow-y-auto p-3 md:block md:max-h-none md:overflow-visible`}>
           <h2 className="px-2 py-2 text-sm font-semibold">{subject.subjectName}</h2>
-          {subject.subSubjects.map(group => <details key={group.subSubjectId} open={group.chapters.some(item => item.chapterId === chapter.chapterId)} className="group">
-            <summary className="flex cursor-pointer list-none items-start gap-2 rounded-lg px-2 py-2 text-sm font-medium hover:bg-[#EFF2E9] dark:hover:bg-[#273C2E] [&::-webkit-details-marker]:hidden">
-              <ChevronDown size={15} aria-hidden="true" className="mt-0.5 shrink-0 -rotate-90 group-open:rotate-0" />
-              {group.subSubjectName}
-            </summary>
+          {subject.subSubjects.map(group => <ChapterGroup key={group.subSubjectId} title={group.subSubjectName}
+            defaultOpen={group.chapters.some(item => item.chapterId === chapter.chapterId)}>
             <ul className="mt-1 space-y-1">
               {group.chapters.map(item => {
                 const active = item.chapterId === chapter.chapterId;
                 return <li key={item.chapterId}><Link to={`${base}/${subject.subjectId}/${item.chapterId}`} aria-current={active ? 'page' : undefined}
-                  onClick={() => setMenuOpen(false)}
                   className={`flex items-start justify-between gap-2 rounded-lg py-2 pl-7 pr-2 text-xs leading-5 ${active ? 'bg-[#E9EFE9] font-semibold text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : 'hover:bg-[#EFF2E9] dark:hover:bg-[#273C2E]'}`}>
                   <span>{item.chapterName}</span><span className="tabular-nums" aria-label={`${item.questions.length} questions`}>{item.questions.length}</span>
                 </Link></li>;
               })}
             </ul>
-          </details>)}
+          </ChapterGroup>)}
         </nav>
       </aside>
       <ChapterPractice key={`${subject.subjectId}/${chapter.chapterId}`} chapter={chapter} answers={answers} subjectId={subject.subjectId}
@@ -80,6 +76,18 @@ export default function ChapterwisePyq() {
       <Link to={subject ? `${base}/${subject.subjectId}` : base} className="quiet-link">Browse available chapters <ArrowRight size={15} aria-hidden="true" /></Link>
     </section>}
   </div>;
+}
+
+function ChapterGroup({ title, defaultOpen, children }: { title: string; defaultOpen: boolean; children: ReactNode }) {
+  // Let the browser keep the user's expanded groups when the selected chapter changes.
+  const [initiallyOpen] = useState(defaultOpen);
+  return <details open={initiallyOpen} className="group">
+    <summary className="flex cursor-pointer list-none items-start gap-2 rounded-lg px-2 py-2 text-sm font-medium hover:bg-[#EFF2E9] dark:hover:bg-[#273C2E] [&::-webkit-details-marker]:hidden">
+      <ChevronDown size={15} aria-hidden="true" className="mt-0.5 shrink-0 -rotate-90 group-open:rotate-0" />
+      {title}
+    </summary>
+    {children}
+  </details>;
 }
 
 function ChapterPractice({ chapter, answers, subjectId, onAnswer }: {

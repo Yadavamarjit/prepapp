@@ -2,7 +2,7 @@ import { LoadingIndicator } from './components/LoadingIndicator';
 import { SyllabusProvider, useSyllabus } from './context/SyllabusContext';
 import { StudyPreferencesProvider } from './context/StudyPreferences';
 import React, { lazy, Suspense, useState, useEffect, useMemo, useCallback } from 'react';
-import { Routes, Route, Outlet, useNavigate, useLocation, useSearchParams, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, Outlet, useNavigate, useLocation, useSearchParams, Navigate, Link, matchPath } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { OverviewDashboard } from './components/OverviewDashboard';
 import { CapfEliminationMode } from './components/CapfEliminationMode';
@@ -102,12 +102,13 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname, hash } = location;
+  const scrollPage = matchPath('/practice/chapterwise-pyq/*', pathname) ? '/practice/chapterwise-pyq' : pathname;
   const { canUseAi, loading } = useAuth();
 
   useEffect(() => {
     if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
     else window.scrollTo(0, 0);
-  }, [pathname, hash]);
+  }, [scrollPage, hash]);
 
   // Question Bank (seeded + dynamic AI generated questions)
   const [savedQuestions, setQuestions] = useState<Question[]>(() => {
