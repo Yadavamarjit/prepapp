@@ -8,6 +8,7 @@ import { createTutor } from './server/aiProvider';
 import { NCERT_STUDY_LIBRARY } from './src/data/ncertCurriculum.js';
 import { decideDailyPlan, parseDecisionRequest } from './server/aiDailyPlan';
 import { registerCurrentAffairs } from './server/currentAffairs';
+import { registerPyqExplanations } from './server/pyqExplanations';
 import { installSecurity } from './server/security';
 import { ensurePdf, validBookChapter, validateBookRequest, limitPdfWork } from './server/pdf';
 import { randomUUID } from 'node:crypto';
@@ -47,6 +48,7 @@ app.post('/api/ai/daily-plan', async (req, res) => {
 
 // Server-side initialization of Google GenAI SDK
 const ai = createTutor();
+registerPyqExplanations(app, privateStore.db, ai.models.generateContent);
 
 // Built-in High-Yield Curriculum Knowledge Engine (ensures instant zero-lag fallback if API key is unconfigured)
 const TOPIC_CURRICULUM_DATA: Record<string, any> = {

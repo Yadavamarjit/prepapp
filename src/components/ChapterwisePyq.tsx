@@ -1,27 +1,10 @@
 import { useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, ChevronDown, ListTree } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import science from '../../upsc_capf_science_chapterwise_pyqs.json';
-import geography from '../../upsc_capf_geography_chapterwise_pyqs.json';
-import history from '../../upsc_capf_history_chapterwise_pyqs.json';
-import polity from '../../upsc_capf_polity_chapterwise_pyqs.json';
-import economy from '../../upsc_capf_economy_chapterwise_pyqs.json';
-import mentalAbility from '../../upsc_capf_mental_ability_chapterwise_pyqs.json';
-import currentEvents from '../../upsc_capf_current_events_chapterwise_pyqs.json';
+import { pyqSubjects as subjects, pyqOptionKeys as optionKeys, type PyqOption as Option, type PyqChapter as Chapter } from '../../shared/pyqCatalog';
+import { PyqExplanationPanel } from './PyqExplanationPanel';
 
-const subjects = [
-  { ...science, label: 'Science' },
-  { ...geography, label: 'Geography' },
-  { ...history, label: 'History' },
-  { ...polity, label: 'Polity' },
-  { ...economy, label: 'Economy' },
-  { ...mentalAbility, label: 'Mental Ability' },
-  { ...currentEvents, label: 'Current Events' },
-];
 const base = '/practice/chapterwise-pyq';
-const optionKeys = ['a', 'b', 'c', 'd'] as const;
-type Option = typeof optionKeys[number];
-type Chapter = typeof science.subSubjects[number]['chapters'][number];
 
 export default function ChapterwisePyq() {
   const { subjectId, chapterId } = useParams();
@@ -139,6 +122,7 @@ function ChapterPractice({ chapter, answers, subjectId, onAnswer }: {
           Next <ArrowRight size={15} aria-hidden="true" />
         </button>
       </div>
+      <PyqExplanationPanel key={`explanation-${question.id}`} subjectId={subjectId} questionId={question.id} />
     </> : <p className="text-sm">There are no questions in this chapter.</p>}
   </section>;
 }

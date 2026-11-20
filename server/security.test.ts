@@ -10,6 +10,7 @@ import { FIREBASE_PROJECT, verifyFirebaseToken } from '../shared/firebaseIdentit
 import { pageAccess } from '../shared/pageAccess';
 import { afterLogin } from '../shared/authRoutes';
 import { validBookChapter } from './pdf';
+import { registerPyqExplanations } from './pyqExplanations';
 
 test('Firebase tokens require a valid signature, project, Google identity and expiry', async () => {
   const { privateKey, publicKey } = await generateKeyPair('RS256');
@@ -63,17 +64,30 @@ test('secure sessions gate study APIs and frontend assets', async () => {
   if (previousEnvironment === undefined) delete process.env.NODE_ENV; else process.env.NODE_ENV = previousEnvironment;
   app.post('/api/ai/test', (_req, res) => res.json({ uid: res.locals.identity.uid }));
   app.get('/api/ncert/books', (_req, res) => res.json({ uid: res.locals.identity.uid }));
+  const explanation = {
+    concept: 'Apply energy conservation.', reasoning: ['Find the rebound speed.', 'Square it.', 'Divide by twice gravity.'],
+    options: { a: 'Too large.', b: 'Too large.', c: 'Too large.', d: 'Fits the calculation.' },
+    examStrategy: 'Track units.', practiceQuestion: 'How does doubling speed affect height?', practiceAnswer: 'Height quadruples.',
+  };
+  let generations = 0;
+  registerPyqExplanations(app, store.db, async request => {
+    generations++;
+    assert.equal(JSON.parse(request.contents).correctOption, 'd');
+    return { text: JSON.stringify(explanation) };
+  });
   const server = app.listen(0, '127.0.0.1');
   await new Promise<void>(resolve => server.once('listening', resolve));
   const address = server.address() as { port: number };
   const url = `http://127.0.0.1:${address.port}`;
   const headers = { 'Content-Type': 'application/json', 'X-DutyDeck-Request': '1' };
   const authorization = 'Bearer ' + token;
+  const pyqPath = '/pyq/general-science/capf-2024-q006/explanation';
   try {
     assert.equal((await fetch(url + '/api/health')).status, 200);
     assert.equal((await fetch(url + '/api/session', { method: 'POST', headers, body: '{}' })).status, 401);
     assert.equal((await fetch(url + '/api/session', { method: 'POST', headers: { ...headers, Authorization: authorization, Origin: 'https://cross-site.invalid' }, body: '{}' })).status, 403);
     assert.equal((await fetch(url + '/api/ncert/books')).status, 401);
+    assert.equal((await fetch(url + '/api' + pyqPath)).status, 401);
     assert.equal((await fetch(url + '/api/ncert/books', { headers: { Cookie: '__Host-dutydeck=legacy-guest' } })).status, 401);
     assert.equal((await fetch(url + '/api/ai/test', { method: 'POST', headers, body: '{}' })).status, 401);
 
@@ -91,6 +105,22 @@ test('secure sessions gate study APIs and frontend assets', async () => {
     const ai = await fetch(url + '/api/ai/test', { method: 'POST', headers: { ...headers, Authorization: authorization }, body: '{}' });
     assert.equal(ai.status, 200);
     assert.equal(ai.headers.get('cache-control'), 'private, no-store');
+    const readPyq = () => fetch(url + '/api' + pyqPath, { headers: { Authorization: authorization } });
+    const generatePyq = () => fetch(url + '/api/ai' + pyqPath, {
+      method: 'POST', headers: { ...headers, Authorization: authorization }, body: '{}',
+    });
+    assert.deepEqual(await (await readPyq()).json(), { explanation: null });
+    assert.equal(generations, 0);
+    assert.deepEqual(await (await generatePyq()).json(), { explanation, cached: false });
+    assert.deepEqual(await (await readPyq()).json(), { explanation });
+    assert.deepEqual(await (await generatePyq()).json(), { explanation, cached: true });
+    assert.equal(generations, 1);
+    const reopened = new PrivateStore(directory);
+    try {
+      const row = reopened.db.prepare('SELECT content FROM pyq_explanations WHERE question_key = ?')
+        .get('general-science/capf-2024-q006') as { content: string };
+      assert.deepEqual(JSON.parse(row.content), explanation);
+    } finally { reopened.db.close(); }
     const cleared = await fetch(url + '/api/session', { method: 'DELETE', headers: { ...headers, Cookie: cookie } });
     assert.equal(cleared.status, 204);
     assert.match(cleared.headers.get('set-cookie')!, /^__Host-cadetslate-session=;/);
