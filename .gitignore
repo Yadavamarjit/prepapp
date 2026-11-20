@@ -14,3 +14,7 @@ data/current_affairs.sqlite*
 *.key
 data/ncert_textbooks/page_renders/
 data/ncert_textbooks/*_rendered_meta.json
+/audit-capf/
+data/private.sqlite*
+/upsc_capf_complete_syllabus.json
+/upsc_capf_current_events_syllabus.json
