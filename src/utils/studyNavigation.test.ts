@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { LearningHub } from '../components/LearningHub';
 import { PracticeHome, RevisionHome, ProgressPage, SectionNavigation } from '../components/StudySections';
+import ChapterwisePyq from '../components/ChapterwisePyq';
 import { DailyReview } from '../components/DailyReview';
 import { LEARNING_CHAPTERS } from '../data/learningLibrary';
 import { buildRecallCards } from './dailyReview';
@@ -41,10 +42,35 @@ test('an invalid chapter route offers a way back instead of showing an unrelated
 
 test('practice overview distinguishes selected-topic practice from mixed exam practice', () => {
   const html = render(React.createElement(PracticeHome));
-  for (const path of ['/ai-tutor', '/practice/capf-analytica', '/capf-elimination', '/paper-2']) assert.ok(html.includes(`href="${path}"`));
+  for (const path of ['/ai-tutor', '/practice/capf-analytica', '/practice/chapterwise-pyq', '/capf-elimination', '/paper-2']) assert.ok(html.includes(`href="${path}"`));
   assert.ok(html.includes('Your selected topic only'));
   assert.ok(html.includes('Mixed topics'));
   assert.doesNotMatch(html, /CPO/i);
+});
+
+function renderPyq(path: string) {
+  return render(React.createElement(Routes, null, React.createElement(Route, {
+    path: '/practice/chapterwise-pyq/:subjectId?/:chapterId?', element: React.createElement(ChapterwisePyq),
+  })), `/practice/chapterwise-pyq${path}`);
+}
+
+test('chapterwise PYQs open the requested subject and chapter from a direct link', () => {
+  for (const [path, heading, questionCount] of [
+    ['/general-science/phy-01', 'Units, Measurements &amp; Motion', 2],
+    ['/geography/geo-phy-01', 'Origin &amp; Evolution of Earth', 10],
+    ['/history/anc-02', 'Indus Valley Civilization', 5],
+  ] as const) {
+    const html = renderPyq(path);
+    assert.match(html, new RegExp(`<h2 id="pyq-chapter-title"[^>]*>${heading}`));
+    assert.ok(html.includes(`Question 1 of ${questionCount}`));
+    assert.match(html, new RegExp(`<a(?=[^>]*href="/practice/chapterwise-pyq${path}")(?=[^>]*aria-current="page")[^>]*>`));
+  }
+});
+
+test('the history menu opens a chapter with questions and keeps empty chapters reachable', () => {
+  assert.ok(renderPyq('/history').includes('Question 1 of 5'));
+  assert.ok(renderPyq('/history/anc-01').includes('There are no questions in this chapter.'));
+  assert.ok(renderPyq('/geography/anc-01').includes('Subject or chapter not found'));
 });
 
 test('revision overview exposes recall and mistakes with actual queue counts', () => {

@@ -1,7 +1,7 @@
 import { Spinner } from './LoadingIndicator';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { House, BookOpen, PencilLine, RotateCcw, ChartNoAxesCombined, LogOut, Moon, Sun } from 'lucide-react';
+import { House, BookOpen, PencilLine, FileText, RotateCcw, ChartNoAxesCombined, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudyPreferences } from '../context/StudyPreferences';
 import { APP_NAME } from '../data/brand';
@@ -11,6 +11,7 @@ const items = [
   { path: '/dashboard', label: 'Today', icon: House, matches: ['/dashboard'] },
   { path: '/books', label: 'Learn', icon: BookOpen, matches: ['/books', '/learning', '/ncert', '/reels', '/capf-syllabus', '/current-affairs'] },
   { path: '/practice', label: 'Practice', icon: PencilLine, matches: ['/practice', '/calculation-coach', '/capf-elimination', '/paper-2', '/ai-tutor'] },
+  { path: '/practice/chapterwise-pyq', label: 'Chapterwise PYQ', icon: FileText, matches: ['/practice/chapterwise-pyq'], desktopOnly: true },
   { path: '/revision', label: 'Revision', icon: RotateCcw, matches: ['/revision', '/daily-review', '/mistake-vault'] },
   { path: '/analytics', label: 'Progress', icon: ChartNoAxesCombined, matches: ['/analytics'] },
 ];
@@ -20,13 +21,16 @@ export function Navbar() {
   const { pathname } = useLocation();
   const active = (matches: string[]) => matches.some(path => pathname === path || pathname.startsWith(path + '/'));
   const hasAccount = !!user;
-  const current = items.find(item => active(item.matches))?.label || 'Study';
-  const links = (mobile = false) => items.map(({ path, label, icon: Icon, matches }) => <Link key={path} to={path} aria-current={active(matches) ? 'page' : undefined}
-    className={`${mobile ? 'flex-col gap-1 py-2 text-[11px]' : 'gap-3 rounded-lg px-3 py-3 text-sm'} flex items-center font-medium transition-colors ${active(matches) ? 'bg-[#E9EFE9] text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : 'text-[#686C65] hover:bg-[#EFEFE9] dark:text-slate-400 dark:hover:bg-[#202C25]'}`}>
-    <Icon size={mobile ? 19 : 18} strokeWidth={1.7} /><span>{label}</span>
-  </Link>);
+  const current = (items.find(item => item.desktopOnly && active(item.matches)) ?? items.find(item => active(item.matches)))?.label || 'Study';
+  const links = (mobile = false) => items.filter(item => !mobile || !item.desktopOnly).map(({ path, label, icon: Icon, matches }) => {
+    const selected = mobile ? active(matches) : current === label;
+    return <Link key={path} to={path} aria-current={selected ? 'page' : undefined}
+      className={`${mobile ? 'flex-col gap-1 py-2 text-[11px]' : 'gap-3 rounded-lg px-3 py-3 text-sm'} flex items-center font-medium transition-colors ${selected ? 'bg-[#E9EFE9] text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : 'text-[#686C65] hover:bg-[#EFEFE9] dark:text-slate-400 dark:hover:bg-[#202C25]'}`}>
+      <Icon size={mobile ? 19 : 18} strokeWidth={1.7} /><span>{label}</span>
+    </Link>;
+  });
   return <>
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col border-r border-[#E4E4DB] bg-[#FAFAF6] p-5 lg:flex dark:border-slate-800 dark:bg-[#151D18]">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col overflow-y-auto border-r border-[#E4E4DB] bg-[#FAFAF6] p-5 lg:flex dark:border-slate-800 dark:bg-[#151D18]">
       <Link to="/" aria-label={`${APP_NAME} home`} className="mb-12 flex items-center gap-2.5 px-2 pt-3 text-xl font-semibold tracking-tight"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#315840] text-white"><BookOpen size={17} aria-hidden="true" /></span>{APP_NAME}</Link>
       <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#898D82]">Your workspace</p>
       <nav aria-label="Main navigation" className="space-y-1">{links()}</nav>

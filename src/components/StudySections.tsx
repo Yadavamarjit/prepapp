@@ -10,15 +10,16 @@ import { LEARNING_CHAPTERS } from '../data/learningLibrary';
 export function SectionNavigation() {
   const { pathname } = useLocation();
   const learning = ['/books', '/learning', '/ncert', '/reels', '/capf-syllabus', '/current-affairs'].some(path => pathname === path || pathname.startsWith(path + '/'));
-  const practice = ['/practice', '/calculation-coach', '/ai-tutor', '/capf-elimination', '/paper-2'].includes(pathname);
+  const practice = pathname.startsWith('/practice/') || ['/practice', '/calculation-coach', '/ai-tutor', '/capf-elimination', '/paper-2'].includes(pathname);
   const revision = ['/revision', '/daily-review', '/mistake-vault'].includes(pathname);
-  const items = learning ? [['/books', 'Books'], ['/current-affairs', 'Current Affairs'], ['/capf-syllabus', 'CAPF syllabus'], ['/reels', 'Learn Reels'], ['/learning', 'Topic lessons'], ['/calculation-coach', 'Calculation Coach']] : practice ? [['/practice', 'Overview'], ['/calculation-coach', 'Calculation Coach'], ['/ai-tutor', 'Topic practice'], ['/capf-elimination', 'CAPF practice'], ['/paper-2', 'Writing']] : revision ? [['/revision', 'Overview'], ['/daily-review', 'Recall cards'], ['/mistake-vault', 'Mistakes']] : [];
+  const items = learning ? [['/books', 'Books'], ['/current-affairs', 'Current Affairs'], ['/capf-syllabus', 'CAPF syllabus'], ['/reels', 'Learn Reels'], ['/learning', 'Topic lessons'], ['/calculation-coach', 'Calculation Coach']] : practice ? [['/practice', 'Overview'], ['/practice/chapterwise-pyq', 'Chapterwise PYQ'], ['/calculation-coach', 'Calculation Coach'], ['/ai-tutor', 'Topic practice'], ['/capf-elimination', 'CAPF practice'], ['/paper-2', 'Writing']] : revision ? [['/revision', 'Overview'], ['/daily-review', 'Recall cards'], ['/mistake-vault', 'Mistakes']] : [];
   if (!items.length) return null;
-  return <nav aria-label={learning ? 'Learning sections' : practice ? 'Practice tools' : 'Revision tools'} className="mb-7 flex flex-wrap gap-x-5 gap-y-3 border-b border-[#E1E3D8] pb-3 dark:border-slate-800">{items.map(([to, label]) => { const active = pathname === to || pathname.startsWith(to + '/'); return <Link key={to} to={to} aria-current={active ? 'page' : undefined} className={`text-xs ${active ? 'font-semibold text-[#315840] dark:text-[#B2D7BA]' : 'text-[#818879] hover:text-[#315840]'}`}>{label}</Link>; })}</nav>;
+  return <nav aria-label={learning ? 'Learning sections' : practice ? 'Practice tools' : 'Revision tools'} className="mb-7 flex flex-wrap gap-x-5 gap-y-3 border-b border-[#E1E3D8] pb-3 dark:border-slate-800">{items.map(([to, label]) => { const active = pathname === to || (to !== '/practice' && pathname.startsWith(to + '/')); return <Link key={to} to={to} aria-current={active ? 'page' : undefined} className={`text-xs ${active ? 'font-semibold text-[#315840] dark:text-[#B2D7BA]' : 'text-[#818879] hover:text-[#315840]'}`}>{label}</Link>; })}</nav>;
 }
 
 export function PracticeHome() {
   const tools = [
+    { to: '/practice/chapterwise-pyq', title: 'Chapterwise PYQ', description: 'Practise previous-year questions in Science, Geography, and History with answer keys.', detail: 'CAPF Paper I', icon: FileText },
     { to: '/practice/capf-analytica', title: 'CAPF Analytica', description: 'Take a timed Paper I sectional, see your net marks and retry the questions you missed.', detail: 'Timed practice and revision', icon: Clock },
     { to: '/calculation-coach', title: 'Calculation Coach', description: 'Build confidence with arithmetic and fractions. Learn visually, fix mistakes, and build speed at your own pace.', detail: 'Phone-friendly / No timer to start', icon: PencilLine },
     { to: '/ai-tutor', title: 'Topic practice', description: 'Choose a subject and topic. Get a short explanation and questions at your level.', detail: 'Your selected topic only', icon: BookOpen },

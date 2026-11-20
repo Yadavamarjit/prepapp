@@ -1,7 +1,7 @@
 import { LoadingIndicator } from './components/LoadingIndicator';
 import { SyllabusProvider, useSyllabus } from './context/SyllabusContext';
 import { StudyPreferencesProvider } from './context/StudyPreferences';
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { lazy, Suspense, useState, useEffect, useMemo, useCallback } from 'react';
 import { Routes, Route, Outlet, useNavigate, useLocation, useSearchParams, Navigate, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { OverviewDashboard } from './components/OverviewDashboard';
@@ -29,6 +29,8 @@ import { INITIAL_QUESTION_BANK } from './data/questionBank';
 import { Question, MistakeRecord, MistakeReason, Paper2Submission, ChapterProgress } from './types';
 import { calculateNextSrsDate } from './utils/srsVault';
 import { ShieldAlert, Compass } from 'lucide-react';
+
+const ChapterwisePyq = lazy(() => import('./components/ChapterwisePyq'));
 
 // 404 Route Not Found Component
 const NotFoundPage: React.FC = () => {
@@ -359,6 +361,9 @@ function App() {
         />
         <Route path="practice" element={<PracticeHome />} />
         <Route path="practice/capf-analytica" element={<CapfAnalytica />} />
+        <Route path="practice/chapterwise-pyq/:subjectId?/:chapterId?" element={
+          <Suspense fallback={<LoadingIndicator label="Loading chapterwise questions…" />}><ChapterwisePyq /></Suspense>
+        } />
         <Route path="current-affairs" element={<CurrentAffairs progress={affairProgress} onChange={handleAffairChange} storageError={affairStorageError} />} />
         <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} progressMap={chapterProgress} />} />
         <Route path="calculation-coach" element={<CalculationCoach />} />
