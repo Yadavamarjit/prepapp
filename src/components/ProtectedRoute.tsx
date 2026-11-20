@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { APP_NAME } from '../data/brand';
 import { ShieldCheck } from 'lucide-react';
 
 interface ProtectedRouteProps {
@@ -20,11 +21,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         <div className="flex items-center gap-3">
           <div className="w-5 h-5 rounded-full border-2 border-[#36624B] border-t-transparent animate-spin" />
           <h3 className="font-semibold text-sm text-[#1E252B] dark:text-white font-sans">
-            Verifying Cadet Clearance Credentials...
+            Opening your workspace…
           </h3>
         </div>
         <p className="text-xs text-[#5C646B] dark:text-slate-400 mt-2 font-mono">
-          DutyDeck Zero-Trust Access Controller
+          {APP_NAME}
         </p>
       </div>
     );

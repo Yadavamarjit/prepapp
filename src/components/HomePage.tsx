@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { APP_NAME } from '../data/brand';
 import './HomePage.css';
 
 const previewTasks = [
@@ -49,7 +50,7 @@ export function HomePage() {
       <a className="prep-skip" href="#home-content">Skip to content</a>
       <header className="prep-header">
         <nav className="prep-container prep-nav" aria-label="Main navigation">
-          <Link className="prep-brand" to="/"><span><Layers3 size={20} aria-hidden="true" /></span> DutyDeck</Link>
+          <Link className="prep-brand" to="/"><span><Layers3 size={20} aria-hidden="true" /></span> {APP_NAME}</Link>
           <div className="prep-nav-links">
             <a className="prep-nav-features" href="#features">Features</a>
             <Link className="prep-sign-in" to="/login">Sign in <ArrowRight size={16} aria-hidden="true" /></Link>
@@ -76,7 +77,7 @@ export function HomePage() {
           <div className="prep-preview">
             <div className="prep-preview-card">
               <div className="prep-preview-top">
-                <span><Layers3 size={16} aria-hidden="true" /> DutyDeck</span>
+                <span><Layers3 size={16} aria-hidden="true" /> {APP_NAME}</span>
                 <span>Sample study plan</span>
               </div>
               <div className="prep-preview-body">
@@ -101,7 +102,7 @@ export function HomePage() {
         <section className="prep-features" id="features" aria-labelledby="prep-features-heading">
           <div className="prep-container">
             <div className="prep-section-heading">
-              <p className="prep-eyebrow"><span /> Inside DutyDeck</p>
+              <p className="prep-eyebrow"><span /> Inside {APP_NAME}</p>
               <h2 id="prep-features-heading">Learn, practise and revise for CAPF.</h2>
             </div>
             <ul className="prep-feature-grid">
@@ -125,7 +126,7 @@ export function HomePage() {
       </main>
 
       <footer className="prep-container prep-footer">
-        <Link className="prep-brand" to="/"><span><Layers3 size={20} aria-hidden="true" /></span> DutyDeck</Link>
+        <Link className="prep-brand" to="/"><span><Layers3 size={20} aria-hidden="true" /></span> {APP_NAME}</Link>
         <Link to="/login">Sign in</Link>
       </footer>
     </div>

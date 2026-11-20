@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react';
 import { ArrowRight, BookOpen, Clock3 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { APP_NAME } from '../data/brand';
 import { paper } from '../utils/capfAttempt';
 
 export function LoginPage() {
@@ -21,7 +22,7 @@ export function LoginPage() {
   }
   return <main className="min-h-dvh bg-[#f7f7f2] px-5 text-[#25382c] dark:bg-[#131b16] dark:text-[#e7eee8]">
     <div className="mx-auto max-w-5xl">
-      <header className="flex h-16 items-center gap-2 border-b border-current/20 text-lg font-semibold"><BookOpen size={21} aria-hidden="true"/> DutyDeck</header>
+      <header className="flex h-16 items-center gap-2 border-b border-current/20 text-lg font-semibold"><BookOpen size={21} aria-hidden="true"/> {APP_NAME}</header>
       <div className="grid gap-8 py-9 sm:py-16 md:grid-cols-2 md:items-center md:gap-14 md:py-24">
         <section><h1 className="font-serif text-[clamp(2.8rem,7vw,5rem)] leading-[1.02] tracking-tight">Prepare for<br/>UPSC CAPF</h1>
           <p className="my-5 max-w-sm leading-7">Practise Paper I under time pressure, work on Paper II writing, and revisit the questions you missed.</p>

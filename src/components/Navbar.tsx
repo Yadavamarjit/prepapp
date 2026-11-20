@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { House, BookOpen, PencilLine, RotateCcw, ChartNoAxesCombined, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudyPreferences } from '../context/StudyPreferences';
+import { APP_NAME } from '../data/brand';
 
 export type NavTab = 'OVERVIEW' | 'LEARNING' | 'ANALYTICS' | 'CPO_SPEED' | 'CAPF_ELIMINATION' | 'PAPER_2' | 'AI_TUTOR' | 'MISTAKE_VAULT' | 'DAILY_REVIEW';
 const items = [
@@ -24,7 +25,7 @@ export function Navbar() {
   </Link>);
   return <>
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col border-r border-[#E4E4DB] bg-[#FAFAF6] p-5 lg:flex dark:border-slate-800 dark:bg-[#151D18]">
-      <Link to="/" className="mb-12 flex items-center gap-2.5 px-2 pt-3 text-xl font-semibold tracking-tight"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#315840] text-white"><BookOpen size={17} /></span>DutyDeck<span className="sr-only">home</span></Link>
+      <Link to="/" aria-label={`${APP_NAME} home`} className="mb-12 flex items-center gap-2.5 px-2 pt-3 text-xl font-semibold tracking-tight"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#315840] text-white"><BookOpen size={17} aria-hidden="true" /></span>{APP_NAME}</Link>
       <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#898D82]">Your workspace</p>
       <nav aria-label="Main navigation" className="space-y-1">{links()}</nav>
       <div className="mt-auto space-y-5 px-2">
@@ -34,7 +35,7 @@ export function Navbar() {
     </aside>
     <header className="sticky top-0 z-30 border-b border-[#E4E4DB] bg-[#F7F7F2]/95 backdrop-blur-sm lg:ml-56 dark:border-slate-800 dark:bg-[#121816]/95">
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between gap-3 px-5 sm:px-8 lg:px-10">
-        <div className="flex items-center gap-3"><Link to="/" className="text-lg font-semibold tracking-tight lg:hidden">DutyDeck</Link><span className="hidden text-sm text-[#777C71] lg:block">Your workspace <span className="mx-2 text-[#BBBFB4]">/</span><span className="text-[#30392D] dark:text-slate-200">{current}</span></span></div>
+        <div className="flex items-center gap-3"><Link to="/" aria-label={`${APP_NAME} home`} className="text-lg font-semibold tracking-tight lg:hidden">{APP_NAME}</Link><span className="hidden text-sm text-[#777C71] lg:block">Your workspace <span className="mx-2 text-[#BBBFB4]">/</span><span className="text-[#30392D] dark:text-slate-200">{current}</span></span></div>
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-xs font-semibold">UPSC CAPF</span>
           <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>

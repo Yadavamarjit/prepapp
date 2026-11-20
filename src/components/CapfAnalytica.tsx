@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Clock, Crosshair } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { APP_NAME } from '../data/brand';
 import { paper, report, startAttempt, attemptKey, loadAttemptBook, type Attempt, type Response } from '../utils/capfAttempt';
 
 const panel = 'study-panel space-y-4 p-5 sm:p-7';
@@ -78,7 +79,7 @@ function Workspace({ storageKey }: { storageKey: string }) {
     {!a && <section className={panel}>
       <Crosshair aria-hidden="true" className="text-[#688461]" size={30} />
       <h2 className="text-2xl font-semibold">Take your baseline</h2>
-      <p>Attempt a timed sectional from the DutyDeck practice bank. Your report shows marks earned, guessing penalties and questions to revisit.</p>
+      <p>Attempt a timed sectional from the {APP_NAME} practice bank. Your report shows marks earned, guessing penalties and questions to revisit.</p>
       <p className="text-sm">{paper.length} questions · {paper.length} minutes · {paper.length * 2} marks</p>
       <p className="text-sm">Correct +2 · Wrong −⅔ · Skipped 0</p>
       <button className={primary} onClick={() => start()}>Start timed practice</button>
