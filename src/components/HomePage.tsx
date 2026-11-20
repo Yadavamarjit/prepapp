@@ -1,7 +1,7 @@
-import { useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent, type PointerEvent } from 'react';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Calculator, Check, ChevronDown, CircleX,
-  Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, PenLine, RotateCcw,
+  Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, Pause, PenLine, Play, RotateCcw,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { APP_NAME } from '../data/brand';
@@ -166,6 +166,28 @@ function SessionPlanner() {
 }
 
 export function HomePage() {
+  const heroFrame = useRef<HTMLDivElement>(null);
+  const [motionPaused, setMotionPaused] = useState(false);
+
+  function moveScene(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType !== 'mouse' || motionPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const { left, top, width, height } = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - left) / width - 0.5;
+    const y = (event.clientY - top) / height - 0.5;
+    heroFrame.current?.style.setProperty('--prep-hero-parallax',
+      `translate3d(${x * 22}px, ${y * 14}px, 0) rotateX(${-y * 1.6}deg) rotateY(${x * 2}deg)`);
+  }
+
+  function resetScene() {
+    if (!motionPaused) heroFrame.current?.style.removeProperty('--prep-hero-parallax');
+  }
+
+  function toggleSceneMotion() {
+    const frame = heroFrame.current;
+    if (frame && !motionPaused) frame.style.setProperty('--prep-hero-frozen', getComputedStyle(frame).transform);
+    setMotionPaused(!motionPaused);
+  }
+
   return (
     <div className="prep-home">
       <a className="prep-skip" href="#home-content">Skip to content</a>
@@ -182,11 +204,19 @@ export function HomePage() {
       </header>
 
       <main id="home-content" tabIndex={-1}>
-        <section className="prep-hero" aria-labelledby="prep-heading">
-          <picture className="prep-hero-media" aria-hidden="true">
-            <source media="(max-width: 43rem)" srcSet="/capf-study-hero-mobile.webp" />
-            <img src="/capf-study-hero.webp" alt="" width={1672} height={941} fetchPriority="high" />
-          </picture>
+        <section className="prep-hero" aria-labelledby="prep-heading" data-motion-paused={motionPaused} onPointerMove={moveScene} onPointerLeave={resetScene}>
+          <div className="prep-hero-media" aria-hidden="true">
+            <div className="prep-hero-frame" ref={heroFrame}>
+              <div className="prep-hero-camera">
+                <picture>
+                  <source media="(max-width: 43rem)" srcSet="/capf-study-hero-mobile.webp" />
+                  <img src="/capf-study-hero.webp" alt="" width={1672} height={941} fetchPriority="high" />
+                </picture>
+                <span className="prep-hero-rain" />
+                <span className="prep-hero-lamp" />
+              </div>
+            </div>
+          </div>
           <div className="prep-container prep-hero-inner">
             <div className="prep-hero-copy">
               <p className="prep-eyebrow">UPSC CAPF (AC) preparation</p>
@@ -199,6 +229,10 @@ export function HomePage() {
               <p className="prep-no-account"><Check size={16} aria-hidden="true" /> No account needed</p>
             </div>
             <a className="prep-scroll-link" href="#study-path"><ArrowDown size={17} aria-hidden="true" /> Explore the study path</a>
+            <button className="prep-hero-motion" type="button" onClick={toggleSceneMotion}>
+              {motionPaused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
+              {motionPaused ? 'Play motion' : 'Pause motion'}
+            </button>
           </div>
         </section>
 

@@ -109,6 +109,7 @@
 
 .prep-hero {
   --prep-focus: var(--prep-gold);
+  --prep-hero-bottom: 1.6rem;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -117,7 +118,26 @@
 }
 
 .prep-hero-media, .prep-hero::after { position: absolute; z-index: -1; inset: 0; }
+.prep-hero-media { container-type: size; pointer-events: none; }
+.prep-hero-frame, .prep-hero-camera, .prep-hero-camera picture { position: absolute; inset: 0; }
 .prep-hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 46%; }
+.prep-hero-rain, .prep-hero-lamp, .prep-hero-motion { display: none; }
+
+/* Match the image’s cover crop so the rain and lamp stay aligned during the drift. */
+@supports (width: 1cqw) {
+  .prep-hero-frame {
+    --prep-image-ratio: 1.77683;
+    --prep-image-y: 46%;
+    inset: var(--prep-image-y) auto auto 50%;
+    width: max(100cqw, calc(100cqh * var(--prep-image-ratio)));
+    height: max(100cqh, calc(100cqw / var(--prep-image-ratio)));
+    translate: -50% calc(0% - var(--prep-image-y));
+  }
+
+  @media (max-width: 43rem) {
+    .prep-hero-frame { --prep-image-ratio: .84408; --prep-image-y: 30%; }
+  }
+}
 
 .prep-hero::after {
   background:
@@ -181,7 +201,7 @@
 
 .prep-scroll-link {
   position: absolute;
-  bottom: 1.6rem;
+  bottom: var(--prep-hero-bottom);
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
@@ -620,7 +640,82 @@ button.prep-option-action:hover, button.prep-option-action[aria-pressed='true'] 
 
 @media (prefers-reduced-motion: no-preference) {
   .prep-hero-copy { animation: prep-enter .58s .08s ease-out both; }
-  .prep-hero-media img { animation: prep-photo-settle 1.6s ease-out both; }
+  .prep-hero-camera { animation: prep-camera-drift 14s ease-in-out infinite alternate; }
+
+  .prep-hero-motion {
+    position: absolute;
+    right: 0;
+    bottom: var(--prep-hero-bottom);
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem .65rem;
+    border: 1px solid #fffaf055;
+    border-radius: .45rem;
+    background: #101a14c4;
+    color: var(--prep-cream);
+    font-size: .75rem;
+    font-weight: 600;
+  }
+
+  .prep-hero-motion:hover { background: #304034; }
+
+  @supports (width: 1cqw) {
+    .prep-hero-rain, .prep-hero-lamp { position: absolute; inset: 0; display: block; }
+    .prep-hero-rain { clip-path: polygon(81.6% 0, 100% 0, 100% 57.5%, 82% 54%); }
+
+    .prep-hero-rain::before, .prep-hero-rain::after {
+      --prep-rain-travel: 180px;
+      position: absolute;
+      inset: calc(0px - var(--prep-rain-travel)) 0 0;
+      background-image:
+        radial-gradient(ellipse 1px 11px at 12px 25px, #ddf8eeaa, transparent),
+        radial-gradient(ellipse .8px 9px at 42px 117px, #e2fff9aa, transparent),
+        radial-gradient(ellipse 1.2px 16px at 78px 68px, #e4f7f0aa, transparent),
+        radial-gradient(ellipse .8px 8px at 105px 158px, #dafff1aa, transparent);
+      background-size: 121px var(--prep-rain-travel);
+      opacity: .54;
+      animation: prep-window-rain 2.25s linear infinite;
+      content: '';
+    }
+
+    .prep-hero-rain::after {
+      --prep-rain-travel: 232px;
+      background-position: 53px 41px;
+      opacity: .34;
+      animation-duration: 3.65s;
+    }
+
+    .prep-hero-lamp {
+      background: radial-gradient(ellipse 13% 14% at var(--prep-lamp-x, 78%) var(--prep-lamp-y, 40%), #efa44672, transparent 72%);
+      mix-blend-mode: screen;
+      animation: prep-lamp-glow 6s ease-in-out infinite alternate;
+    }
+
+    @media (max-width: 43rem) {
+      .prep-hero-rain { display: none; }
+      .prep-hero-lamp { --prep-lamp-x: 74%; --prep-lamp-y: 38%; }
+    }
+  }
+
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .prep-hero-frame {
+      transform: perspective(1300px) var(--prep-hero-parallax, translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg));
+      transition: transform .48s ease-out;
+    }
+
+    .prep-hero[data-motion-paused='true'] .prep-hero-frame {
+      transform: var(--prep-hero-frozen, none);
+      transition: none;
+    }
+  }
+
+  .prep-hero[data-motion-paused='true'] :is(.prep-hero-camera, .prep-hero-lamp),
+  .prep-hero[data-motion-paused='true'] .prep-hero-rain::before,
+  .prep-hero[data-motion-paused='true'] .prep-hero-rain::after {
+    animation-play-state: paused;
+  }
   .prep-quiz-feedback, .prep-disclosure[open] > p, .prep-disclosure[open] > ol { animation: prep-enter .22s ease-out both; }
   .prep-option-text::after { transition: transform .18s ease-out; }
   .prep-button, .prep-nav-cta, .prep-hero-link, .prep-option, .prep-quiz-submit, .prep-option-action {
@@ -632,9 +727,16 @@ button.prep-option-action:hover, button.prep-option-action[aria-pressed='true'] 
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes prep-photo-settle {
-    from { transform: scale(1.025); }
-    to { transform: scale(1); }
+  @keyframes prep-camera-drift {
+    from { transform: scale(1.04) translate3d(.25%, .2%, 0); }
+    to { transform: scale(1.085) translate3d(-.65%, -.38%, 0); }
+  }
+
+  @keyframes prep-window-rain { to { transform: translateY(var(--prep-rain-travel)); } }
+
+  @keyframes prep-lamp-glow {
+    from { opacity: .24; }
+    to { opacity: .68; }
   }
 }
 
@@ -652,6 +754,7 @@ button.prep-option-action:hover, button.prep-option-action[aria-pressed='true'] 
   .prep-brand > span { width: 2rem; }
   .prep-nav-cta { min-height: 2.75rem; padding-inline: .65rem; font-size: .77rem; }
   .prep-nav-cta svg { width: .85rem; }
+  .prep-hero { --prep-hero-bottom: 1rem; }
   .prep-hero-inner { min-height: max(44rem, min(51rem, 97svh)); align-items: end; padding-block: 5.5rem 5.35rem; }
   .prep-hero-media img { object-position: center 30%; }
   .prep-hero::after { background: linear-gradient(0deg, #0d1710 0%, #0d1710f5 24%, #0d1710bc 44%, #0d17103a 64%, #0d17101c 85%, #0d171085 100%); }
@@ -659,7 +762,6 @@ button.prep-option-action:hover, button.prep-option-action[aria-pressed='true'] 
   .prep-hero-intro { max-width: 21rem; }
   .prep-actions { gap: .5rem; margin-top: 1.15rem; }
   .prep-actions > * { font-size: .8rem; padding-inline: .72rem; }
-  .prep-scroll-link { bottom: 1rem; }
   .prep-path, .prep-revision, .prep-faq, .prep-papers-heading, .prep-papers-grid, .prep-resource-list { grid-template-columns: minmax(0, 1fr); }
   .prep-papers-heading { gap: 0; margin-bottom: 1.5rem; }
   .prep-section h2 { text-wrap: initial; }
