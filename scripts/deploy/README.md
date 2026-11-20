@@ -1,6 +1,6 @@
 # DutyDeck backend deployment
 
-The Vite frontend runs on Vercel. The Express API is intended for Oracle Linux 9 at `130.210.120.198`, behind Caddy at `https://api-130-210-120-198.sslip.io`. Deployment is not complete until HTTPS and the Vercel proxy have passed the checks below.
+The Vite frontend runs on Vercel. The Express API runs on Oracle Linux 9 at `152.67.15.185`, behind Caddy at `https://api-152-67-15-185.sslip.io`. Deployment is not complete until HTTPS and the Vercel proxy have passed the checks below.
 
 ## Server adjustments
 
@@ -18,7 +18,7 @@ Run `npm ci`, `npm run lint`, `node --import tsx --test src/utils/*.test.ts serv
 
 ## Server installation
 
-Run `provision.sh` as root on the server. It verifies the pinned Node archive checksum, installs Caddy and PDF dependencies, creates separate unprivileged service accounts, opens only HTTP/HTTPS in addition to the existing SSH access, and configures key-only SSH. Keep the existing SSH session open while validating a second login.
+Run `provision.sh` as root on the server. It verifies the pinned Node archive checksum for x86_64 or ARM64, installs matching Caddy and PDF dependencies, creates separate unprivileged service accounts, opens only HTTP/HTTPS in addition to the existing SSH access, and configures key-only SSH. Keep the existing SSH session open while validating a second login.
 
 Upload the archive as `/home/opc/prepapp-backend.tar.gz`, deployment service files and Caddyfile to `/home/opc/prepapp-units/`, and `install-release.sh` into `/home/opc`. Transfer the keys file through an encrypted SSH connection with `umask 077` to `/home/opc/prepapp.keys.env`. Run `sudo bash install-release.sh <unique-release-id>`. The installer merges allowed provider settings into `/etc/prepapp/backend.env` and removes the temporary key transfer file. It does not overwrite the session signing secret.
 
@@ -34,7 +34,7 @@ Defaults: 6 AI requests per minute per account, 30 per account per UTC day, 100 
 
 ## Publish and check
 
-First verify `https://api-130-210-120-198.sslip.io/api/health`, then run `API_BASE_URL=https://api-130-210-120-198.sslip.io node scripts/deploy/verify-api.mjs`. Verify TLS without bypassing certificate validation. Add a Vercel rewrite before the SPA fallback: `/api/:path*` to `https://api-130-210-120-198.sslip.io/api/:path*`. Deploy and rerun the same script with `API_BASE_URL=https://prepapp-five.vercel.app`, ensuring the proxy preserves session cookies. Verify Google sign-in and a paid AI request with a real user session before calling the complete flow verified.
+First verify `https://api-152-67-15-185.sslip.io/api/health`, then run `API_BASE_URL=https://api-152-67-15-185.sslip.io node scripts/deploy/verify-api.mjs`. Verify TLS without bypassing certificate validation. Add a Vercel rewrite before the SPA fallback: `/api/:path*` to `https://api-152-67-15-185.sslip.io/api/:path*`. Deploy and rerun the same script with `API_BASE_URL=https://prepapp-five.vercel.app`, ensuring the proxy preserves session cookies. Verify Google sign-in and a paid AI request with a real user session before calling the complete flow verified.
 
 Use `systemctl status prepapp caddy` and `journalctl -u prepapp -u caddy --since '10 minutes ago'` for bounded troubleshooting. To roll back, point `/opt/prepapp/current` to a previous verified release and restart `prepapp`. Never print the environment file or tokens in troubleshooting output.
 

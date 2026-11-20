@@ -6,17 +6,24 @@ install -d -m 0755 /opt/prepapp /opt/prepapp/releases
 if ! id prepapp >/dev/null 2>&1; then useradd --system --home-dir /var/lib/prepapp --shell /sbin/nologin prepapp; fi
 install -d -m 0750 -o prepapp -g prepapp /var/lib/prepapp
 install -d -m 0750 -o root -g prepapp /etc/prepapp
-if ! test -x /opt/node-v24.22.3-linux-x64/bin/node; then
-  curl --fail --silent --show-error --location --max-time 180 https://nodejs.org/dist/v24.22.3/node-v24.22.3-linux-x64.tar.xz -o /opt/prepapp/node.tar.xz
-  echo '4f2b175a6d53a5c617a80dba2676238a0688cef28c6da4eba35c7d844e66fcfb  /opt/prepapp/node.tar.xz' | sha256sum --check
+architecture="$(uname -m)"
+case "$architecture" in
+  x86_64) node_arch=x64; node_checksum=4f2b175a6d53a5c617a80dba2676238a0688cef28c6da4eba35c7d844e66fcfb ;;
+  aarch64) node_arch=arm64; node_checksum=6e51a2ada00f0011cc266f65d98922b403d7ad88f809ca2aa615a5fe1ce6e86c ;;
+  *) echo "Unsupported CPU architecture: $architecture" >&2; exit 1 ;;
+esac
+node_dir="/opt/node-v24.22.3-linux-$node_arch"
+if ! test -x "$node_dir/bin/node"; then
+  curl --fail --silent --show-error --location --max-time 180 "https://nodejs.org/dist/v24.22.3/node-v24.22.3-linux-$node_arch.tar.xz" -o /opt/prepapp/node.tar.xz
+  echo "$node_checksum  /opt/prepapp/node.tar.xz" | sha256sum --check
   tar -xJf /opt/prepapp/node.tar.xz -C /opt
 fi
-ln -sfn /opt/node-v24.22.3-linux-x64/bin/node /usr/local/bin/node
-ln -sfn /opt/node-v24.22.3-linux-x64/bin/npm /usr/local/bin/npm
-if ! test -x /usr/local/bin/caddy; then
-  curl --fail --silent --show-error --location --max-time 180 'https://caddyserver.com/api/download?os=linux&arch=amd64' -o /opt/prepapp/caddy.download
-  install -m 0755 /opt/prepapp/caddy.download /usr/local/bin/caddy
-fi
+ln -sfn "$node_dir/bin/node" /usr/local/bin/node
+ln -sfn "$node_dir/bin/npm" /usr/local/bin/npm
+caddy_arch=amd64
+if test "$architecture" = aarch64; then caddy_arch=arm64; fi
+curl --fail --silent --show-error --location --max-time 180 "https://caddyserver.com/api/download?os=linux&arch=$caddy_arch" -o /opt/prepapp/caddy.download
+install -m 0755 /opt/prepapp/caddy.download /usr/local/bin/caddy
 if ! id caddy >/dev/null 2>&1; then useradd --system --home-dir /var/lib/caddy --shell /sbin/nologin caddy; fi
 install -d -m 0750 -o caddy -g caddy /var/lib/caddy
 install -d -m 0755 /etc/caddy
@@ -28,7 +35,7 @@ if ! test -f /etc/prepapp/backend.env; then
   python3 - <<'PY'
 import secrets
 from pathlib import Path
-Path('/etc/prepapp/backend.env').write_text('NODE_ENV=production\nAPI_ONLY=true\nHOST=127.0.0.1\nPORT=3000\nDATA_DIR=/var/lib/prepapp\nPYTHON_BIN=/opt/prepapp/venv/bin/python\nFIREBASE_PROJECT_ID=gen-lang-client-0456258653\nALLOWED_ORIGINS=https://prepapp-five.vercel.app,https://prepapp-amarjits-projects-cd5ca462.vercel.app\nAI_USER_DAILY_LIMIT=30\nAI_GLOBAL_DAILY_LIMIT=100\nSESSION_SECRET=' + secrets.token_hex(48) + '\n')
+Path('/etc/prepapp/backend.env').write_text('NODE_ENV=production\nAPI_ONLY=true\nHOST=127.0.0.1\nPORT=3000\nDATA_DIR=/var/lib/prepapp\nPYTHON_BIN=/opt/prepapp/venv/bin/python\nFIREBASE_PROJECT_ID=gen-lang-client-0456258653\nALLOWED_ORIGINS=https://prepapp-five.vercel.app,https://prepapp-amarjits-projects-cd5ca462.vercel.app,https://prepapp-git-main-amarjits-projects-cd5ca462.vercel.app\nAI_USER_DAILY_LIMIT=30\nAI_GLOBAL_DAILY_LIMIT=100\nSESSION_SECRET=' + secrets.token_hex(48) + '\n')
 PY
 fi
 chown root:prepapp /etc/prepapp/backend.env

@@ -1,4 +1,4 @@
-api-130-210-120-198.sslip.io {
+api-152-67-15-185.sslip.io {
     encode zstd gzip
     request_body {
         max_size 256KB

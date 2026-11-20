@@ -21,7 +21,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://api-130-210-120-198.sslip.io/api/:path*" },
+    { "source": "/api/:path*", "destination": "https://api-152-67-15-185.sslip.io/api/:path*" },
     { "source": "/((?!api(?:/|$)).*)", "destination": "/index.html" }
   ]
 }
