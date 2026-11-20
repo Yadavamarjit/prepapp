@@ -350,7 +350,7 @@ export default function App() {
         <Route path="practice" element={<PracticeHome />} />
         <Route path="practice/capf-analytica" element={<CapfAnalytica />} />
         <Route path="current-affairs" element={<CurrentAffairs progress={affairProgress} onChange={handleAffairChange} storageError={affairStorageError} />} />
-        <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} />} />
+        <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} progressMap={chapterProgress} onToggleChapterCompleted={handleToggleChapterCompleted} onSelectTopicForAi={handleSelectTopicForAi} />} />
         <Route path="calculation-coach" element={<CalculationCoach />} />
         <Route path="reels" element={<LearnReels progress={reelsProgress} onChange={handleReelsChange} storageError={reelsStorageError} />} />
         <Route path="reels/:courseId/:chapterNumber" element={<LearnReels progress={reelsProgress} onChange={handleReelsChange} storageError={reelsStorageError} />} />

@@ -1,0 +1,3149 @@
+{
+  "exam": "UPSC CAPF (Assistant Commandant)",
+  "version": "1.0",
+  "totalSubjects": 8,
+  "subjects": [
+    {
+      "id": "history",
+      "name": "History of India",
+      "slug": "history-of-india",
+      "officialScope": "Broad areas of social, economic, and political history of India, including the growth of nationalism and the Indian freedom movement.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "UPSC CAPF AC Syllabus & Pattern (Testbook)",
+          "url": "https://testbook.com/upsc-capf-ac/syllabus-exam-pattern"
+        },
+        {
+          "title": "Spectrum: A Brief History of Modern India Chapters (NotesBolt)",
+          "url": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+        },
+        {
+          "title": "NCERT Class 12 Themes in Indian History Part I (NCERT)",
+          "url": "https://www.ncerttextbooks.com/ncert-books/class-12/history/"
+        },
+        {
+          "title": "NCERT Class 12 Themes in Indian History Part III (Competishun)",
+          "url": "https://competishun.com/ncert-class-12-history-book-pdf-download/"
+        },
+        {
+          "title": "History of Medieval India by Satish Chandra (PDF Contents)",
+          "url": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+        },
+        {
+          "title": "India's Ancient Past by R.S. Sharma Guide (PrepOS)",
+          "url": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+        },
+        {
+          "title": "NCERT Class 11 An Introduction to Indian Art Part I (Competishun)",
+          "url": "https://competishun.com/ncert-class-11-fine-arts-book-pdf-download-an-introduction-to-indian-art-part-1/"
+        },
+        {
+          "title": "Nitin Singhania Indian Art & Culture Guide (Anantam IAS)",
+          "url": "https://anantamias.com/nitin-singhania-art-and-culture/"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "ancient-history",
+          "name": "Ancient History",
+          "slug": "ancient-history",
+          "priority": "Medium-High",
+          "primaryBooks": [
+            "NCERT Class 12: Themes in Indian History – Part I",
+            "R.S. Sharma: India's Ancient Past (Old NCERT Class 11)"
+          ],
+          "chapters": [
+            {
+              "id": "anc-01",
+              "order": 1,
+              "title": "Prehistoric India: Stone Age & Chalcolithic Cultures",
+              "priority": "Medium",
+              "bookReferences": [
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Stone Age, Neolithic & Chalcolithic Cultures",
+                  "sourceUrl": "https://india.oup.com/product/indias-ancient-past-9789354977527/"
+                }
+              ],
+              "topics": [
+                "Palaeolithic, Mesolithic, and Neolithic phases (tools, sites, lifestyle)",
+                "Important prehistoric sites: Bhimbetka, Mehrgarh, Burzahom, Chirand, Daojali Hading",
+                "Chalcolithic cultures: Ahar-Banas, Malwa, Jorwe, Ochre Coloured Pottery (OCP)",
+                "Megalithic cultures of South India"
+              ]
+            },
+            {
+              "id": "anc-02",
+              "order": 2,
+              "title": "Indus Valley Civilization (Harappan Culture)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part I",
+                  "chapter": "Theme 1: Bricks, Beads and Bones (The Harappan Civilisation)",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lehs101.pdf"
+                },
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Harappan Culture: Bronze Age Urbanization",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                }
+              ],
+              "topics": [
+                "Geographical extent and major sites (Harappa, Mohenjodaro, Lothal, Dholavira, Kalibangan, Rakhigarhi, Banawali, Chanhudaro)",
+                "Town planning: Citadel, Lower Town, drainage system, Great Bath, Granaries",
+                "Agriculture, craft production, seals, weights, script, and internal/external trade (Mesopotamia/Meluhha)",
+                "Society, religious beliefs (Pashupati seal, Mother Goddess), and theories of decline"
+              ]
+            },
+            {
+              "id": "anc-03",
+              "order": 3,
+              "title": "The Vedic Age (Early & Later Vedic Period)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Early Vedic Age & Later Vedic Phase",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                },
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part I",
+                  "chapter": "Theme 3: Kinship, Caste and Class (Early Societies)",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lehs103.pdf"
+                }
+              ],
+              "topics": [
+                "Vedic literature: Four Vedas, Brahmanas, Aranyakas, Upanishads, Vedangas",
+                "Rigvedic polity (Sabha, Samiti, Vidatha, Rajan), pastoral economy, and social structure",
+                "Later Vedic shift to Ganga valley, iron use (PGW pottery), rise of Varna and Ashrama systems",
+                "Changes in religion, sacrifices, and status of women"
+              ]
+            },
+            {
+              "id": "anc-04",
+              "order": 4,
+              "title": "Mahajanapadas, Rise of Magadha & Second Urbanization",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part I",
+                  "chapter": "Theme 2: Kings, Farmers and Towns (Early States and Economies)",
+                  "sourceUrl": "https://www.ncerttextbooks.com/ncert-books/class-12/history/"
+                },
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Territorial States and the Rise of Magadha",
+                  "sourceUrl": "https://india.oup.com/product/indias-ancient-past-9789354977527/"
+                }
+              ],
+              "topics": [
+                "16 Mahajanapadas (monarchies vs. Gana-Sanghas/republics) and their capitals",
+                "Dynasties of Magadha: Haryanka (Bimbisara, Ajatashatru), Shishunaga, Nanda",
+                "Iranian (Achaemenid) and Macedonian (Alexander) invasions and their impact",
+                "Punch-marked coins, NBPW pottery, guilds (Shrenis), and urban growth"
+              ]
+            },
+            {
+              "id": "anc-05",
+              "order": 5,
+              "title": "Buddhism, Jainism & Heterodox Sects",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part I",
+                  "chapter": "Theme 4: Thinkers, Beliefs and Buildings (Cultural Developments)",
+                  "sourceUrl": "https://www.ncerttextbooks.com/ncert-books/class-12/history/"
+                },
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Jainism and Buddhism",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                }
+              ],
+              "topics": [
+                "Life of Gautama Buddha, Four Noble Truths, Eightfold Path, Sangha",
+                "Four Buddhist Councils, Buddhist literature (Tripitakas, Jatakas), Hinayana vs. Mahayana vs. Vajrayana",
+                "Life of Vardhamana Mahavira, Tirthankaras, Five Vows, Triratna, Anekantavada & Syadvada",
+                "Jain Councils, Digambara vs. Shvetambara sects, and Ajivika / Charvaka philosophies"
+              ]
+            },
+            {
+              "id": "anc-06",
+              "order": 6,
+              "title": "The Mauryan Empire",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part I",
+                  "chapter": "Theme 2: Kings, Farmers and Towns",
+                  "sourceUrl": "https://www.ncerttextbooks.com/ncert-books/class-12/history/"
+                },
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "The Maurya Age & Significance of Maurya Rule",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                }
+              ],
+              "topics": [
+                "Sources: Kautilya's Arthashastra, Megasthenes' Indica, Ashokan Edicts (Major/Minor Rock & Pillar Edicts)",
+                "Chandragupta Maurya, Bindusara, and Ashoka (Kalinga War and Dhamma)",
+                "Central, provincial, and municipal administration; espionage and revenue systems",
+                "Mauryan economy, art, architecture, and causes of decline"
+              ]
+            },
+            {
+              "id": "anc-07",
+              "order": 7,
+              "title": "Post-Mauryan Period & The Sangam Age",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Central Asian Contacts, Satavahanas & Dawn of History in the Deep South",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                }
+              ],
+              "topics": [
+                "Indigenous dynasties: Shungas, Kanvas, Satavahanas (land grants, administration, trade)",
+                "Foreign rulers: Indo-Greeks, Shakas (Rudradaman I), Parthians, Kushanas (Kanishka, Silk Route, Gandhara & Mathura art)",
+                "Sangam Age: Cheras, Cholas, Pandyas; Three Sangams; Tolkappiyam, Silappadikaram, Manimekalai",
+                "Indo-Roman trade (Periplus of the Erythraean Sea, Arikamedu, Muziris)"
+              ]
+            },
+            {
+              "id": "anc-08",
+              "order": 8,
+              "title": "The Gupta Empire & Vakatakas",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Rise and Growth of the Gupta Empire & Life in the Gupta Age",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                }
+              ],
+              "topics": [
+                "Rulers: Chandragupta I, Samudragupta (Prayag Prashasti), Chandragupta II (Fa-Hien's visit), Kumaragupta, Skandagupta",
+                "Administration, land grants (Agrahara/Brahmadeya), feudal tendencies, and taxation",
+                "Science, astronomy, mathematics, and literature (Aryabhata, Varahamihira, Kalidasa, Sushruta)",
+                "Vakatakas and decline of the Guptas (Huna invasions)"
+              ]
+            },
+            {
+              "id": "anc-09",
+              "order": 9,
+              "title": "Post-Gupta Era: Harshavardhana & Regional Kingdoms",
+              "priority": "Medium",
+              "bookReferences": [
+                {
+                  "book": "R.S. Sharma – India's Ancient Past",
+                  "chapter": "Harsha and His Times & Formation of New States in the Deccan and South India",
+                  "sourceUrl": "https://theprepos.in/upsc-books/rs-sharma-ancient-india"
+                }
+              ],
+              "topics": [
+                "Pushyabhutis of Thanesar & Kannauj: Harshavardhana, Banabhatta's Harshacharita, Xuanzang (Hiuen Tsang)",
+                "Chalukyas of Badami (Pulakeshin II, Aihole inscription) and Pallavas of Kanchipuram (Mahendravarman, Narasimhavarman)",
+                "Transition from Ancient to Early Medieval India, Indian philosophical schools (Shad-Darshanas)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "medieval-history",
+          "name": "Medieval History",
+          "slug": "medieval-history",
+          "priority": "Medium-High",
+          "primaryBooks": [
+            "NCERT Class 12: Themes in Indian History – Part II",
+            "Satish Chandra: History of Medieval India (Old NCERT Class 11)"
+          ],
+          "chapters": [
+            {
+              "id": "med-01",
+              "order": 1,
+              "title": "Early Medieval India: Tripartite Struggle & The Imperial Cholas (800–1200 CE)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Satish Chandra – History of Medieval India",
+                  "chapter": "Ch. 2: Northern India: Age of the Three Empires (800–1000) & Ch. 3: South India: The Chola Empire (900–1200)",
+                  "sourceUrl": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+                }
+              ],
+              "topics": [
+                "Tripartite Struggle for Kannauj: Palas, Gurjara-Pratiharas, Rashtrakutas",
+                "Imperial Cholas: Rajaraja I, Rajendra I, naval expeditions, local self-government (Ur, Sabha, Nagaram, Uttaramerur inscription)",
+                "Rajput kingdoms, Arab conquest of Sindh, Mahmud of Ghazni, and Muhammad Ghori (Battles of Tarain 1191–92)"
+              ]
+            },
+            {
+              "id": "med-02",
+              "order": 2,
+              "title": "The Delhi Sultanate (1206–1526 CE)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Satish Chandra – History of Medieval India",
+                  "chapter": "Ch. 6: The Delhi Sultanat–I (1200–1300), Ch. 7: The Delhi Sultanat–II (1300–1400) & Ch. 8: Government, Economic and Social Life",
+                  "sourceUrl": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+                },
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part II",
+                  "chapter": "Theme 5: Through the Eyes of Travellers (Al-Biruni, Ibn Battuta, Francois Bernier)",
+                  "sourceUrl": "https://www.drishtiias.com/images/pdf/NCERT-Class-12-History-Part-2.pdf"
+                }
+              ],
+              "topics": [
+                "Five dynasties: Mamluk/Slave (Qutb-ud-din Aibak, Iltutmish, Razia, Balban), Khalji (Alauddin Khalji's market & military reforms), Tughlaq (Muhammad bin Tughlaq, Firoz Shah Tughlaq), Sayyid, Lodi",
+                "Administrative terms: Iqta system, Diwan-i-Wizarat, Diwan-i-Arz, Diwan-i-Insha, Diwan-i-Risalat, Chahalgani",
+                "Agrarian economy, currency, urbanization, and foreign travellers' accounts (Al-Biruni, Ibn Battuta)"
+              ]
+            },
+            {
+              "id": "med-03",
+              "order": 3,
+              "title": "Vijayanagara Empire, Bahmani Kingdom & Regional States",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part II",
+                  "chapter": "Theme 7: An Imperial Capital: Vijayanagara",
+                  "sourceUrl": "https://anujjindal.in/wp-content/uploads/2022/06/History-Class-12th-2.pdf"
+                },
+                {
+                  "book": "Satish Chandra – History of Medieval India",
+                  "chapter": "Ch. 9: The Age of Vijayanagara and the Bahmanids & Ch. 10: Struggle for Empire in North India–I",
+                  "sourceUrl": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+                }
+              ],
+              "topics": [
+                "Vijayanagara dynasties (Sangama, Saluva, Tuluva, Aravidu) and Krishnadevaraya",
+                "Amara-Nayaka system, Hampi architecture (Virupaksha, Vitthala temples, Mahanavami Dibba), Battle of Talikota (1565)",
+                "Foreign visitors to Vijayanagara: Nicolo Conti, Abdur Razzaq, Domingo Paes, Fernao Nuniz",
+                "Bahmani Kingdom (Mahmud Gawan) and Deccan Sultanates (Bijapur, Golconda, Ahmadnagar, Berar, Bidar); Bengal, Gujarat, Malwa, Mewar, Kashmir"
+              ]
+            },
+            {
+              "id": "med-04",
+              "order": 4,
+              "title": "Bhakti and Sufi Movements",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part II",
+                  "chapter": "Theme 6: Bhakti-Sufi Traditions (Changes in Religious Beliefs and Devotional Texts)",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lehs202.pdf"
+                },
+                {
+                  "book": "Satish Chandra – History of Medieval India",
+                  "chapter": "Ch. 11: Cultural Development in India (1200–1500)",
+                  "sourceUrl": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+                }
+              ],
+              "topics": [
+                "Early South Indian Bhakti: Alvars (Vaishnava) and Nayanars (Shaiva); Virashaivas/Lingayats (Basavanna)",
+                "Philosophies: Shankara (Advaita), Ramanuja (Vishishtadvaita), Madhvacharya (Dvaita), Nimbarka, Vallabhacharya",
+                "Nirguna vs. Saguna Bhakti: Kabir, Guru Nanak, Ravidas, Mirabai, Tulsidas, Surdas, Chaitanya, Namdev, Tukaram, Shankaradeva",
+                "Sufi Silsilas in India: Chishti (Moinuddin Chishti, Nizamuddin Auliya), Suhrawardi, Qadiri, Naqshbandi; Khanqah & Dargah traditions"
+              ]
+            },
+            {
+              "id": "med-05",
+              "order": 5,
+              "title": "The Mughal Empire & Sur Interregnum (1526–1707 CE)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Satish Chandra – History of Medieval India",
+                  "chapter": "Ch. 12–19: Mughals & Afghans, Age of Akbar, Deccan, 17th Century Economy/Culture & Climax/Disintegration",
+                  "sourceUrl": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+                },
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part II",
+                  "chapter": "Theme 8: Peasants, Zamindars and the State (Agrarian Society and the Mughal Empire) & Theme 9: Kings and Chronicles",
+                  "sourceUrl": "https://www.drishtiias.com/images/pdf/NCERT-Class-12-History-Part-2.pdf"
+                }
+              ],
+              "topics": [
+                "Babur (Panipat 1526, Khanwa 1527), Humayun, and Sher Shah Suri (administrative, currency & road reforms)",
+                "Akbar: Mansabdari & Jagirdari systems, Zabti/Dahsala land revenue (Todar Mal), Rajput policy, Ibadat Khana, Sulh-i-Kul",
+                "Jahangir, Shah Jahan, and Aurangzeb (Deccan policy, religious policy, revolts)",
+                "Mughal agrarian society (Ain-i-Akbari, Khud-kashta, Pahi-kashta, Zamindars), trade, architecture, and court chronicles"
+              ]
+            },
+            {
+              "id": "med-06",
+              "order": 6,
+              "title": "Rise of the Marathas & 18th Century Regional Powers",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "Satish Chandra – History of Medieval India",
+                  "chapter": "Ch. 18–19: Climax and Disintegration of the Mughal Empire (Rise of Marathas)",
+                  "sourceUrl": "https://crpmahavidyalaya.in/wp-content/uploads/2020/04/AR_History-of-Medieval-India-by-Satish-Chandra.pdf"
+                }
+              ],
+              "topics": [
+                "Chhatrapati Shivaji Maharaj: Ashtapradhan council, Chauth & Sardeshmukhi, forts, military tactics",
+                "Age of the Peshwas (Balaji Vishwanath, Baji Rao I, Balaji Baji Rao), Maratha Confederacy, Third Battle of Panipat (1761)",
+                "Rise of Sikhs (Guru Gobind Singh, Banda Bahadur, Misls), Jats, Awadh, Bengal, Hyderabad, Mysore"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "modern-history",
+          "name": "Modern History & Indian Freedom Struggle",
+          "slug": "modern-history",
+          "priority": "Very High",
+          "primaryBooks": [
+            "Spectrum: A Brief History of Modern India by Rajiv Ahir",
+            "NCERT Class 12: Themes in Indian History – Part III"
+          ],
+          "chapters": [
+            {
+              "id": "mod-01",
+              "order": 1,
+              "title": "Sources, Historiography & Advent of Europeans in India",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 1 (Ch. 1–2): Sources & Approaches; Unit 2 (Ch. 3): Advent of the Europeans in India",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                }
+              ],
+              "topics": [
+                "Portuguese (Vasco da Gama, Francisco de Almeida, Albuquerque, Cartaze system)",
+                "Dutch (VOC), English East India Company (Farrukhsiyar's Farman 1717), Danes, French",
+                "Anglo-French rivalry: First, Second, and Third Carnatic Wars (Battle of Wandiwash 1760)"
+              ]
+            },
+            {
+              "id": "mod-02",
+              "order": 2,
+              "title": "India on the Eve of British Conquest & British Expansion",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 2 (Ch. 4): India on the Eve of British Conquest; (Ch. 5): Expansion and Consolidation of British Power in India",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                }
+              ],
+              "topics": [
+                "Decline of Later Mughals, Nadir Shah & Ahmad Shah Abdali invasions, successor states",
+                "Conquest of Bengal: Battle of Plassey (1757), Battle of Buxar (1764), Treaty of Allahabad (1765), Dual Government",
+                "Anglo-Mysore Wars (Hyder Ali, Tipu Sultan), Anglo-Maratha Wars (Treaties of Salbai, Bassein), Conquest of Sindh & Anglo-Sikh Wars",
+                "Policies of expansion: Ring-Fence, Subsidiary Alliance (Wellesley), Doctrine of Lapse (Dalhousie)"
+              ]
+            },
+            {
+              "id": "mod-03",
+              "order": 3,
+              "title": "People's Resistance Before 1857 & The Revolt of 1857",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 3 (Ch. 6): People's Resistance Against British Before 1857; (Ch. 7): The Revolt of 1857",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                },
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part III",
+                  "chapter": "Theme 10: Colonialism and the Countryside & Theme 11: Rebels and the Raj",
+                  "sourceUrl": "https://competishun.com/ncert-class-12-history-book-pdf-download/"
+                }
+              ],
+              "topics": [
+                "Civil rebellions: Sanyasi, Paika, Poligar, Velu Thampi, Kittur Chennamma, Wahabi, Kuka",
+                "Peasant & Tribal uprisings: Pahariyas, Chuar, Kol (1831), Santhal (1855–56), Khond, Bhil, Ramosi, Munda (Ulgulan), Vellore Mutiny (1806)",
+                "Revolt of 1857: Causes, storm centres & leaders (Delhi, Kanpur, Lucknow, Jhansi, Bihar, Bareilly), British suppression",
+                "Nature/historiography of 1857, Government of India Act 1858, Queen's Proclamation, Peel Commission"
+              ]
+            },
+            {
+              "id": "mod-04",
+              "order": 4,
+              "title": "Socio-Religious Reform Movements (19th & Early 20th Century)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 4 (Ch. 8): Socio-Religious Reform Movements: General Features; (Ch. 9): A General Survey of Socio-Cultural Reform Movements",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                }
+              ],
+              "topics": [
+                "Bengal Renaissance: Raja Rammohan Roy (Brahmo Samaj), Debendranath Tagore, Keshab Chandra Sen, Young Bengal (Derozio), Ishwar Chandra Vidyasagar",
+                "Western & Southern India: Prarthana Samaj, Jyotiba Phule (Satyashodhak Samaj), Gopal Hari Deshmukh, Sree Narayana Guru (SNDP), Justice Movement, Self-Respect Movement (Periyar), Vaikom Satyagraha",
+                "Revivalist & All-India movements: Arya Samaj (Dayananda Saraswati), Ramakrishna Mission (Swami Vivekananda), Theosophical Society (Annie Besant)",
+                "Muslim, Sikh & Parsi reforms: Aligarh Movement (Sir Syed Ahmad Khan), Deoband, Singh Sabha, Akali Movement, Rahnumai Mazdayasnan Sabha"
+              ]
+            },
+            {
+              "id": "mod-05",
+              "order": 5,
+              "title": "Beginning of Modern Nationalism & Moderate Phase (1885–1905)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 5 (Ch. 10): Beginning of Modern Nationalism in India; (Ch. 11): Indian National Congress: Foundation and the Moderate Phase",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                }
+              ],
+              "topics": [
+                "Pre-Congress political associations in Bengal, Bombay, and Madras (Landholders' Society, British Indian Association, Indian Association, Poona Sarvajanik Sabha, Madras Mahajan Sabha)",
+                "Foundation of Indian National Congress (1885), Safety Valve debate, early sessions",
+                "Moderate leaders (Dadabhai Naoroji, R.C. Dutt, Gokhale, Pherozeshah Mehta), Drain of Wealth theory, constitutional methods"
+              ]
+            },
+            {
+              "id": "mod-06",
+              "order": 6,
+              "title": "Militant Nationalism, Revolutionary Phase I & World War I (1905–1918)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 6 (Ch. 12): Era of Militant Nationalism (1905–09); (Ch. 13): First Phase of Revolutionary Activities (1907–17); (Ch. 14): First World War and Nationalist Response",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                }
+              ],
+              "topics": [
+                "Partition of Bengal (1905), Swadeshi & Boycott Movement, Surat Split (1907), All-India Muslim League (1906), Morley-Minto Reforms (1909)",
+                "Revolutionary activities in India & abroad: Anushilan Samiti, Jugantar, Abhinav Bharat, India House (London), Ghadar Party, Komagata Maru, Berlin Committee",
+                "Home Rule League Movement (Tilak & Annie Besant), Lucknow Pact (1916), Montagu's August Declaration (1917)"
+              ]
+            },
+            {
+              "id": "mod-07",
+              "order": 7,
+              "title": "Emergence of Gandhi, Non-Cooperation & 1920s Politics (1915–1929)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 7 (Ch. 15): Emergence of Gandhi; (Ch. 16): Non-Cooperation and Khilafat Movements; (Ch. 17): Swarajists, Socialists & Revolutionary Activities; (Ch. 18): Simon Commission & Nehru Report",
+                  "sourceUrl": "https://notesbolt.com/books/history/spectrum-books-a-brief-history-of-modern-india-2026-2dition"
+                },
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part III",
+                  "chapter": "Theme 13: Mahatma Gandhi and the Nationalist Movement",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lehs303.pdf"
+                }
+              ],
+              "topics": [
+                "Gandhi in South Africa; Champaran (1917), Ahmedabad Mill Strike (1918), Kheda (1918)",
+                "Rowlatt Act & Satyagraha, Jallianwala Bagh Massacre (1919), Montagu-Chelmsford Reforms (GoI Act 1919)",
+                "Khilafat & Non-Cooperation Movement (1920–22), Chauri Chaura incident",
+                "Swarajists vs. No-Changers; HRA/HSRA (Kakori, Bhagat Singh, Chandrashekhar Azad), Chittagong Armoury Raid (Surya Sen)",
+                "Simon Commission (1927), Nehru Report (1928), Jinnah's 14 Points, Bardoli Satyagraha"
+              ]
+            },
+            {
+              "id": "mod-08",
+              "order": 8,
+              "title": "Civil Disobedience, Round Table Conferences & Provincial Autonomy (1929–1939)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 7 (Ch. 19): Civil Disobedience Movement & RTCs; (Ch. 20): Debates on Future Strategy; (Ch. 21): Congress Rule in Provinces",
+                  "sourceUrl": "https://www.scribd.com/document/857642893/brief-history-of-modern-India"
+                }
+              ],
+              "topics": [
+                "Lahore Session (1929 – Purna Swaraj), Dandi March & Salt Satyagraha (1930), regional spread (Khan Abdul Ghaffar Khan, Rani Gaidinliu, Dharasana)",
+                "Gandhi-Irwin Pact (1931), Karachi Session (1931 – Fundamental Rights), Three Round Table Conferences",
+                "Communal Award (1932) & Poona Pact, Gandhi's Harijan campaign",
+                "Government of India Act 1935, 1937 Provincial Elections, 28 months of Congress Ministries, Haripura & Tripuri sessions"
+              ]
+            },
+            {
+              "id": "mod-09",
+              "order": 9,
+              "title": "World War II, Quit India Movement, Independence & Partition (1939–1947)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 8 (Ch. 22): Nationalist Response in Wake of WWII; (Ch. 23): Quit India, Demand for Pakistan & INA; (Ch. 24): Post-War National Scenario; (Ch. 25): Independence with Partition",
+                  "sourceUrl": "https://www.scribd.com/document/857642893/brief-history-of-modern-India"
+                },
+                {
+                  "book": "NCERT Class 12: Themes in Indian History – Part III",
+                  "chapter": "Theme 15: Framing the Constitution",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lehs304.pdf"
+                }
+              ],
+              "topics": [
+                "August Offer (1940), Individual Satyagraha, Cripps Mission (1942), Lahore Resolution (1940)",
+                "Quit India Movement (1942): Underground activity, parallel governments (Ballia, Tamluk, Satara)",
+                "Subhas Chandra Bose, Azad Hind Fauj (INA), INA Trials, Royal Indian Navy (RIN) Mutiny (1946)",
+                "C.R. Formula, Desai-Liaquat Pact, Wavell Plan & Shimla Conference, Cabinet Mission Plan (1946), Mountbatten Plan & Indian Independence Act (1947)"
+              ]
+            },
+            {
+              "id": "mod-10",
+              "order": 10,
+              "title": "India Under British Rule: Constitutional, Administrative, Economic, Press & Education Developments",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Spectrum – A Brief History of Modern India (Rajiv Ahir)",
+                  "chapter": "Unit 9 (Ch. 26–32): Constitutional/Administrative/Judicial Developments, Survey of British Policies, Economic Impact, Indian Press, Education, Peasant & Working Class Movements",
+                  "sourceUrl": "https://www.amitbookdepot.com/product/Spectrum-A-Brief-History-Of-Modern-India-a-new"
+                }
+              ],
+              "topics": [
+                "Constitutional Acts: Regulating Act 1773, Pitt's India Act 1784, Charter Acts (1813, 1833, 1853), Indian Councils Acts (1861, 1892, 1909), GoI Acts (1919, 1935)",
+                "Land Revenue Systems: Permanent Settlement (Cornwallis), Ryotwari (Munro/Read), Mahalwari (Holt Mackenzie); Deindustrialization & commercialization of agriculture",
+                "Evolution of Civil Services, Police, Judiciary, Local Self-Government (Mayo, Ripon), and Princely States (Butler Committee)",
+                "Development of Indian Press (Vernacular Press Act 1878, Metcalfe, major newspapers & editors)",
+                "Development of Education (Macaulay's Minute, Wood's Despatch 1854, Hunter, Raleigh, Saddler, Hartog, Wardha Scheme, Sergeant Plan)",
+                "Peasant & Working Class Movements (Indigo Revolt, Pabna, Deccan Riots, Eka, Moplah, Tebhaga, Telangana; AITUC, Trade Disputes Act)",
+                "Governor-Generals & Viceroys chronology and key reforms (Spectrum Appendices)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "art-and-culture",
+          "name": "Art & Culture",
+          "slug": "art-and-culture",
+          "priority": "High",
+          "primaryBooks": [
+            "NCERT Class 11: An Introduction to Indian Art – Part I",
+            "Nitin Singhania: Indian Art and Culture (Selective Chapters)"
+          ],
+          "chapters": [
+            {
+              "id": "art-01",
+              "order": 1,
+              "title": "Prehistoric, Indus Valley & Mauryan Art and Architecture",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: An Introduction to Indian Art – Part I",
+                  "chapter": "Ch. 1: Prehistoric Rock Paintings; Ch. 2: Arts of the Indus Valley; Ch. 3: Arts of the Mauryan Period",
+                  "sourceUrl": "https://competishun.com/ncert-class-11-fine-arts-book-pdf-download-an-introduction-to-indian-art-part-1/"
+                },
+                {
+                  "book": "Nitin Singhania – Indian Art and Culture",
+                  "chapter": "Ch. 1: Indian Architecture, Sculpture and Pottery",
+                  "sourceUrl": "https://anantamias.com/nitin-singhania-art-and-culture/"
+                }
+              ],
+              "topics": [
+                "Rock art at Bhimbetka, Lakhudiyar, Kupgallu",
+                "Harappan seals, bronze casting (Dancing Girl), terracotta (Mother Goddess), stone sculptures (Bearded Priest), pottery",
+                "Mauryan court art (pillars, capitals, Sarnath Lion, stupas like Sanchi & Bharhut) and popular art (Yakshas/Yakshinis, Barabar caves)"
+              ]
+            },
+            {
+              "id": "art-02",
+              "order": 2,
+              "title": "Post-Mauryan, Rock-Cut Caves & Temple Architecture",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: An Introduction to Indian Art – Part I",
+                  "chapter": "Ch. 4: Post-Mauryan Trends in Indian Art & Architecture; Ch. 6: Temple Architecture and Sculpture; Ch. 7: Indian Bronze Sculpture",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kefa104.pdf"
+                },
+                {
+                  "book": "Nitin Singhania – Indian Art and Culture",
+                  "chapter": "Ch. 1: Indian Architecture, Sculpture and Pottery",
+                  "sourceUrl": "https://anantamias.com/nitin-singhania-art-and-culture/"
+                }
+              ],
+              "topics": [
+                "Sculpture schools: Gandhara, Mathura, Amaravati",
+                "Rock-cut caves: Ajanta, Ellora, Elephanta, Karla, Bhaja, Udayagiri-Khandagiri, Bagh",
+                "Temple styles: Nagara (Odisha, Khajuraho, Solanki), Dravida (Pallava, Chola, Vijayanagara, Nayaka), Vesara (Chalukya, Hoysala)",
+                "Chola bronze sculptures (Nataraja, lost-wax/Cire-perdue technique)"
+              ]
+            },
+            {
+              "id": "art-03",
+              "order": 3,
+              "title": "Indo-Islamic & Colonial Architecture",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: An Introduction to Indian Art – Part I",
+                  "chapter": "Ch. 8: Some Aspects of Indo-Islamic Architecture",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kefa1ps.pdf"
+                },
+                {
+                  "book": "Nitin Singhania – Indian Art and Culture",
+                  "chapter": "Ch. 1: Indian Architecture (Indo-Islamic & Modern)",
+                  "sourceUrl": "https://anantamias.com/nitin-singhania-art-and-culture/"
+                }
+              ],
+              "topics": [
+                "Architectural features: Arcuate style, Pietra Dura, Arabesque, Jaali, Charbagh, domes & minarets",
+                "Delhi Sultanate styles (Imperial & Provincial: Bengal, Jaunpur, Malwa, Bijapur/Gol Gumbaz)",
+                "Mughal architecture (Humayun's Tomb, Fatehpur Sikri, Agra Fort, Taj Mahal, Red Fort) and Indo-Saracenic colonial architecture"
+              ]
+            },
+            {
+              "id": "art-04",
+              "order": 4,
+              "title": "Indian Paintings (Mural, Miniature & Folk)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: An Introduction to Indian Art – Part I",
+                  "chapter": "Ch. 5: Later Mural Traditions",
+                  "sourceUrl": "https://www.youtube.com/watch?v=k0AnUWR8EOs"
+                },
+                {
+                  "book": "Nitin Singhania – Indian Art and Culture",
+                  "chapter": "Ch. 2: Indian Paintings",
+                  "sourceUrl": "https://anantamias.com/nitin-singhania-art-and-culture/"
+                }
+              ],
+              "topics": [
+                "Mural traditions: Ajanta, Bagh, Badami, Sittanavasal, Lepakshi, Kerala murals",
+                "Miniature schools: Pala, Apabhramsa, Mughal, Deccani, Rajasthani (Mewar, Kishangarh/Bani Thani, Bundi, Kota), Pahari (Basholi, Kangra)",
+                "Folk paintings: Madhubani, Warli, Pattachitra, Kalamkari, Kalighat, Gond, Phad, Thangka"
+              ]
+            },
+            {
+              "id": "art-05",
+              "order": 5,
+              "title": "Performing Arts: Music, Dance, Theatre & Martial Arts",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "Nitin Singhania – Indian Art and Culture",
+                  "chapter": "Ch. 4–8: Indian Music, Dance Forms, Theatre, Puppetry & Martial Arts",
+                  "sourceUrl": "https://anantamias.com/nitin-singhania-art-and-culture/"
+                }
+              ],
+              "topics": [
+                "Hindustani vs. Carnatic classical music, Dhrupad, Khayal, Thumri, Gharanas, folk music & instruments",
+                "8 Classical Dances (Bharatanatyam, Kathak, Kathakali, Kuchipudi, Odissi, Manipuri, Mohiniyattam, Sattriya) and major folk dances",
+                "Traditional theatre (Koodiyattam, Yakshagana, Bhavai, Nautanki, Tamasha, Jatra), Puppetry, and Martial Arts (Kalaripayattu, Silambam, Gatka, Thang-Ta)"
+              ]
+            },
+            {
+              "id": "art-06",
+              "order": 6,
+              "title": "Indian Literature, Languages, Philosophy, Coinage & UNESCO Heritage",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "Nitin Singhania – Indian Art and Culture",
+                  "chapter": "Ch. 11–24: Languages, Literature, Schools of Philosophy, Coinage, UNESCO Sites & GI Tags",
+                  "sourceUrl": "https://anantamias.com/nitin-singhania-art-and-culture/"
+                }
+              ],
+              "topics": [
+                "Classical languages of India, Sanskrit, Prakrit, Pali, Sangam, and Bhakti/Medieval literature",
+                "Orthodox philosophies (Samkhya, Yoga, Nyaya, Vaisheshika, Mimamsa, Vedanta) and Heterodox schools",
+                "UNESCO World Heritage Sites (Cultural/Natural/Mixed) and Intangible Cultural Heritage of India"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective)",
+        "Paper II: Part A Essay (Modern Indian History & Freedom Struggle)"
+      ]
+    },
+    {
+      "id": "general-science",
+      "name": "General Science",
+      "slug": "general-science",
+      "officialScope": "General awareness, scientific temper, comprehension and appreciation of scientific phenomena of everyday observation including new areas of importance like Information Technology, Biotechnology, and Environmental Science.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "NCERT Class 9 Science Chapters (Vedantu)",
+          "url": "https://www.vedantu.com/ncert-books/ncert-books-class-9"
+        },
+        {
+          "title": "NCERT Class 10 Science Chapters (Aakash)",
+          "url": "https://www.aakash.ac.in/ncert-solutions/class-10/science"
+        },
+        {
+          "title": "NCERT Class 10 Science Revision Units (LearnCBSE)",
+          "url": "https://www.learncbse.net/cbse-notes/class-10/science/"
+        },
+        {
+          "title": "NCERT Class 12 Biology Chapters (Ncert24)",
+          "url": "https://ncert24.com/ncert-books/ncert-books-class-12-biology-chapter-12"
+        },
+        {
+          "title": "UPSC CAPF AC PYQ Topic Focus (UPSCOne)",
+          "url": "https://www.upscone.in/capf/syllabus"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "physics",
+          "name": "Physics",
+          "slug": "physics",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 9 Science (Physics Chapters)",
+            "NCERT Class 10 Science (Physics Chapters)",
+            "NCERT Class 6–8 Science (Foundations: Heat, Light, Force, Pressure)"
+          ],
+          "chapters": [
+            {
+              "id": "phy-01",
+              "order": 1,
+              "title": "Units, Measurements & Motion",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 7 (Old Ch. 8): Motion",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "SI units, scalar vs. vector quantities, derived units, measuring instruments",
+                "Distance vs. displacement, speed vs. velocity, uniform & non-uniform acceleration",
+                "Equations of motion (v = u + at, s = ut + 1/2 at², v² - u² = 2as)",
+                "Distance-time and velocity-time graphs, uniform circular motion"
+              ]
+            },
+            {
+              "id": "phy-02",
+              "order": 2,
+              "title": "Force, Laws of Motion & Friction",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 8 (Old Ch. 9): Force and Laws of Motion",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "Balanced and unbalanced forces, inertia and mass",
+                "Newton's First, Second (F = ma, momentum), and Third Laws of Motion",
+                "Conservation of linear momentum and impulse",
+                "Friction (static, sliding, rolling), centripetal & centrifugal forces"
+              ]
+            },
+            {
+              "id": "phy-03",
+              "order": 3,
+              "title": "Gravitation, Floatation & Fluid Mechanics",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 9 (Old Ch. 10): Gravitation",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "Universal Law of Gravitation, acceleration due to gravity (g) and its variation with altitude/depth/latitude",
+                "Mass vs. weight, weightlessness, Kepler's laws of planetary motion, escape velocity",
+                "Thrust and pressure, Pascal's law, buoyancy, Archimedes' principle, relative density",
+                "Surface tension, capillarity, viscosity, and Bernoulli's principle (everyday applications)"
+              ]
+            },
+            {
+              "id": "phy-04",
+              "order": 4,
+              "title": "Work, Energy, Power & Sources of Energy",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 10 (Old Ch. 11): Work and Energy",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                },
+                {
+                  "book": "NCERT Class 10 Science (Pre-rationalized)",
+                  "chapter": "Old Ch. 14: Sources of Energy",
+                  "sourceUrl": "https://www.aakash.ac.in/ncert-solutions/class-10/science"
+                }
+              ],
+              "topics": [
+                "Work done by constant force (positive, negative, zero work)",
+                "Kinetic energy, potential energy, law of conservation of energy, work-energy theorem",
+                "Power, commercial unit of energy (kWh to Joules conversion)",
+                "Conventional & non-conventional energy: solar, wind, hydro, biomass, geothermal, nuclear fission & fusion"
+              ]
+            },
+            {
+              "id": "phy-05",
+              "order": 5,
+              "title": "Sound & Waves",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 11 (Old Ch. 12): Sound",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "Mechanical vs. electromagnetic waves, longitudinal vs. transverse waves",
+                "Characteristics of sound: amplitude (loudness), frequency (pitch), wavelength, time period, speed in different media",
+                "Reflection of sound, echo, reverberation, SONAR, infrasound & ultrasound applications",
+                "Human ear structure, Doppler effect, Mach number & sonic boom"
+              ]
+            },
+            {
+              "id": "phy-06",
+              "order": 6,
+              "title": "Heat & Thermodynamics (Everyday Physics)",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 7 & Class 9 Science",
+                  "chapter": "Heat (Class 7) & Matter in Our Surroundings (Class 9 Ch. 1)",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-9"
+                }
+              ],
+              "topics": [
+                "Temperature scales (Celsius, Fahrenheit, Kelvin) and conversions",
+                "Modes of heat transfer: conduction, convection, radiation",
+                "Specific heat capacity, latent heat of fusion & vaporization, anomalous expansion of water",
+                "Thermal expansion, evaporation cooling, humidity, greenhouse effect"
+              ]
+            },
+            {
+              "id": "phy-07",
+              "order": 7,
+              "title": "Light: Reflection, Refraction & Human Eye (Optics)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 9 (Old Ch. 10): Light – Reflection and Refraction; Ch. 10 (Old Ch. 11): The Human Eye and the Colourful World",
+                  "sourceUrl": "https://www.learncbse.net/cbse-notes/class-10/science/"
+                }
+              ],
+              "topics": [
+                "Laws of reflection, plane & spherical mirrors (concave, convex), mirror formula & magnification",
+                "Refraction, Snell's law, refractive index, Total Internal Reflection (optical fibres, mirage, diamond)",
+                "Spherical lenses (convex, concave), lens formula, power of a lens (Dioptre)",
+                "Human eye, defects of vision (Myopia, Hypermetropia, Presbyopia, Astigmatism) and corrections",
+                "Dispersion of light, rainbow, atmospheric refraction (twinkling of stars), Tyndall effect & Rayleigh scattering"
+              ]
+            },
+            {
+              "id": "phy-08",
+              "order": 8,
+              "title": "Electricity & Magnetic Effects of Electric Current",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 11 (Old Ch. 12): Electricity; Ch. 12 (Old Ch. 13): Magnetic Effects of Electric Current",
+                  "sourceUrl": "https://www.learncbse.net/cbse-notes/class-10/science/"
+                }
+              ],
+              "topics": [
+                "Electric current, potential difference, Ohm's Law, resistance & resistivity",
+                "Resistors in series and parallel, Joule's law of heating, electric power, fuse & household circuits",
+                "Magnetic field lines, Right-Hand Thumb Rule, solenoid, electromagnet",
+                "Fleming's Left-Hand & Right-Hand Rules, electric motor, electromagnetic induction, AC vs. DC generators, transformers"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "chemistry",
+          "name": "Chemistry",
+          "slug": "chemistry",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 9 Science (Chemistry Chapters)",
+            "NCERT Class 10 Science (Chemistry Chapters)"
+          ],
+          "chapters": [
+            {
+              "id": "chem-01",
+              "order": 1,
+              "title": "Matter, States of Matter & Separation Techniques",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 1: Matter in Our Surroundings; Ch. 2: Is Matter Around Us Pure?",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "States of matter (solid, liquid, gas, plasma, Bose-Einstein Condensate), sublimation, deposition, evaporation",
+                "Elements, compounds, and mixtures (homogeneous vs. heterogeneous)",
+                "Solutions, suspensions, colloids (Tyndall effect, emulsions, aerosols, sols, gels)",
+                "Separation methods: centrifugation, chromatography, distillation, fractional distillation, crystallization"
+              ]
+            },
+            {
+              "id": "chem-02",
+              "order": 2,
+              "title": "Atoms, Molecules & Atomic Structure",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 3: Atoms and Molecules; Ch. 4: Structure of the Atom",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "Laws of chemical combination (conservation of mass, constant proportions), Dalton's atomic theory, mole concept",
+                "Subatomic particles (electron, proton, neutron), Thomson, Rutherford, and Bohr atomic models",
+                "Atomic number, mass number, electronic configuration, valency",
+                "Isotopes (applications in medicine/nuclear), isobars, and isotones"
+              ]
+            },
+            {
+              "id": "chem-03",
+              "order": 3,
+              "title": "Chemical Reactions, Equations & Redox",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 1: Chemical Reactions and Equations",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/jesc101.pdf"
+                }
+              ],
+              "topics": [
+                "Physical vs. chemical changes, balancing chemical equations",
+                "Types of reactions: combination, decomposition (thermal, electrolytic, photolytic), displacement, double displacement",
+                "Exothermic vs. endothermic reactions",
+                "Oxidation, reduction, redox reactions, oxidizing/reducing agents, corrosion & rancidity"
+              ]
+            },
+            {
+              "id": "chem-04",
+              "order": 4,
+              "title": "Acids, Bases, Salts & pH Scale",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 2: Acids, Bases and Salts",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/jesc102.pdf"
+                }
+              ],
+              "topics": [
+                "Natural & synthetic indicators (litmus, turmeric, phenolphthalein, methyl orange, olfactory indicators)",
+                "Reactions of acids/bases with metals, metal carbonates/bicarbonates, metal & non-metal oxides",
+                "pH scale, importance of pH in digestion, tooth decay, soil, acid rain, and natural acids (citric, tartaric, oxalic, methanoic)",
+                "Important salts & formulas: Sodium hydroxide (Chlor-alkali process), Bleaching powder, Baking soda, Washing soda, Plaster of Paris, Gypsum"
+              ]
+            },
+            {
+              "id": "chem-05",
+              "order": 5,
+              "title": "Metals, Non-Metals, Alloys & Metallurgy",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 3: Metals and Non-metals",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/jesc103.pdf"
+                }
+              ],
+              "topics": [
+                "Physical & chemical properties of metals and non-metals, amphoteric oxides (Al2O3, ZnO), Aqua Regia",
+                "Reactivity series of metals, ionic bonding and properties of ionic compounds",
+                "Metallurgy basics: ores, gangue, roasting vs. calcination, thermite reaction, electrolytic refining",
+                "Corrosion prevention (galvanization, anodizing, alloying) and key alloys (Brass, Bronze, Solder, Stainless steel, Amalgam)"
+              ]
+            },
+            {
+              "id": "chem-06",
+              "order": 6,
+              "title": "Carbon and Its Compounds & Everyday Chemistry",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 4: Carbon and its Compounds",
+                  "sourceUrl": "https://www.learncbse.net/cbse-notes/class-10/science/"
+                }
+              ],
+              "topics": [
+                "Covalent bonding, catenation, tetravalency, allotropes of carbon (Diamond, Graphite, Fullerene C-60, Graphene)",
+                "Saturated (alkanes) vs. unsaturated (alkenes, alkynes) hydrocarbons, isomers, functional groups, homologous series",
+                "Chemical properties: combustion, oxidation, addition (hydrogenation of oils), substitution",
+                "Ethanol, ethanoic acid (esterification, saponification), soaps vs. detergents (micelles, hard water)",
+                "Chemistry in everyday life: glass, cement, fertilizers (NPK), polymers/plastics, medicines (analgesics, antipyretics, antiseptics, antibiotics)"
+              ]
+            },
+            {
+              "id": "chem-07",
+              "order": 7,
+              "title": "Periodic Classification of Elements",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science (Pre-rationalized)",
+                  "chapter": "Old Ch. 5: Periodic Classification of Elements",
+                  "sourceUrl": "https://learnflix.in/ncert-syllabus-class-10-chemistry.html"
+                }
+              ],
+              "topics": [
+                "Dobereiner's Triads, Newlands' Law of Octaves, Mendeleev's Periodic Table",
+                "Modern Periodic Table (Henry Moseley): periods, groups, blocks (s, p, d, f), noble gases, halogens, alkali & alkaline earth metals",
+                "Periodic trends across periods and down groups: atomic radius, valency, metallic/non-metallic character, electronegativity"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "biology",
+          "name": "Biology",
+          "slug": "biology",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 9 Science (Biology Chapters)",
+            "NCERT Class 10 Science (Biology Chapters)",
+            "NCERT Class 12 Biology (Ch. 7 & Ch. 8)"
+          ],
+          "chapters": [
+            {
+              "id": "bio-01",
+              "order": 1,
+              "title": "Cell Biology & Tissues",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science",
+                  "chapter": "Ch. 5: The Fundamental Unit of Life; Ch. 6: Tissues",
+                  "sourceUrl": "https://www.jagranjosh.com/articles/cbse-class-9-science-ncert-book-1522396937-1"
+                }
+              ],
+              "topics": [
+                "Prokaryotic vs. eukaryotic cells, plant vs. animal cells, diffusion & osmosis (hypotonic, isotonic, hypertonic)",
+                "Cell organelles: plasma membrane, cell wall, nucleus, ER, Golgi apparatus, lysosomes, mitochondria (ATP), plastids (chloroplasts), vacuoles",
+                "Cell division: Mitosis vs. Meiosis",
+                "Plant tissues: meristematic (apical, lateral, intercalary) & permanent (parenchyma, collenchyma, sclerenchyma, xylem, phloem)",
+                "Animal tissues: epithelial, connective (blood, bone, cartilage, ligament, tendon), muscular, nervous"
+              ]
+            },
+            {
+              "id": "bio-02",
+              "order": 2,
+              "title": "Diversity in Living Organisms (Taxonomy)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science (Pre-rationalized)",
+                  "chapter": "Old Ch. 7: Diversity in Living Organisms",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-9"
+                }
+              ],
+              "topics": [
+                "Whittaker's Five Kingdom Classification: Monera, Protista, Fungi, Plantae, Animalia",
+                "Plant kingdom: Thallophyta (Algae), Bryophyta, Pteridophyta, Gymnosperms, Angiosperms (Monocots vs. Dicots)",
+                "Animal kingdom: Porifera, Coelenterata, Platyhelminthes, Nematoda, Annelida, Arthropoda, Mollusca, Echinodermata, Protochordata, Vertebrata (Pisces, Amphibia, Reptilia, Aves, Mammalia)"
+              ]
+            },
+            {
+              "id": "bio-03",
+              "order": 3,
+              "title": "Life Processes: Human & Plant Physiology",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 5 (Old Ch. 6): Life Processes",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/jesc105.pdf"
+                }
+              ],
+              "topics": [
+                "Nutrition: photosynthesis (chlorophyll, stomata), human digestive system (enzymes: amylase, pepsin, trypsin, lipase, bile)",
+                "Respiration: aerobic vs. anaerobic respiration (ethanol/lactic acid), human respiratory system, alveoli",
+                "Transportation: human heart (double circulation), arteries, veins, capillaries, blood components (RBC, WBC, platelets, plasma, blood groups), lymph; xylem & phloem transport in plants",
+                "Excretion: human excretory system, nephron structure & urine formation, dialysis"
+              ]
+            },
+            {
+              "id": "bio-04",
+              "order": 4,
+              "title": "Control & Coordination (Nervous & Endocrine Systems)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 6 (Old Ch. 7): Control and Coordination",
+                  "sourceUrl": "https://www.learncbse.net/cbse-notes/class-10/science/"
+                }
+              ],
+              "topics": [
+                "Neuron structure, synapse, reflex arc, central nervous system (forebrain, midbrain, hindbrain, spinal cord)",
+                "Plant hormones (phytohormones): Auxin, Gibberellin, Cytokinin, Abscisic acid, Ethylene; tropic movements",
+                "Human endocrine glands & hormones: Pituitary, Thyroid (Thyroxine), Pancreas (Insulin/Glucagon), Adrenal (Adrenaline), Gonads"
+              ]
+            },
+            {
+              "id": "bio-05",
+              "order": 5,
+              "title": "Reproduction, Heredity & Evolution",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science",
+                  "chapter": "Ch. 7 (Old Ch. 8): How do Organisms Reproduce?; Ch. 8 (Old Ch. 9): Heredity",
+                  "sourceUrl": "https://www.learncbse.net/cbse-notes/class-10/science/"
+                }
+              ],
+              "topics": [
+                "Asexual modes (fission, budding, fragmentation, regeneration, spore formation, vegetative propagation)",
+                "Sexual reproduction in flowering plants (pollination, double fertilization) and humans, contraception",
+                "Mendel's laws of inheritance, dominant vs. recessive traits, sex determination (XX/XY)",
+                "DNA, RNA, chromosomes, homologous vs. analogous organs, fossils, Darwin's natural selection"
+              ]
+            },
+            {
+              "id": "bio-06",
+              "order": 6,
+              "title": "Human Health, Diseases, Nutrition & Microbes",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 9 Science & NCERT Class 12 Biology",
+                  "chapter": "Class 9 Old Ch. 13: Why Do We Fall Ill; Class 12 Ch. 7: Human Health and Disease; Ch. 8: Microbes in Human Welfare",
+                  "sourceUrl": "https://ncert24.com/ncert-books/ncert-books-class-12-biology-chapter-12"
+                }
+              ],
+              "topics": [
+                "Bacterial, viral, protozoan, fungal, and helminthic diseases (TB, Cholera, Typhoid, Dengue, Malaria, Kala-azar, HIV/AIDS, Hepatitis)",
+                "Vitamins (water vs. fat-soluble) and deficiency diseases (Scurvy, Rickets, Beri-beri, Night blindness, Pellagra, Anaemia)",
+                "Immunity (innate vs. acquired, active vs. passive), vaccines, antibodies, antibiotics & antimicrobial resistance (AMR)",
+                "Improvement in food resources (Class 9 Ch. 12): Kharif/Rabi crops, biofertilizers, nitrogen fixation, microbes in industry"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "science-and-technology",
+          "name": "Science & Technology (IT, Biotech, Space & Defence)",
+          "slug": "science-and-technology",
+          "priority": "High",
+          "primaryBooks": [
+            "NCERT Class 12 Biology (Ch. 9 & Ch. 10)",
+            "Current Affairs (ISRO, DRDO, IT & Emerging Tech)"
+          ],
+          "chapters": [
+            {
+              "id": "st-01",
+              "order": 1,
+              "title": "Biotechnology: Principles & Applications",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12 Biology",
+                  "chapter": "Ch. 9: Biotechnology: Principles and Processes; Ch. 10: Biotechnology and its Applications",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lebo109.pdf"
+                }
+              ],
+              "topics": [
+                "Genetic engineering, recombinant DNA technology, restriction enzymes, vectors, PCR, gel electrophoresis",
+                "CRISPR-Cas9 gene editing, stem cells, cloning, RNAi, gene therapy, CAR-T cell therapy",
+                "GM crops (Bt Cotton, GM Mustard/DMH-11, Golden Rice), GMAC/GEAC regulation, biopiracy & biopatents"
+              ]
+            },
+            {
+              "id": "st-02",
+              "order": 2,
+              "title": "Information Technology, Computing & Emerging Tech",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Official Syllabus & Current Affairs",
+                  "chapter": "Information Technology & Computer Awareness",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Computer fundamentals: CPU, memory hierarchy (RAM, ROM, Cache), OS, protocols (HTTP/HTTPS, TCP/IP, DNS)",
+                "5G/6G, Li-Fi, Wi-Fi, Bluetooth, NFC, RFID, IoT, Cloud & Edge computing",
+                "Artificial Intelligence (AI/ML/LLMs), Blockchain, Web3, Quantum Computing, Cybersecurity (malware, ransomware, phishing, CERT-In)"
+              ]
+            },
+            {
+              "id": "st-03",
+              "order": 3,
+              "title": "Space Technology (ISRO) & Defence Technology (DRDO)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Current Affairs & Static Sci-Tech",
+                  "chapter": "Space & Defence Systems",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Orbits (LEO, MEO, GEO, GTO, Sun-Synchronous), launch vehicles (PSLV, GSLV, LVM3, SSLV, cryogenic engines)",
+                "Key ISRO missions: Chandrayaan, Aditya-L1, Gaganyaan, NavIC, NISAR, Bharatiya Antariksh Station",
+                "Indian missile programme (IGMDP: Agni, Prithvi, Trishul, Nag, Akash), BrahMos, Pinaka, S-400, Astra, Tejas, INS Vikrant, Arihant-class submarines"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "environment-and-ecology",
+          "name": "Environment & Ecology",
+          "slug": "environment-and-ecology",
+          "priority": "High",
+          "primaryBooks": [
+            "NCERT Class 12 Biology (Ch. 11, 12, 13)",
+            "NCERT Class 10 Science (Ch. 13: Our Environment)",
+            "PMF IAS / Shankar IAS Environment (Selective)"
+          ],
+          "chapters": [
+            {
+              "id": "env-01",
+              "order": 1,
+              "title": "Ecology, Ecosystems & Biogeochemical Cycles",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12 Biology & Class 10 Science",
+                  "chapter": "Class 12 Ch. 11: Organisms and Populations; Ch. 12: Ecosystem; Class 10 Ch. 13: Our Environment",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lebo112.pdf"
+                }
+              ],
+              "topics": [
+                "Levels of ecological organization, habitat vs. niche, ecotone & edge effect",
+                "Food chains, food webs, ecological pyramids (10% law), biomagnification & bioaccumulation",
+                "Biotic interactions (mutualism, commensalism, parasitism, amensalism, competition)",
+                "Biogeochemical cycles (Carbon, Nitrogen, Phosphorus, Water) and ecological succession"
+              ]
+            },
+            {
+              "id": "env-02",
+              "order": 2,
+              "title": "Biodiversity, Conservation & Protected Areas in India",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12 Biology",
+                  "chapter": "Ch. 13: Biodiversity and Conservation",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/lebo113.pdf"
+                }
+              ],
+              "topics": [
+                "Types of biodiversity (genetic, species, ecological), biodiversity hotspots in India (Western Ghats, Himalaya, Indo-Burma, Sundaland)",
+                "In-situ (National Parks, Wildlife Sanctuaries, Biosphere Reserves, Tiger Reserves, Ramsar Wetlands) vs. Ex-situ conservation",
+                "IUCN Red List categories, flagship Indian species & conservation projects (Project Tiger, Project Elephant, Project Cheetah, Project Dolphin)"
+              ]
+            },
+            {
+              "id": "env-03",
+              "order": 3,
+              "title": "Pollution, Climate Change, Acts & International Conventions",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 10 Science & Environmental Laws",
+                  "chapter": "Class 10 Ch. 13: Our Environment & Indian/Global Environmental Frameworks",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/jesc113.pdf"
+                }
+              ],
+              "topics": [
+                "Air pollution (AQI, PM2.5/PM10, smog, acid rain), water pollution (BOD, COD, eutrophication), e-waste, microplastics",
+                "Ozone depletion (Montreal Protocol, Kigali Amendment), greenhouse gases, global warming, UNFCCC, Paris Agreement, COP summits",
+                "Global conventions: CBD, CITES, CMS (Bonn), Ramsar, Stockholm, Basel, Rotterdam, Minamata",
+                "Indian laws: Wildlife Protection Act 1972, Environment Protection Act 1986, Forest Rights Act 2006, Biological Diversity Act 2002, NGT"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective)"
+      ]
+    },
+    {
+      "id": "geography",
+      "name": "Indian and World Geography",
+      "slug": "indian-and-world-geography",
+      "officialScope": "Physical, social, and economic aspects of geography pertaining to India and the world.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "NCERT Class 11 Fundamentals of Physical Geography (Vedantu)",
+          "url": "https://www.vedantu.com/ncert-books/ncert-books-class-11-geography-fundamental-of-physical-geography"
+        },
+        {
+          "title": "NCERT Class 11 India: Physical Environment (Vedantu)",
+          "url": "https://www.vedantu.com/ncert-solutions/ncert-solutions-class-11-geography"
+        },
+        {
+          "title": "NCERT Class 12 Geography Books & Chapters (BYJU'S)",
+          "url": "https://byjus.com/free-ias-prep/free-download-ncert-class-12-geography-textbook-for-upsc-exam/"
+        },
+        {
+          "title": "G.C. Leong Certificate Physical & Human Geography Guide (PrepOS)",
+          "url": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "physical-geography",
+          "name": "Physical Geography (Geomorphology, Climatology & Oceanography)",
+          "slug": "physical-geography",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 11: Fundamentals of Physical Geography",
+            "G.C. Leong: Certificate Physical and Human Geography (Part I)"
+          ],
+          "chapters": [
+            {
+              "id": "geo-phy-01",
+              "order": 1,
+              "title": "Origin & Evolution of Earth, Latitudes, Longitudes & Interior of the Earth",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Fundamentals of Physical Geography",
+                  "chapter": "Ch. 2: The Origin and Evolution of the Earth; Ch. 3: Interior of the Earth",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kegy203.pdf"
+                },
+                {
+                  "book": "G.C. Leong – Certificate Physical and Human Geography",
+                  "chapter": "Ch. 1: The Earth and the Universe; Ch. 2: The Earth's Crust",
+                  "sourceUrl": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+                }
+              ],
+              "topics": [
+                "Solar system, Big Bang theory, rotation, revolution, seasons, solstices, equinoxes, IST & International Date Line",
+                "Earth's interior: Crust, Mantle, Core, discontinuities (Conrad, Mohorovicic, Repetti, Gutenberg, Lehmann)",
+                "Earthquakes: P, S, and surface waves, shadow zones, Richter & Mercalli scales",
+                "Volcanism: shield, composite, caldera, flood basalt provinces, intrusive landforms (batholith, laccolith, sill, dyke)"
+              ]
+            },
+            {
+              "id": "geo-phy-02",
+              "order": 2,
+              "title": "Distribution of Oceans & Continents (Plate Tectonics)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Fundamentals of Physical Geography",
+                  "chapter": "Ch. 4: Distribution of Oceans and Continents",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-11-geography-fundamental-of-physical-geography"
+                },
+                {
+                  "book": "G.C. Leong – Certificate Physical and Human Geography",
+                  "chapter": "Earth's Interior and Tectonics",
+                  "sourceUrl": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+                }
+              ],
+              "topics": [
+                "Continental Drift Theory (Alfred Wegener) and evidence (Pangaea, jig-saw fit, fossils, tillite)",
+                "Convectional current theory, seafloor spreading (Harry Hess), paleomagnetism",
+                "Plate Tectonics: major & minor plates, convergent, divergent, and transform boundaries",
+                "Movement of the Indian Plate and formation of the Himalayas & Ring of Fire"
+              ]
+            },
+            {
+              "id": "geo-phy-03",
+              "order": 3,
+              "title": "Minerals, Rocks, Geomorphic Processes & Landforms",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Fundamentals of Physical Geography",
+                  "chapter": "Ch. 5: Geomorphic Processes; Ch. 6: Landforms and their Evolution",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kegy205.pdf"
+                },
+                {
+                  "book": "G.C. Leong – Certificate Physical and Human Geography",
+                  "chapter": "Landforms (Fluvial, Glacial, Aeolian, Karst & Coastal)",
+                  "sourceUrl": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+                }
+              ],
+              "topics": [
+                "Rocks and rock cycle: Igneous, Sedimentary, Metamorphic",
+                "Endogenic (diastrophism, folding, faulting) vs. Exogenic processes (weathering, mass wasting, erosion, deposition)",
+                "Fluvial landforms (V-shaped valleys, gorges, meanders, ox-bow lakes, alluvial fans, deltas)",
+                "Karst (sinkholes, stalactites, stalagmites), Glacial (cirques, moraines, drumlins, eskers), Aeolian (barchans, yardangs, mushroom rocks), and Coastal landforms (sea cliffs, stacks, spits, lagoons)"
+              ]
+            },
+            {
+              "id": "geo-phy-04",
+              "order": 4,
+              "title": "Atmosphere, Insolation, Pressure Belts & Planetary Winds",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Fundamentals of Physical Geography",
+                  "chapter": "Ch. 7–9: Composition & Structure of Atmosphere, Solar Radiation/Heat Balance, Atmospheric Circulation & Weather Systems",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-11-geography-fundamental-of-physical-geography"
+                },
+                {
+                  "book": "G.C. Leong – Certificate Physical and Human Geography",
+                  "chapter": "Atmospheric Circulation & Weather",
+                  "sourceUrl": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+                }
+              ],
+              "topics": [
+                "Layers of atmosphere (Troposphere, Stratosphere, Mesosphere, Thermosphere, Exosphere) and ozone layer",
+                "Insolation, albedo, terrestrial radiation, heat budget, temperature inversion, lapse rate",
+                "Pressure belts, Coriolis force, tricellular model (Hadley, Ferrel, Polar cells), Trade winds, Westerlies, Polar Easterlies, Jet streams",
+                "Local winds (Loo, Foehn, Chinook, Mistral, Sirocco, Harmattan), air masses, fronts, tropical vs. extratropical cyclones"
+              ]
+            },
+            {
+              "id": "geo-phy-05",
+              "order": 5,
+              "title": "Water in the Atmosphere, Clouds, Precipitation & World Climates",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Fundamentals of Physical Geography",
+                  "chapter": "Ch. 10: Water in the Atmosphere; Ch. 11: World Climate and Climate Change",
+                  "sourceUrl": "https://cbseacademic.nic.in/web_material/CurriculumMain27/SecPart2/Geography_SecP2_2026-27.pdf"
+                },
+                {
+                  "book": "G.C. Leong – Certificate Physical and Human Geography",
+                  "chapter": "Part II (Ch. 15–25): World Climatic Regions & Köppen Classification",
+                  "sourceUrl": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+                }
+              ],
+              "topics": [
+                "Humidity (absolute, relative), dew point, condensation (dew, frost, fog, mist), cloud types (cirrus, cumulus, stratus, cumulonimbus)",
+                "Types of rainfall: convectional, orographic, cyclonic/frontal",
+                "Köppen's climatic classification (A, B, C, D, E) and major world climate zones (Equatorial, Savanna, Monsoon, Desert, Mediterranean, Steppe, China, British, Laurentian, Taiga, Tundra)"
+              ]
+            },
+            {
+              "id": "geo-phy-06",
+              "order": 6,
+              "title": "Oceanography: Ocean Relief, Salinity, Tides & Ocean Currents",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Fundamentals of Physical Geography",
+                  "chapter": "Ch. 12: Water (Oceans); Ch. 13: Movements of Ocean Water",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-11-geography-fundamental-of-physical-geography"
+                },
+                {
+                  "book": "G.C. Leong – Certificate Physical and Human Geography",
+                  "chapter": "The Oceans & Ocean Currents",
+                  "sourceUrl": "https://theprepos.in/upsc-books/gc-leong-certificate-geography"
+                }
+              ],
+              "topics": [
+                "Ocean floor relief: continental shelf, slope, rise, abyssal plain, mid-oceanic ridges, trenches, seamounts, guyots, atolls/coral reefs",
+                "Ocean temperature (thermocline) and salinity distribution (halocline)",
+                "Waves, tides (spring vs. neap tides, apogee/perigee)",
+                "Warm & cold ocean currents (Gulf Stream, Labrador, Kuroshio, Oyashio, Humboldt/Peru, Benguela, Agulhas, Canary) and impact on deserts & fishing grounds"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "indian-geography",
+          "name": "Indian Geography (Physical, Social & Economic)",
+          "slug": "indian-geography",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 11: India: Physical Environment",
+            "NCERT Class 12: India: People and Economy"
+          ],
+          "chapters": [
+            {
+              "id": "geo-ind-01",
+              "order": 1,
+              "title": "India: Location, Frontiers & Physiographic Divisions",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: India: Physical Environment",
+                  "chapter": "Ch. 1: India – Location; Ch. 2: Structure and Physiography",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kegy102.pdf"
+                }
+              ],
+              "topics": [
+                "Latitudinal/longitudinal extent, Tropic of Cancer states, IST (82.5°E), international land borders & coastal states/UTs, channels (8°, 9°, 10°)",
+                "The Himalayas: Trans-Himalayas, Greater, Lesser (Himachal), Shiwaliks; regional divisions (Kashmir to Arunachal); major mountain passes & peaks",
+                "Northern Plains: Bhabar, Tarai, Bhangar, Khadar; Doabs",
+                "Peninsular Plateau: Central Highlands, Deccan Plateau, Western & Eastern Ghats, Aravalli, Vindhya, Satpura, Meghalaya/Karbi-Anglong plateau",
+                "Indian Desert (Thar), Coastal Plains (Konkan, Malabar, Coromandel, Northern Circars), Islands (Andaman & Nicobar, Lakshadweep)"
+              ]
+            },
+            {
+              "id": "geo-ind-02",
+              "order": 2,
+              "title": "Indian Drainage System (Rivers, Lakes & Watersheds)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: India: Physical Environment",
+                  "chapter": "Ch. 3: Drainage System",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kegy103.pdf"
+                }
+              ],
+              "topics": [
+                "Drainage patterns (dendritic, radial, trellis, centripetal), Himalayan vs. Peninsular rivers",
+                "Indus System (Jhelum, Chenab, Ravi, Beas, Satluj), Ganga System (Yamuna, Ghaghara, Gandak, Kosi, Son, Chambal, Betwa, Ken, Damodar), Brahmaputra System",
+                "East-flowing Peninsular rivers: Mahanadi, Godavari, Krishna, Kaveri (and major tributaries)",
+                "West-flowing rivers: Narmada, Tapi, Mahi, Sabarmati, Luni, Periyar; major Indian lakes, waterfalls & multipurpose river valley projects"
+              ]
+            },
+            {
+              "id": "geo-ind-03",
+              "order": 3,
+              "title": "Indian Climate & Monsoon Mechanism",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: India: Physical Environment",
+                  "chapter": "Ch. 4: Climate",
+                  "sourceUrl": "https://www.vedantu.com/ncert-solutions/ncert-solutions-class-11-geography"
+                }
+              ],
+              "topics": [
+                "Factors determining India's climate, ITCZ shift, Tibetan Plateau heating, Tropical Easterly & Subtropical Westerly Jet Streams",
+                "El Niño, La Niña, Southern Oscillation (ENSO), Indian Ocean Dipole (IOD), Madden-Julian Oscillation (MJO)",
+                "Seasons in India: Southwest Monsoon (Arabian Sea & Bay of Bengal branches), Retreating/Northeast Monsoon, Western Disturbances, pre-monsoon showers (Mango, Blossom, Nor'westers/Kalbaisakhi)",
+                "Rainfall distribution and Köppen climatic regions of India"
+              ]
+            },
+            {
+              "id": "geo-ind-04",
+              "order": 4,
+              "title": "Natural Vegetation, Soils & Natural Hazards of India",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: India: Physical Environment",
+                  "chapter": "Ch. 5: Natural Vegetation; Ch. 6: Soils; Ch. 7: Natural Hazards and Disasters",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/kegy105.pdf"
+                }
+              ],
+              "topics": [
+                "Forest types: Tropical Evergreen & Semi-Evergreen, Tropical Deciduous (Moist & Dry), Tropical Thorn, Montane, Littoral & Swamp (Mangroves)",
+                "Biosphere Reserves of India (MAB UNESCO network) and Forest Survey of India (ISFR) highlights",
+                "Indian Soils (ICAR): Alluvial, Black (Regur), Red & Yellow, Laterite, Arid, Saline, Peaty, Forest soils; soil erosion & conservation",
+                "Natural hazards in India: seismic zones, cyclones, floods, droughts, landslides"
+              ]
+            },
+            {
+              "id": "geo-ind-05",
+              "order": 5,
+              "title": "Indian Agriculture, Land & Water Resources",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: India: People and Economy",
+                  "chapter": "Ch. 5: Land Resources and Agriculture; Ch. 6: Water Resources",
+                  "sourceUrl": "https://byjus.com/free-ias-prep/free-download-ncert-class-12-geography-textbook-for-upsc-exam/"
+                }
+              ],
+              "topics": [
+                "Cropping seasons (Kharif, Rabi, Zaid), major food & cash crops (rice, wheat, millets, pulses, cotton, jute, sugarcane, tea, coffee, rubber) and climatic/soil requirements",
+                "Green Revolution, dryland farming, shifting cultivation (Jhum names across India), irrigation types & watershed management"
+              ]
+            },
+            {
+              "id": "geo-ind-06",
+              "order": 6,
+              "title": "Minerals, Energy Resources, Industries, Transport & Demographics of India",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: India: People and Economy",
+                  "chapter": "Ch. 1–4: Population, Migration & Settlements; Ch. 7–11: Minerals, Manufacturing, Transport & International Trade",
+                  "sourceUrl": "https://byjus.com/free-ias-prep/free-download-ncert-class-12-geography-textbook-for-upsc-exam/"
+                }
+              ],
+              "topics": [
+                "Mineral belts of India: Iron ore, Manganese, Bauxite, Copper, Mica, Limestone, Coal (Gondwana vs. Tertiary), Petroleum & Natural Gas, Uranium/Thorium",
+                "Major industrial regions and location factors (Iron & Steel, Cotton, Sugar, Petrochemicals)",
+                "Transport networks: Golden Quadrilateral, National Highways, Railway zones, Dedicated Freight Corridors, National Waterways (NW-1 to NW-6), Major Sea Ports (East & West coasts)",
+                "Indian Census demographics: population density, sex ratio, literacy, urbanization, major tribes of India"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "world-human-and-economic-geography",
+          "name": "World Human, Economic & Mapping Geography",
+          "slug": "world-human-and-economic-geography",
+          "priority": "High",
+          "primaryBooks": [
+            "NCERT Class 12: Fundamentals of Human Geography",
+            "G.C. Leong: Certificate Physical and Human Geography (Part II)",
+            "Oxford School Atlas (World & India Mapping)"
+          ],
+          "chapters": [
+            {
+              "id": "geo-wld-01",
+              "order": 1,
+              "title": "World Population, Human Development & Settlements",
+              "priority": "Medium",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Fundamentals of Human Geography",
+                  "chapter": "Ch. 1–4: Human Geography, World Population & Human Development; Ch. 10: Human Settlements",
+                  "sourceUrl": "https://byjus.com/free-ias-prep/free-download-ncert-class-12-geography-textbook-for-upsc-exam/"
+                }
+              ],
+              "topics": [
+                "Demographic Transition Model, population pyramids (expanding, constant, declining)",
+                "Human Development Index (HDI) pillars, push & pull factors of migration",
+                "Rural vs. urban settlement patterns (linear, rectangular, circular, star-like, conurbation, megalopolis)"
+              ]
+            },
+            {
+              "id": "geo-wld-02",
+              "order": 2,
+              "title": "World Economic Activities, Transport & Trade",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Fundamentals of Human Geography",
+                  "chapter": "Ch. 5–9: Primary, Secondary, Tertiary/Quaternary Activities, Transport & International Trade",
+                  "sourceUrl": "https://byjus.com/free-ias-prep/free-download-ncert-class-12-geography-textbook-for-upsc-exam/"
+                }
+              ],
+              "topics": [
+                "Primary activities: nomadic herding, commercial livestock ranching, intensive subsistence vs. extensive commercial grain farming, plantation agriculture, Mediterranean agriculture, truck farming, mining",
+                "Secondary & Tertiary/Quaternary/Quinary sectors, footloose industries, major industrial regions (Ruhr, Great Lakes, Silicon Valley)",
+                "Trans-continental railways (Trans-Siberian, Trans-Canadian), major ocean routes (Suez Canal, Panama Canal, North Atlantic), regional trade blocs"
+              ]
+            },
+            {
+              "id": "geo-wld-03",
+              "order": 3,
+              "title": "High-Yield World Mapping (CAPF PYQ Focus)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Oxford School Atlas & UPSC CAPF Current Affairs",
+                  "chapter": "World Physical & Political Maps",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Major straits & chokepoints: Malacca, Hormuz, Bab-el-Mandeb, Gibraltar, Bosphorus, Dardanelles, Bering, Dover, Palk, Sunda, Lombok",
+                "Seas & bordering countries: Black Sea, Caspian Sea, Red Sea, Mediterranean Sea, South China Sea, Baltic Sea, Persian Gulf, Aral Sea",
+                "Major mountain ranges (Andes, Rockies, Alps, Urals, Atlas, Drakensberg), plateaus (Tibetan, Anatolian, Patagonia), deserts (Sahara, Atacama, Kalahari, Gobi, Mojave), grasslands (Prairies, Pampas, Steppes, Velds, Downs, Savanna)",
+                "Major world rivers (Nile, Amazon, Danube, Rhine, Mekong, Yangtze, Tigris-Euphrates, Congo) and countries on the Equator, Tropic of Cancer, Tropic of Capricorn & Prime Meridian"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective)",
+        "Paper II: Part A Essay (Geography, Environment & Climate Issues)"
+      ]
+    },
+    {
+      "id": "indian-polity",
+      "name": "Indian Polity, Governance & Internal Security",
+      "slug": "indian-polity",
+      "officialScope": "Country's political system and the Constitution of India, social systems and public administration, regional and international security issues, and human rights including its indicators.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "Indian Polity by M. Laxmikanth Chapter Index (IASExamPortal)",
+          "url": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+        },
+        {
+          "title": "M. Laxmikanth High-Priority Chapters Guide (SuperKalam)",
+          "url": "https://superkalam.com/upsc-preparation/resources/how-to-study-laxmikanth-polity-effectively-for-upsc-prelims-and-mains"
+        },
+        {
+          "title": "M. Laxmikanth Important Topics Breakdown (BYJU'S)",
+          "url": "https://byjus.com/free-ias-prep/tips-to-study-polity-from-laxmikanth-for-upsc-exam/"
+        },
+        {
+          "title": "NCERT Class 11 Indian Constitution at Work Chapters (Ncert24)",
+          "url": "https://ncert24.com/ncert-books/class-11-political-science-book"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "indian-constitution-and-political-system",
+          "name": "Indian Constitution & Political System",
+          "slug": "indian-constitution-and-political-system",
+          "priority": "Very High",
+          "primaryBooks": [
+            "M. Laxmikanth: Indian Polity (Parts I–VI)",
+            "NCERT Class 11: Indian Constitution at Work"
+          ],
+          "chapters": [
+            {
+              "id": "pol-01",
+              "order": 1,
+              "title": "Historical Background, Making & Salient Features of the Constitution",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part I: Historical Background; Making of the Constitution; Salient Features of the Constitution",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 1: Constitution: Why and How?; Ch. 10: The Philosophy of the Constitution",
+                  "sourceUrl": "https://ncert24.com/ncert-books/class-11-political-science-book"
+                }
+              ],
+              "topics": [
+                "Company Rule (1773–1858) & Crown Rule (1858–1947): Regulating Act 1773, Charter Acts, GoI Acts 1919 & 1935, Indian Independence Act 1947",
+                "Constituent Assembly: composition, major committees (Drafting Committee, Union Powers, Provincial), Objectives Resolution, adoption & enforcement",
+                "Salient features, borrowed features from other constitutions, Schedules (1st to 12th) and Parts of the Constitution"
+              ]
+            },
+            {
+              "id": "pol-02",
+              "order": 2,
+              "title": "Preamble, Union & Its Territory, and Citizenship",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part I: Preamble of the Constitution; Union and its Territory; Citizenship",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                }
+              ],
+              "topics": [
+                "Preamble: Sovereign, Socialist, Secular, Democratic, Republic; Justice, Liberty, Equality, Fraternity; Berubari, Kesavananda Bharati & LIC cases; 42nd Amendment",
+                "Articles 1–4: reorganization of states (Dhar, JVP, Fazl Ali Commissions), creation of new states",
+                "Articles 5–11, Citizenship Act 1955 (acquisition & loss), OCI/PIO, CAA amendments"
+              ]
+            },
+            {
+              "id": "pol-03",
+              "order": 3,
+              "title": "Fundamental Rights, DPSP & Fundamental Duties",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part I: Fundamental Rights; Directive Principles of State Policy; Fundamental Duties",
+                  "sourceUrl": "https://byjus.com/free-ias-prep/tips-to-study-polity-from-laxmikanth-for-upsc-exam/"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 2: Rights in the Indian Constitution",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/keps202.pdf"
+                }
+              ],
+              "topics": [
+                "Fundamental Rights (Part III, Art. 12–35): Right to Equality (14–18), Freedom (19–22), Against Exploitation (23–24), Religion (25–28), Cultural & Educational (29–30), Constitutional Remedies (32 — 5 Writs: Habeas Corpus, Mandamus, Prohibition, Certiorari, Quo Warranto)",
+                "Armed Forces & Fundamental Rights (Art. 33), Martial Law (Art. 34), Right to Property (Art. 300A)",
+                "DPSP (Part IV, Art. 36–51): Socialistic, Gandhian, Liberal-Intellectual principles; conflicts & harmony with FRs",
+                "Fundamental Duties (Part IV-A, Art. 51A): Swaran Singh Committee, 42nd Amendment (1976) & 86th Amendment (2002)"
+              ]
+            },
+            {
+              "id": "pol-04",
+              "order": 4,
+              "title": "Constitutional Amendment & Basic Structure Doctrine",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part I: Amendment of the Constitution; Basic Structure of the Constitution",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 9: Constitution as a Living Document",
+                  "sourceUrl": "https://ncert24.com/ncert-books/class-11-political-science-book"
+                }
+              ],
+              "topics": [
+                "Article 368: Simple majority, Special majority, Special majority + ratification by half the states",
+                "Evolution of Basic Structure: Shankari Prasad, Golaknath, Kesavananda Bharati (1973), Minerva Mills, Waman Rao",
+                "Landmark Constitutional Amendments (1st, 7th, 24th, 42nd, 44th, 52nd, 61st, 73rd, 74th, 86th, 91st, 97th, 101st–106th)"
+              ]
+            },
+            {
+              "id": "pol-05",
+              "order": 5,
+              "title": "Parliamentary System, Federalism, Centre–State & Emergency Provisions",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part II: Parliamentary System; Federal System; Centre–State Relations; Inter-State Relations; Emergency Provisions",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 7: Federalism",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/keps207.pdf"
+                }
+              ],
+              "topics": [
+                "Parliamentary vs. Presidential system; Federal vs. Unitary features of Indian Constitution",
+                "Centre–State legislative (Seventh Schedule Lists), administrative & financial relations; Sarkaria & Punchhi Commissions",
+                "Inter-State Councils (Art. 263), Inter-State Water Disputes (Art. 262), Zonal Councils",
+                "Emergency Provisions: National Emergency (Art. 352), President's Rule (Art. 356/365), Financial Emergency (Art. 360) and effect on Fundamental Rights"
+              ]
+            },
+            {
+              "id": "pol-06",
+              "order": 6,
+              "title": "Union Executive & Parliament",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part III: President; Vice-President; Prime Minister; Central Council of Ministers; Cabinet Committees; Parliament; Parliamentary Committees",
+                  "sourceUrl": "https://byjus.com/free-ias-prep/tips-to-study-polity-from-laxmikanth-for-upsc-exam/"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 4: Executive; Ch. 5: Legislature",
+                  "sourceUrl": "https://ncert.nic.in/textbook/pdf/keps204.pdf"
+                }
+              ],
+              "topics": [
+                "President: election, impeachment (Art. 61), veto powers, ordinance power (Art. 123), pardoning power (Art. 72); Vice-President",
+                "Prime Minister, Council of Ministers (Art. 74–75, collective & individual responsibility), Cabinet Committees",
+                "Parliament: Lok Sabha vs. Rajya Sabha, Speaker & Chairman, sessions, quorum, motions (No-Confidence, Adjournment, Cut, Censure)",
+                "Legislative procedure: Ordinary, Money (Art. 110), Financial Bills, Joint Sitting (Art. 108), Budget process (Art. 112), Consolidated/Contingency/Public Account Funds",
+                "Parliamentary Committees: PAC, Estimates Committee, Committee on Public Undertakings, DRSCs"
+              ]
+            },
+            {
+              "id": "pol-07",
+              "order": 7,
+              "title": "State Government: Governor, CM, Council of Ministers & State Legislature",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part IV: Governor; Chief Minister; State Council of Ministers; State Legislature",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                }
+              ],
+              "topics": [
+                "Governor: appointment, tenure, discretionary powers, reservation of bills (Art. 200–201), ordinance (Art. 213), pardoning power (Art. 161)",
+                "Chief Minister & State Council of Ministers (Art. 163–164)",
+                "State Legislature: Legislative Assembly (Vidhan Sabha) & Legislative Council (Vidhan Parishad — creation/abolition under Art. 169)"
+              ]
+            },
+            {
+              "id": "pol-08",
+              "order": 8,
+              "title": "Judiciary: Supreme Court, High Courts, Subordinate Courts & Judicial Review",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part III & IV: Supreme Court; Judicial Review; Judicial Activism; PIL; High Court; Tribunals; Subordinate Courts",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 6: Judiciary",
+                  "sourceUrl": "https://ncert24.com/ncert-books/class-11-political-science-book"
+                }
+              ],
+              "topics": [
+                "Supreme Court: Collegium system, appointment & removal of judges, Original, Writ, Appellate, Advisory (Art. 143) & Court of Record jurisdictions",
+                "High Courts: jurisdiction (Art. 226 vs. Art. 32), supervisory powers; Subordinate Courts, Lok Adalats, NALSA, Gram Nyayalayas",
+                "Tribunals (Part XIV-A, Art. 323A & 323B — CAT), Judicial Review, Judicial Activism & Public Interest Litigation (PIL)"
+              ]
+            },
+            {
+              "id": "pol-09",
+              "order": 9,
+              "title": "Local Government, Union Territories & Scheduled/Tribal Areas",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part V & VI: Panchayati Raj; Municipalities; Union Territories; Scheduled and Tribal Areas; Special Provisions for Some States",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                },
+                {
+                  "book": "NCERT Class 11: Indian Constitution at Work",
+                  "chapter": "Ch. 8: Local Governments",
+                  "sourceUrl": "https://ncert24.com/ncert-books/class-11-political-science-book"
+                }
+              ],
+              "topics": [
+                "Panchayati Raj: Balwant Rai Mehta, Ashok Mehta, L.M. Singhvi Committees; 73rd Amendment Act (Part IX, 11th Schedule), Gram Sabha, PESA Act 1996",
+                "Municipalities: 74th Amendment Act (Part IX-A, 12th Schedule), types of urban local bodies, District & Metropolitan Planning Committees",
+                "Union Territories (Art. 239–241, Delhi/Puducherry/J&K), Fifth Schedule (Scheduled Areas) vs. Sixth Schedule (Tribal Areas — AMTM states), Art. 371 special provisions"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "constitutional-and-non-constitutional-bodies",
+          "name": "Constitutional, Statutory & Non-Constitutional Bodies",
+          "slug": "constitutional-and-non-constitutional-bodies",
+          "priority": "Very High",
+          "primaryBooks": [
+            "M. Laxmikanth: Indian Polity (Parts VII & VIII)"
+          ],
+          "chapters": [
+            {
+              "id": "pol-body-01",
+              "order": 1,
+              "title": "Constitutional Bodies",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part VII: Election Commission, UPSC, SPSC, Finance Commission, GST Council, NCSC, NCST, NCBC, Special Officer for Linguistic Minorities, CAG, Attorney General, Advocate General",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                }
+              ],
+              "topics": [
+                "Election Commission of India (Art. 324), UPSC & SPSC (Art. 315–323)",
+                "Finance Commission (Art. 280) & GST Council (Art. 279A)",
+                "NCSC (Art. 338), NCST (Art. 338A), NCBC (Art. 338B), Special Officer for Linguistic Minorities (Art. 350B)",
+                "Comptroller and Auditor General – CAG (Art. 148–151), Attorney General of India (Art. 76), Advocate General of the State (Art. 165)"
+              ]
+            },
+            {
+              "id": "pol-body-02",
+              "order": 2,
+              "title": "Non-Constitutional & Statutory Bodies",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity",
+                  "chapter": "Part VIII: NITI Aayog, NHRC, SHRC, CIC, SIC, CVC, CBI, Lokpal & Lokayuktas, NIA, NDMA",
+                  "sourceUrl": "https://iasexamportal.com/study-kit/ias-pre/general-studies-foundation-course/indian-polity"
+                }
+              ],
+              "topics": [
+                "NITI Aayog (structure, cooperative & competitive federalism)",
+                "National & State Human Rights Commissions (NHRC/SHRC — Protection of Human Rights Act 1993 & 2019 Amendment)",
+                "Central & State Information Commissions (RTI Act 2005), Central Vigilance Commission (CVC)",
+                "Central Bureau of Investigation (CBI — DSPE Act 1946), Lokpal & Lokayuktas Act 2013, National Investigation Agency (NIA), NDMA"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "public-administration-and-governance",
+          "name": "Public Administration, Elections & Social Systems",
+          "slug": "public-administration-and-governance",
+          "priority": "Medium-High",
+          "primaryBooks": [
+            "M. Laxmikanth: Indian Polity (Parts IX & X)",
+            "NCERT Class 11: Indian Constitution at Work (Ch. 3)"
+          ],
+          "chapters": [
+            {
+              "id": "pol-gov-01",
+              "order": 1,
+              "title": "Elections, Representation & Anti-Defection Law",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity & NCERT Class 11",
+                  "chapter": "Part X: Elections, Electoral Reforms, Anti-Defection Law; NCERT Ch. 3: Election and Representation",
+                  "sourceUrl": "https://ncert24.com/ncert-books/class-11-political-science-book"
+                }
+              ],
+              "topics": [
+                "FPTP vs. Proportional Representation, Representation of the People Acts (1950 & 1951), Model Code of Conduct, EVM & VVPAT",
+                "Anti-Defection Law (10th Schedule, 52nd & 91st Amendments, Kihoto Hollohan case)",
+                "Political parties (National vs. State party recognition criteria), pressure groups, electoral reforms"
+              ]
+            },
+            {
+              "id": "pol-gov-02",
+              "order": 2,
+              "title": "Public Services, Official Languages, Co-operatives & Social Justice",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "M. Laxmikanth – Indian Polity & CAPF Official Syllabus",
+                  "chapter": "Part IX: Co-operative Societies, Official Language, Public Services, Rights & Liabilities of Government",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "All-India Services (Art. 312), Central & State Services, Doctrine of Pleasure (Art. 310–311)",
+                "Official Language (Part XVII, Art. 343–351, Eighth Schedule 22 languages), Co-operative Societies (97th Amendment, Part IX-B)",
+                "Governance & Social Systems: Citizen's Charters, E-Governance, Social Audit, welfare & constitutional safeguards for SCs, STs, OBCs, Women, Children & Minorities"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "internal-security-and-human-rights",
+          "name": "Internal Security, CAPF Mandate & Human Rights",
+          "slug": "internal-security-and-human-rights",
+          "priority": "High",
+          "primaryBooks": [
+            "UPSC CAPF Official Syllabus (Paper I & Paper II)",
+            "MHA Annual Report / Challenges to Internal Security of India (Ashok Kumar)"
+          ],
+          "chapters": [
+            {
+              "id": "pol-sec-01",
+              "order": 1,
+              "title": "Central Armed Police Forces (CAPFs) & Border Management",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Syllabus & MHA Framework",
+                  "chapter": "Role of Police, CAPFs & Border Management",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Mandate & border assignments: BSF (Pakistan & Bangladesh), ITBP (China/LAC), SSB (Nepal & Bhutan), Assam Rifles (Myanmar/NE), CRPF (internal security & LWE), CISF (critical infrastructure & airports), NSG",
+                "Border management challenges: smuggling, infiltration, narco-terrorism, coastal security, One Border One Force principle"
+              ]
+            },
+            {
+              "id": "pol-sec-02",
+              "order": 2,
+              "title": "Internal Security Threats & Security Laws",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Syllabus (Paper I & Paper II)",
+                  "chapter": "Regional and International Security Issues",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Left-Wing Extremism (Naxalism), insurgency in North-East India, cross-border terrorism in J&K",
+                "Cyber security threats, money laundering (PMLA/FATF), organized crime & drug trafficking",
+                "Key security legislation: UAPA, AFSPA, NSA, NIA Act, Bharatiya Nyaya Sanhita (BNS) / BNSS / BSA overview"
+              ]
+            },
+            {
+              "id": "pol-sec-03",
+              "order": 3,
+              "title": "Human Rights & Indicators",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Official Syllabus",
+                  "chapter": "Human Rights and Its Indicators",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Universal Declaration of Human Rights (UDHR 1948), ICCPR, ICESCR, UNHRC, Geneva Conventions",
+                "Human rights indicators (structural, process, outcome) and balancing national security with human rights",
+                "Constitutional & statutory protections in India: NHRC, NCW, NCPCR, custodial justice & police reforms (Prakash Singh directives)"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective — grouped under Indian Polity and Economy)",
+        "Paper II: Part A Essay (Indian Polity, Security & Human Rights Issues)"
+      ]
+    },
+    {
+      "id": "general-mental-ability",
+      "name": "General Mental Ability (Quantitative Aptitude, Reasoning & Data Interpretation)",
+      "slug": "general-mental-ability",
+      "officialScope": "Questions designed to test logical reasoning, quantitative aptitude including numerical ability, and data interpretation.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "UPSC CAPF General Mental Ability Detailed Topics (CollegeWollege)",
+          "url": "https://collegewollege.com/upsc-capf-exam-syllabus"
+        },
+        {
+          "title": "UPSC CAPF Syllabus & Reasoning Topics (BYJU'S)",
+          "url": "https://byjus.com/upsc-capf/capf-syllabus/"
+        },
+        {
+          "title": "R.S. Aggarwal Quantitative Aptitude Guide (Dokumen)",
+          "url": "https://dokumen.pub/quantitative-aptitude-for-competitive-examinations-by-rs-aggarwal-reprint-2017nbsped-9352534026-9789352534029.html"
+        },
+        {
+          "title": "CAPF Logical Reasoning & Mental Ability PYQs (UnlockIAS)",
+          "url": "https://www.unlockias.in/upsc-other-exam-pyq/capf-pyq/topic-wise/logical-reasoning-and-mental-ability"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "quantitative-aptitude-and-numerical-ability",
+          "name": "Quantitative Aptitude & Numerical Ability",
+          "slug": "quantitative-aptitude-and-numerical-ability",
+          "priority": "Very High",
+          "primaryBooks": [
+            "R.S. Aggarwal: Quantitative Aptitude for Competitive Examinations",
+            "NCERT Class 9 & 10 Mathematics (Foundations)"
+          ],
+          "chapters": [
+            {
+              "id": "gma-qa-01",
+              "order": 1,
+              "title": "Number System, Divisibility, HCF & LCM",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Number System; H.C.F. and L.C.M. of Numbers; Decimal Fractions",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Types of numbers (natural, whole, prime, composite, co-prime, rational/irrational), divisibility rules",
+                "Remainder theorem, unit digit, trailing zeroes, factors & multiples",
+                "HCF & LCM applications (bells tolling, remainders, greatest/least number problems)",
+                "Simplification (BODMAS), fractions, surds, indices, squares & cube roots"
+              ]
+            },
+            {
+              "id": "gma-qa-02",
+              "order": 2,
+              "title": "Percentages, Profit & Loss, and Discount",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Percentage; Profit and Loss",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Fraction-to-percentage conversions, successive percentage change, population & election problems",
+                "Cost price, selling price, marked price, profit/loss %, dishonest dealer problems",
+                "Successive discounts and equivalent single discount"
+              ]
+            },
+            {
+              "id": "gma-qa-03",
+              "order": 3,
+              "title": "Averages, Ratio & Proportion, Partnership & Alligation",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Average; Ratio and Proportion; Partnership; Alligation or Mixture; Problems on Ages",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Arithmetic mean, weighted average, replacement/inclusion/exclusion problems",
+                "Direct & inverse proportion, compound ratio, coins & income-expenditure problems",
+                "Partnership (capital × time ratio), Problems on Ages",
+                "Rule of Alligation and repeated replacement of mixtures"
+              ]
+            },
+            {
+              "id": "gma-qa-04",
+              "order": 4,
+              "title": "Simple Interest & Compound Interest",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Simple Interest; Compound Interest",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Simple interest formula, doubling/tripling time, rate & principal problems",
+                "Compound interest (annual, half-yearly, quarterly compounding), difference between CI and SI for 2 and 3 years",
+                "Installment basics and growth/depreciation applications"
+              ]
+            },
+            {
+              "id": "gma-qa-05",
+              "order": 5,
+              "title": "Time & Work, Pipes & Cisterns",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Time and Work; Pipes and Cisterns; Chain Rule",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Efficiency-based LCM method, alternate-day work, leaving/joining mid-way",
+                "Man-days-hours chain rule (M1D1H1/W1 = M2D2H2/W2) and work-wages distribution",
+                "Inlet & outlet pipes, leak emptying tank problems"
+              ]
+            },
+            {
+              "id": "gma-qa-06",
+              "order": 6,
+              "title": "Time, Speed & Distance, Trains, Boats & Races",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Time and Distance; Problems on Trains; Boats and Streams; Races and Games",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Average speed, relative speed (same vs. opposite direction), km/h to m/s conversion",
+                "Trains crossing poles, platforms, and moving trains",
+                "Upstream & downstream speed (boats and streams), circular track meetings & linear races"
+              ]
+            },
+            {
+              "id": "gma-qa-07",
+              "order": 7,
+              "title": "Permutations, Combinations, Probability & Set Theory",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Permutations and Combinations; Probability",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Fundamental counting principle, arrangements (nPr), selections (nCr), handshakes & committee problems",
+                "Basic probability: coins, dice, playing cards, balls drawn with/without replacement",
+                "Venn diagram set theory: n(A ∪ B) = n(A) + n(B) − n(A ∩ B) for 2 and 3 sets"
+              ]
+            },
+            {
+              "id": "gma-qa-08",
+              "order": 8,
+              "title": "Basic Algebra, Progressions, Geometry & Mensuration (2D & 3D)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude & NCERT Class 9–10 Maths",
+                  "chapter": "Area; Volume and Surface Areas; Linear/Quadratic Equations",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Linear equations in 1–2 variables, quadratic roots, algebraic identities, Arithmetic & Geometric Progressions (AP/GP)",
+                "Basic Geometry: lines & angles, triangles (Pythagoras, similarity), circles, polygons",
+                "2D Mensuration: area & perimeter of triangle, square, rectangle, parallelogram, rhombus, trapezium, circle, sector",
+                "3D Mensuration: surface area & volume of cube, cuboid, cylinder, cone, sphere, hemisphere, melting/recasting"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "logical-and-analytical-reasoning",
+          "name": "Logical & Analytical Reasoning",
+          "slug": "logical-and-analytical-reasoning",
+          "priority": "High",
+          "primaryBooks": [
+            "R.S. Aggarwal: A Modern Approach to Verbal & Non-Verbal Reasoning",
+            "UPSC CAPF Previous Year Question Papers (2015–2026)"
+          ],
+          "chapters": [
+            {
+              "id": "gma-lr-01",
+              "order": 1,
+              "title": "Series, Coding-Decoding, Analogy & Classification",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Verbal & Non-Verbal Reasoning",
+                  "chapter": "Series Completion; Coding-Decoding; Analogy; Classification",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Number series, alphabet series, alphanumeric & missing-number-in-matrix patterns",
+                "Letter shifting, direct substitution, number/symbol coding-decoding",
+                "Word/number analogies and odd-one-out (classification)"
+              ]
+            },
+            {
+              "id": "gma-lr-02",
+              "order": 2,
+              "title": "Blood Relations, Direction Sense & Ranking/Order",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Verbal & Non-Verbal Reasoning",
+                  "chapter": "Blood Relations; Direction Sense Test; Number, Ranking & Time Sequence",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Family tree puzzles, pointing/introducing statements, coded blood relations",
+                "Cardinal & ordinal directions, shortest distance (Pythagoras), shadow-based direction problems",
+                "Ranking in a row/queue, interchanging positions, comparison of heights/weights/marks"
+              ]
+            },
+            {
+              "id": "gma-lr-03",
+              "order": 3,
+              "title": "Syllogism, Logical Venn Diagrams & Statement-Conclusion",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Verbal & Non-Verbal Reasoning",
+                  "chapter": "Logical Venn Diagrams; Syllogism; Statement & Conclusions/Assumptions",
+                  "sourceUrl": "https://byjus.com/upsc-capf/capf-syllabus/"
+                }
+              ],
+              "topics": [
+                "Categorical syllogisms (All, Some, No, Some Not) via Venn diagrams, either-or & possibility cases",
+                "Statement & Conclusion, Statement & Assumptions, Cause & Effect, Decision Making"
+              ]
+            },
+            {
+              "id": "gma-lr-04",
+              "order": 4,
+              "title": "Seating Arrangements, Puzzles, Clocks & Calendars",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Verbal & Non-Verbal Reasoning",
+                  "chapter": "Puzzle Test; Seating Arrangement; Clocks; Calendar",
+                  "sourceUrl": "https://byjus.com/upsc-capf/capf-syllabus/"
+                }
+              ],
+              "topics": [
+                "Linear & circular seating arrangements, floor/scheduling puzzles, mathematical operations (symbol substitution)",
+                "Clocks: angle between hands, coinciding/opposite/right-angle times, faulty clocks",
+                "Calendars: odd days, leap years, finding day of the week for a given date, calendar repetition"
+              ]
+            },
+            {
+              "id": "gma-lr-05",
+              "order": 5,
+              "title": "Non-Verbal & Spatial Reasoning",
+              "priority": "Medium",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Verbal & Non-Verbal Reasoning",
+                  "chapter": "Non-Verbal Reasoning: Mirror/Water Images, Paper Folding, Cubes & Dice, Figure Counting",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Mirror images, water images, paper folding & cutting, embedded figures",
+                "Cubes & dice (opposite faces, painted cubes), figure counting (triangles/squares), figural series"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "data-interpretation",
+          "name": "Data Interpretation & Basic Statistics",
+          "slug": "data-interpretation",
+          "priority": "Medium-High",
+          "primaryBooks": [
+            "R.S. Aggarwal: Quantitative Aptitude (Data Interpretation Section)"
+          ],
+          "chapters": [
+            {
+              "id": "gma-di-01",
+              "order": 1,
+              "title": "Tables, Charts, Graphs & Basic Statistics",
+              "priority": "Medium-High",
+              "bookReferences": [
+                {
+                  "book": "R.S. Aggarwal – Quantitative Aptitude",
+                  "chapter": "Tabulation; Bar Graphs; Pie Charts; Line Graphs",
+                  "sourceUrl": "https://collegewollege.com/upsc-capf-exam-syllabus"
+                }
+              ],
+              "topics": [
+                "Data tables, bar charts, line graphs, pie charts (degree-to-percentage conversion), mixed graphs",
+                "Mean, median, mode, range, and basic data sufficiency questions"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective)"
+      ]
+    },
+    {
+      "id": "indian-economy",
+      "name": "Indian Economy",
+      "slug": "indian-economy",
+      "officialScope": "Economic development in India, national income, banking and monetary policy, government budget and taxation, inflation, planning, poverty, employment, agriculture, industry, and external sector.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "NCERT Class 12 Introductory Macroeconomics Chapters (Ncert24)",
+          "url": "https://ncert24.com/ncert-books/ncert-books-class-12-macroeconomics-chapter-1"
+        },
+        {
+          "title": "NCERT Class 12 Introductory Microeconomics Chapters (Vedantu)",
+          "url": "https://www.vedantu.com/ncert-books/ncert-books-class-12-micro-economics"
+        },
+        {
+          "title": "NCERT Class 11 Indian Economic Development Chapters (Vedantu)",
+          "url": "https://www.vedantu.com/ncert-books/ncert-books-class-11-economics-indian-economic-development"
+        },
+        {
+          "title": "Indian Economy by Ramesh Singh Priority Chapters (Scribd)",
+          "url": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "macroeconomics-and-national-income",
+          "name": "Basic Concepts, Microeconomics & National Income",
+          "slug": "macroeconomics-and-national-income",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 12: Introductory Macroeconomics (Ch. 1, 2, 4)",
+            "NCERT Class 12: Introductory Microeconomics (Ch. 1–5)",
+            "Ramesh Singh: Indian Economy (Ch. 1–2)"
+          ],
+          "chapters": [
+            {
+              "id": "eco-01",
+              "order": 1,
+              "title": "Microeconomics Basics: Demand, Supply, Elasticity & Market Structures",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Introductory Microeconomics",
+                  "chapter": "Ch. 1–5: Introduction, Theory of Consumer Behaviour, Production & Costs, Perfect Competition, Market Equilibrium",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-12-micro-economics"
+                }
+              ],
+              "topics": [
+                "Law of Demand & Law of Supply, demand/supply curve shifts, price elasticity of demand",
+                "Types of goods: Normal, Inferior, Giffen, Veblen, Substitute, Complementary, Public vs. Private, Merit goods",
+                "Opportunity cost, Production Possibility Frontier (PPF), Marginal Utility, Returns to Scale",
+                "Market structures: Perfect Competition, Monopoly, Monopolistic Competition, Oligopoly, Monopsony; Price Ceiling & Price Floor"
+              ]
+            },
+            {
+              "id": "eco-02",
+              "order": 2,
+              "title": "National Income Accounting & Economic Growth vs. Development",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Introductory Macroeconomics",
+                  "chapter": "Ch. 1: Introduction; Ch. 2: National Income Accounting; Ch. 4: Determination of Income and Employment",
+                  "sourceUrl": "https://ncert24.com/ncert-books/ncert-books-class-12-macroeconomics-chapter-1"
+                },
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 1: Indian Economy: An Introduction; Ch. 2: Growth, Development, and Happiness",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "GDP, GNP, NDP, NNP, GVA (Basic Prices vs. Market Prices vs. Factor Cost), Nominal vs. Real GDP, GDP Deflator",
+                "Three methods of GDP calculation: Product/Value Added, Income, Expenditure; Circular flow of income",
+                "Personal Income, Disposable Income, Per Capita Income, Purchasing Power Parity (PPP), ICOR",
+                "Growth vs. Development: HDI, Multidimensional Poverty Index (MPI), Gini Coefficient, Lorenz Curve, Kuznets Curve, Green GDP"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "money-banking-and-inflation",
+          "name": "Money, Banking, Monetary Policy & Inflation",
+          "slug": "money-banking-and-inflation",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 12: Introductory Macroeconomics (Ch. 3)",
+            "Ramesh Singh: Indian Economy (Ch. 9–10)"
+          ],
+          "chapters": [
+            {
+              "id": "eco-03",
+              "order": 1,
+              "title": "Money Supply, Banking System & RBI Monetary Policy",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Introductory Macroeconomics",
+                  "chapter": "Ch. 3: Money and Banking",
+                  "sourceUrl": "https://ncert24.com/ncert-books/ncert-books-class-12-macroeconomics-chapter-1"
+                },
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 10: Money and Banking",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Functions of money, money supply aggregates (M0/Reserve Money, M1, M2, M3, M4), Money Multiplier, Fiat vs. Legal Tender, CBDC (e-Rupee)",
+                "RBI functions, Monetary Policy Committee (MPC), quantitative tools (Repo, Reverse Repo, SDF, MSF, Bank Rate, CRR, SLR, OMO) & qualitative tools",
+                "Scheduled Commercial Banks, RRBs, Small Finance Banks, Payment Banks, NBFCs, Priority Sector Lending (PSL)",
+                "NPAs, Basel Norms (CAR/CRAR), Insolvency & Bankruptcy Code (IBC), Financial Inclusion (Jan Dhan, UPI, NPCI), Capital Market basics (SEBI, Primary/Secondary markets, Bonds, G-Secs)"
+              ]
+            },
+            {
+              "id": "eco-04",
+              "order": 2,
+              "title": "Inflation, Deflation & Business Cycles",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 9: Inflation and Business Cycle",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Demand-pull vs. Cost-push inflation, Core vs. Headline inflation, Disinflation, Deflation, Stagflation, Reflation, Shrinkflation",
+                "Inflation indices in India: CPI (Combined, Rural, Urban — NSO), WPI (DPIIT), IIP, Base Year concepts",
+                "Effects of inflation on debtors/creditors, Phillips Curve (inflation vs. unemployment), business cycle phases (boom, recession, depression, recovery)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fiscal-policy-budget-and-taxation",
+          "name": "Government Budget, Fiscal Policy & Taxation",
+          "slug": "fiscal-policy-budget-and-taxation",
+          "priority": "Very High",
+          "primaryBooks": [
+            "NCERT Class 12: Introductory Macroeconomics (Ch. 5)",
+            "Ramesh Singh: Indian Economy (Ch. 11–13)"
+          ],
+          "chapters": [
+            {
+              "id": "eco-05",
+              "order": 1,
+              "title": "Union Budget, Deficits & Fiscal Policy",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Introductory Macroeconomics",
+                  "chapter": "Ch. 5: Government Budget and the Economy",
+                  "sourceUrl": "https://ncert24.com/ncert-books/ncert-books-class-12-macroeconomics-chapter-1"
+                },
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 11: Government Budgeting; Ch. 13: Public Finance in India",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Revenue Receipts (Tax & Non-Tax) vs. Capital Receipts (Debt & Non-Debt — disinvestment, loan recoveries)",
+                "Revenue Expenditure vs. Capital Expenditure, Effective Capital Expenditure",
+                "Deficits: Fiscal Deficit, Revenue Deficit, Effective Revenue Deficit, Primary Deficit; Monetization of deficit & Crowding-out effect",
+                "FRBM Act, Fiscal Council, Public Debt (Internal vs. External), Finance Commission tax devolution, latest Union Budget & Economic Survey highlights"
+              ]
+            },
+            {
+              "id": "eco-06",
+              "order": 2,
+              "title": "Tax Structure in India (Direct Taxes & GST)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 12: Tax Structure in India",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Progressive, Regressive, and Proportional taxation; Laffer Curve; Tax-to-GDP ratio & Tax Buoyancy",
+                "Direct Taxes: Income Tax, Corporate Tax, Capital Gains Tax, STT, MAT, Equalization Levy",
+                "Indirect Taxes: GST (101st Amendment, CGST/SGST/IGST, GST Council, Input Tax Credit, Compensation Cess), Customs & Excise duties",
+                "Cess vs. Surcharge, Tax Havens, GAAR, BEPS, Double Taxation Avoidance Agreement (DTAA)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "planning-poverty-employment-and-sectors",
+          "name": "Planning, Reforms, Poverty, Employment & Economic Sectors",
+          "slug": "planning-poverty-employment-and-sectors",
+          "priority": "High",
+          "primaryBooks": [
+            "NCERT Class 11: Indian Economic Development (Ch. 1–8)",
+            "Ramesh Singh: Indian Economy (Ch. 4, 7, 15–17, 22)"
+          ],
+          "chapters": [
+            {
+              "id": "eco-07",
+              "order": 1,
+              "title": "Economic Planning, 1991 LPG Reforms & NITI Aayog",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Indian Economic Development",
+                  "chapter": "Ch. 1: Indian Economy on the Eve of Independence; Ch. 2: Indian Economy 1950–1990; Ch. 3: LPG Reforms",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-11-economics-indian-economic-development"
+                },
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 4–5: Planning in India; Ch. 7: Economic Reforms",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Five-Year Plans overview (Harrod-Domar, Mahalanobis, Gadgil Formula, Rolling Plan, Plan Holidays) to NITI Aayog",
+                "1991 BoP Crisis & LPG Reforms (Liberalisation, Privatisation, Globalisation), Industrial Policy 1991",
+                "Disinvestment & Strategic Sale, Maharatna/Navratna/Miniratna PSUs"
+              ]
+            },
+            {
+              "id": "eco-08",
+              "order": 2,
+              "title": "Poverty, Unemployment, Inequality & Human Capital",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 11: Indian Economic Development",
+                  "chapter": "Ch. 4: Human Capital Formation; Ch. 5: Rural Development; Ch. 6: Employment: Growth, Informalisation & Other Issues",
+                  "sourceUrl": "https://www.vedantu.com/ncert-books/ncert-books-class-11-economics-indian-economic-development"
+                }
+              ],
+              "topics": [
+                "Absolute vs. Relative poverty, Poverty Estimation Committees (Alagh, Lakdawala, Tendulkar, Rangarajan), NITI Aayog National MPI",
+                "Types of unemployment: Structural, Frictional, Cyclical, Disguised, Seasonal, Underemployment; PLFS indicators (LFPR, WPR, UR)",
+                "Demographic dividend, formal vs. informal sector, gig economy, MGNREGA, Skill India, PM-KISAN, Ayushman Bharat"
+              ]
+            },
+            {
+              "id": "eco-09",
+              "order": 3,
+              "title": "Agriculture, Industry, Services & Infrastructure",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 15: Agriculture & Food Management; Ch. 16: Industry & Infrastructure; Ch. 17: Services Sector",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Agriculture: MSP (CACP — A2, A2+FL, C2), PDS & NFSA, Buffer Stocks (FCI), NABARD, e-NAM, PMFBY, KCC, Land Reforms, Food Processing",
+                "Industry: Eight Core Industries (IIP), MSME classification, PLI schemes, Make in India, Startup India, SEZs",
+                "Infrastructure: PPP models (BOT, HAM, EPC, Swiss Challenge), PM Gati Shakti, National Infrastructure Pipeline, Energy & Logistics"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "external-sector-and-international-organizations",
+          "name": "External Sector, BoP & International Economic Bodies",
+          "slug": "external-sector-and-international-organizations",
+          "priority": "High",
+          "primaryBooks": [
+            "NCERT Class 12: Introductory Macroeconomics (Ch. 6)",
+            "Ramesh Singh: Indian Economy (Ch. 18–19)"
+          ],
+          "chapters": [
+            {
+              "id": "eco-10",
+              "order": 1,
+              "title": "Balance of Payments, Exchange Rate, FDI/FPI & Global Institutions",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "NCERT Class 12: Introductory Macroeconomics",
+                  "chapter": "Ch. 6: Open Economy Macroeconomics",
+                  "sourceUrl": "https://ncert24.com/ncert-books/ncert-books-class-12-macroeconomics-chapter-1"
+                },
+                {
+                  "book": "Ramesh Singh – Indian Economy",
+                  "chapter": "Ch. 18: External Sector in India; Ch. 19: International Organisations & India",
+                  "sourceUrl": "https://www.scribd.com/document/1062247504/Indian-Economy-Ramesh-Singh-Chapter-Checklist"
+                }
+              ],
+              "topics": [
+                "Balance of Payments (BoP): Current Account (Trade Balance, Invisibles, Remittances) vs. Capital Account (FDI, FPI/FII, ECB, NRI deposits)",
+                "Forex Reserves components (Foreign Currency Assets, Gold, SDRs, Reserve Tranche Position with IMF)",
+                "Exchange rates: Fixed vs. Floating vs. Managed Float, Depreciation vs. Devaluation, Appreciation vs. Revaluation, NEER & REER, Convertibility (Current vs. Capital)",
+                "International Institutions: IMF (SDR, Quotas), World Bank Group (IBRD, IDA, IFC, MIGA, ICSID), WTO (AoA — Green/Amber/Blue Box subsidies, TRIPS, TRIMS), ADB, AIIB, NDB (BRICS), FTA/CEPA/CECA"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective — grouped under Indian Polity and Economy)",
+        "Paper II: Part A Essay (Indian Economy & Developmental Issues)"
+      ]
+    },
+    {
+      "id": "current-events",
+      "name": "Current Events of National and International Importance",
+      "slug": "current-events",
+      "officialScope": "Current events of national and international importance in culture, music, arts, literature, sports, governance, societal and developmental issues, industry, business, globalisation, and interplay among nations.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Syllabus (Testkart)",
+          "url": "https://testkart.in/exams/upsc-capf/syllabus"
+        },
+        {
+          "title": "UPSC CAPF Paper 1 Syllabus (Prepp)",
+          "url": "https://prepp.in/upsc-capf-exam/syllabus"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "national-affairs-and-governance",
+          "name": "National Affairs, Schemes & Governance",
+          "slug": "national-affairs-and-governance",
+          "priority": "Very High",
+          "primaryBooks": [
+            "The Hindu / The Indian Express (Last 12 Months)",
+            "PIB (Press Information Bureau) & Vision IAS / Insights Monthly Compilations"
+          ],
+          "chapters": [
+            {
+              "id": "ce-01",
+              "order": 1,
+              "title": "Government Schemes, Bills, Supreme Court Judgments & Appointments",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "PIB & Monthly Current Affairs Compilations",
+                  "chapter": "Polity, Governance & Social Schemes (Last 12 Months)",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Flagship Union Government schemes (ministry, launch year, target beneficiaries, key provisions)",
+                "Major Parliamentary Acts, Constitutional Amendments, and landmark Supreme Court judgments",
+                "Key constitutional/statutory appointments, commissions, and national reports/indices (NITI Aayog, NCRB, NFHS)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "international-relations-and-global-events",
+          "name": "International Relations, Summits & Global Groupings",
+          "slug": "international-relations-and-global-events",
+          "priority": "Very High",
+          "primaryBooks": [
+            "The Hindu / The Indian Express (World & Editorial Pages)",
+            "Monthly Current Affairs Compilations (IR Section)"
+          ],
+          "chapters": [
+            {
+              "id": "ce-02",
+              "order": 1,
+              "title": "Summits, Treaties, Bilateral Relations & Geopolitical Places in News",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Monthly Current Affairs Compilations",
+                  "chapter": "International Relations & Global Indices (Last 12 Months)",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Major summits & groupings: G20, G7, BRICS, SCO, QUAD, ASEAN, BIMSTEC, IORA, UNGA, NATO",
+                "India's bilateral relations with neighbours and major powers, key FTAs/CEPAs, and international treaties",
+                "Global reports & indices (HDI, Global Hunger Index, Global Peace Index, Press Freedom, Innovation Index — publishing body & India's rank)",
+                "Conflict zones, strategic corridors, and geographical places in news"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "defence-security-and-capf-news",
+          "name": "Defence, Security & CAPF Developments",
+          "slug": "defence-security-and-capf-news",
+          "priority": "Very High",
+          "primaryBooks": [
+            "PIB (Ministry of Defence & Ministry of Home Affairs)",
+            "Monthly Defence Current Affairs Compilations"
+          ],
+          "chapters": [
+            {
+              "id": "ce-03",
+              "order": 1,
+              "title": "Military Exercises, Indigenous Weapons & CAPF Operations",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "PIB Defence & MHA Releases",
+                  "chapter": "Defence Exercises, Inductions & CAPF Updates",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "Bilateral & multilateral military exercises (Army, Navy, Air Force — partner country & location)",
+                "Recent DRDO missile tests, naval ship/submarine inductions, aircraft/drone acquisitions, and border infrastructure",
+                "CAPF deployments, modernization initiatives, rescue/disaster operations, and gallantry awards"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "culture-sports-awards-and-persons-in-news",
+          "name": "Culture, Arts, Literature, Sports & Awards",
+          "slug": "culture-sports-awards-and-persons-in-news",
+          "priority": "High",
+          "primaryBooks": [
+            "Monthly Current Affairs Compilations (Culture, Sports & Awards)",
+            "PIB (Ministry of Culture & Youth Affairs/Sports)"
+          ],
+          "chapters": [
+            {
+              "id": "ce-04",
+              "order": 1,
+              "title": "Awards, Honours, Books, Sports & Cultural Heritage in News",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "Monthly Current Affairs Compilations",
+                  "chapter": "Awards, Sports, Literature & Culture (Last 12 Months)",
+                  "sourceUrl": "https://testkart.in/exams/upsc-capf/syllabus"
+                }
+              ],
+              "topics": [
+                "National & international awards: Nobel Prizes, Bharat Ratna, Padma Awards, Jnanpith, Sahitya Akademi, Booker Prize, Ramon Magsaysay, National Film Awards",
+                "Major sports events: Olympics, Paralympics, Asian/Commonwealth Games, Cricket/Football/Badminton/Chess/Athletics tournaments & Indian winners",
+                "Newly added UNESCO World Heritage Sites, GI Tags, Ramsar Wetlands, festivals, and notable books/authors in news"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper I: General Ability and Intelligence (Objective)",
+        "Paper II: Part A Essay & Part B Reports/Arguments (Current Linkages)"
+      ]
+    },
+    {
+      "id": "paper-2-general-studies-essay-comprehension",
+      "name": "Paper II: General Studies, Essay, Comprehension & English Language",
+      "slug": "paper-2-general-studies-essay-comprehension",
+      "officialScope": "Part A (80 Marks, English or Hindi): Essay questions in long narrative form. Part B (120 Marks, English only): Comprehension passages, précis writing, developing counter-arguments, report writing, simple grammar, and other aspects of language testing.",
+      "referenceUrls": [
+        {
+          "title": "UPSC CAPF AC Paper 2 Syllabus & Pattern (Testbook)",
+          "url": "https://testbook.com/upsc-capf-ac/syllabus-exam-pattern"
+        },
+        {
+          "title": "UPSC CAPF Paper 2 Guidebook (Mission CAPF Hub)",
+          "url": "https://missioncapfhub.com/wp-content/uploads/2020/05/Guidebook-2023-for-CAPF-Paper-2-updated.pdf"
+        },
+        {
+          "title": "CAPF Paper 2 Essay, Precis & Grammar Strategy (NCA Academy)",
+          "url": "https://ncaacademy.com/capf-paper-2-essay-writing-tips/"
+        },
+        {
+          "title": "CAPF Paper 2 Argument Writing Guide (Medium)",
+          "url": "https://medium.com/@academicdiary3.14/argument-writing-guide-for-ac-capf-paper-2-2e4e762dfc6d"
+        },
+        {
+          "title": "CAPF Paper 2 Preparation Tips (BYJU'S)",
+          "url": "https://byjus.com/govt-exams/tips-to-crack-capf-ac-paper-2/"
+        }
+      ],
+      "subSubjects": [
+        {
+          "id": "part-a-essay-writing",
+          "name": "Part A: Essay Writing (80 Marks — English or Hindi)",
+          "slug": "part-a-essay-writing",
+          "priority": "Very High",
+          "primaryBooks": [
+            "The Hindu / The Indian Express Editorials",
+            "Ashok Kumar: Challenges to Internal Security of India",
+            "UPSC CAPF Paper II Previous Year Solved Papers"
+          ],
+          "chapters": [
+            {
+              "id": "p2-ess-01",
+              "order": 1,
+              "title": "Security, Border Management, Defence & International Relations Essays",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Paper II Official Syllabus & Ashok Kumar (Internal Security)",
+                  "chapter": "Security & Geopolitical Themes (4 Essays × 20 Marks = 80 Marks, ~300 words each)",
+                  "sourceUrl": "https://missioncapfhub.com/wp-content/uploads/2020/05/Guidebook-2023-for-CAPF-Paper-2-updated.pdf"
+                }
+              ],
+              "topics": [
+                "Role of CAPFs in internal security & border management, modernization of armed forces",
+                "Left-Wing Extremism, insurgency, cross-border terrorism, cybersecurity & hybrid warfare",
+                "India's neighbourhood policy, Indo-Pacific, BRICS/SCO/QUAD, global terrorism & changing world order"
+              ]
+            },
+            {
+              "id": "p2-ess-02",
+              "order": 2,
+              "title": "Polity, Governance, Economy, Society & Human Rights Essays",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Paper II Official Syllabus",
+                  "chapter": "Polity, Economy, Social Justice & Human Rights Themes",
+                  "sourceUrl": "https://www.scribd.com/document/934749252/CAPF-Paper2-2026-Topics"
+                }
+              ],
+              "topics": [
+                "Federalism, One Nation One Election, electoral & judicial reforms, ethics in law enforcement",
+                "Demographic dividend, Digital India, AI & automation, privatization, agrarian distress & inclusive growth",
+                "Women empowerment & gender inclusion in security forces, social media & fake news, education/health reforms, human rights vs. national security"
+              ]
+            },
+            {
+              "id": "p2-ess-03",
+              "order": 3,
+              "title": "Modern History, Geography, Environment & Analytical Essays",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Paper II Official Syllabus",
+                  "chapter": "Freedom Struggle, Geography, Climate & Analytical Themes",
+                  "sourceUrl": "https://victorgrowth.com/important-essay-topics-for-capf-exam-2026/"
+                }
+              ],
+              "topics": [
+                "Legacy of the Indian freedom struggle, constitutional values, nationalism & national integration",
+                "Climate change & climate security, renewable energy transition, water crisis, urbanization, disaster preparedness & e-waste"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "part-b-writing-and-comprehension",
+          "name": "Part B: Counter-Arguments, Report Writing, Précis & Comprehension (English Only)",
+          "slug": "part-b-writing-and-comprehension",
+          "priority": "Very High",
+          "primaryBooks": [
+            "UPSC CAPF Paper II Previous Year Papers (2014–2026)",
+            "Wren & Martin: High School English Grammar and Composition (Composition Section)"
+          ],
+          "chapters": [
+            {
+              "id": "p2-wrt-01",
+              "order": 1,
+              "title": "Argument / Counter-Argument Writing (For & Against — 2 × 20 = 40 Marks)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Paper II Official Syllabus",
+                  "chapter": "Developing Counter-Arguments (Structured For & Against Points)",
+                  "sourceUrl": "https://medium.com/@academicdiary3.14/argument-writing-guide-for-ac-capf-paper-2-2e4e762dfc6d"
+                }
+              ],
+              "topics": [
+                "Presenting balanced, distinct, fact-backed points strictly in favour and against a given proposition",
+                "Common themes: GM crops, capital punishment, simultaneous elections, social media regulation, privatization, reservation, AI & jobs, UN reforms"
+              ]
+            },
+            {
+              "id": "p2-wrt-02",
+              "order": 2,
+              "title": "Report Writing (2 × 10 = 20 Marks, ~200 Words Each)",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Paper II Guidebook",
+                  "chapter": "Formal Report Format & Objective Narration",
+                  "sourceUrl": "https://missioncapfhub.com/wp-content/uploads/2020/05/Guidebook-2023-for-CAPF-Paper-2-updated.pdf"
+                }
+              ],
+              "topics": [
+                "Formal newspaper/official report structure (Heading, Date/Place/Byline, 3–4 objective paragraphs, no personal opinion or bullet lists)",
+                "Common themes: disaster/flood relief, cybercrime/data leak, communal tension, border smuggling/seizure, protests, VIP security, scheme implementation"
+              ]
+            },
+            {
+              "id": "p2-wrt-03",
+              "order": 3,
+              "title": "Précis Writing (15 Marks) & Reading Comprehension (20 Marks)",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "UPSC CAPF Paper II Guidebook",
+                  "chapter": "Précis Grid Format (1/3rd Word Limit) & Unseen Passage Comprehension",
+                  "sourceUrl": "https://byjus.com/govt-exams/tips-to-crack-capf-ac-paper-2/"
+                }
+              ],
+              "topics": [
+                "Précis rules: strictly 1/3rd of original word count in single paragraph, own words (no verbatim lifting), third person, same tense, word count noted at bottom, no title unless asked",
+                "Reading Comprehension: answering 5 analytical/factual questions in own words based strictly on the unseen passage"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "part-b-english-grammar-and-vocabulary",
+          "name": "Part B: English Grammar & Language Skills (25 Marks — English Only)",
+          "slug": "part-b-english-grammar-and-vocabulary",
+          "priority": "Very High",
+          "primaryBooks": [
+            "Wren & Martin: High School English Grammar and Composition",
+            "S.P. Bakshi: Objective General English"
+          ],
+          "chapters": [
+            {
+              "id": "p2-grm-01",
+              "order": 1,
+              "title": "Core Grammar, Sentence Transformation & Error Correction",
+              "priority": "Very High",
+              "bookReferences": [
+                {
+                  "book": "Wren & Martin / S.P. Bakshi",
+                  "chapter": "Tenses, Voice, Narration, Clauses, Prepositions & Sentence Correction",
+                  "sourceUrl": "https://byjus.com/govt-exams/tips-to-crack-capf-ac-paper-2/"
+                }
+              ],
+              "topics": [
+                "Rewrite as directed: Active & Passive Voice, Direct & Indirect Speech, Degrees of Comparison, Simple/Compound/Complex sentence conversion",
+                "Question tags, conditional sentences, inversion, removal of 'too', affirmative/negative/interrogative transformations",
+                "Subject-Verb Agreement, Tenses, Articles, Prepositions, Conjunctions, Determiners, and spotting/correcting grammatical errors"
+              ]
+            },
+            {
+              "id": "p2-grm-02",
+              "order": 2,
+              "title": "Vocabulary in Usage: Phrasal Verbs, Idioms & Confusable Words",
+              "priority": "High",
+              "bookReferences": [
+                {
+                  "book": "S.P. Bakshi / Wren & Martin",
+                  "chapter": "Idioms & Phrases, Phrasal Verbs, Homonyms & Word Usage",
+                  "sourceUrl": "https://byjus.com/govt-exams/tips-to-crack-capf-ac-paper-2/"
+                }
+              ],
+              "topics": [
+                "Using idioms and phrases in original sentences to bring out their clear meaning",
+                "Phrasal verbs, homophones/homonyms (pair of words), synonyms/antonyms, one-word substitutions, prefixes & suffixes"
+              ]
+            }
+          ]
+        }
+      ],
+      "papers": [
+        "Paper II: General Studies, Essay and Comprehension (Descriptive — 200 Marks, 3 Hours)"
+      ]
+    }
+  ]
+}
