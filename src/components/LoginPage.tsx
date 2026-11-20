@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { ArrowRight, Layers3 } from 'lucide-react';
-import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, ArrowRight, Layers3 } from 'lucide-react';
+import { Link, Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import { afterLogin } from '../../shared/authRoutes';
 import { useAuth } from '../context/AuthContext';
 import { APP_NAME } from '../data/brand';
@@ -52,6 +52,7 @@ export function LoginPage() {
           <span className="grid size-9 place-items-center rounded-lg bg-[#f2bf78] text-[#17281f]"><Layers3 size={20} aria-hidden="true" /></span>
           {APP_NAME}
         </span>
+        <Link to="/" className="inline-flex min-h-11 items-center gap-1.5 text-sm hover:underline"><ArrowLeft size={16} aria-hidden="true" /> Home</Link>
       </header>
       <section aria-labelledby="sign-in-heading" className="mx-auto my-auto w-full max-w-md py-16">
         <h1 id="sign-in-heading" className="font-serif text-5xl leading-none tracking-tight sm:text-6xl">Sign in to CadetSlate</h1>

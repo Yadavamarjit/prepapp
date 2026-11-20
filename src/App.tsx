@@ -23,7 +23,6 @@ import { DailyReview } from './components/DailyReview';
 import { LEARNING_CHAPTERS } from './data/learningLibrary';
 import { buildRecallCards, parseRecallProgress, RECALL_STORAGE_KEY, scheduleRecall, getDueRecallCards } from './utils/dailyReview';
 import type { RecallRating } from './utils/dailyReview';
-import { HomePage } from './components/HomePage';
 import { useAuth } from './context/AuthContext';
 import { INITIAL_QUESTION_BANK } from './data/questionBank';
 import { Question, MistakeRecord, MistakeReason, Paper2Submission, ChapterProgress } from './types';
@@ -349,8 +348,6 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-
       <Route element={<StudyLayout />}>
         <Route
           path="dashboard"

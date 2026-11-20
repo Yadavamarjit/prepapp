@@ -1,11 +1,12 @@
-import { useRef, useState, type FormEvent, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type PointerEvent } from 'react';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Calculator, Check, ChevronDown, CircleX,
   Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, Pause, PenLine, Play, RotateCcw, Sparkles,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { APP_NAME } from '../data/brand';
-import { ARTICLE_33_QUESTION } from '../data/learningLibrary';
+import { ARTICLE_33_QUESTION } from '../data/sampleQuestion';
 import './HomePage.css';
 
 const studySessions = {
@@ -174,8 +175,15 @@ function SessionPlanner() {
 }
 
 export function HomePage() {
+  const { user } = useAuth();
+  const { hash } = useLocation();
   const heroFrame = useRef<HTMLDivElement>(null);
   const [motionPaused, setMotionPaused] = useState(false);
+
+  useEffect(() => {
+    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }, [hash]);
 
   function moveScene(event: PointerEvent<HTMLElement>) {
     if (event.pointerType !== 'mouse' || motionPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -209,6 +217,7 @@ export function HomePage() {
             <a href="#ai-tools">AI tools</a>
           </div>
           <div className="prep-nav-actions">
+            {!user && <Link className="prep-nav-sign-in" to="/login">Sign in</Link>}
             <Link className="prep-nav-cta" to="/dashboard" aria-label="Open workspace">
               <span className="prep-nav-workspace-full">Open workspace</span><span className="prep-nav-workspace-short">Workspace</span>
               <ArrowUpRight size={16} aria-hidden="true" />
@@ -241,6 +250,7 @@ export function HomePage() {
                 <a className="prep-hero-link" href="#sample-question">Try a sample question <ArrowDown size={16} aria-hidden="true" /></a>
               </div>
               <div className="prep-hero-access">
+                {!user && <span>Google sign-in for the workspace</span>}
                 <a className="prep-hero-ai" href="#ai-tools">Explore AI tools <ArrowUpRight size={14} aria-hidden="true" /></a>
               </div>
             </div>
@@ -340,7 +350,7 @@ export function HomePage() {
             <div className="prep-section-copy">
               <p className="prep-eyebrow"><Sparkles size={16} aria-hidden="true" /> AI study tools</p>
               <h2 id="prep-ai-heading">Get help when you get stuck.</h2>
-              <p>Ask for a clearer explanation, get feedback on a draft or figure out what to study next.</p>
+              <p>Ask for a clearer explanation, get feedback on a draft or figure out what to study next. Sign in to access the AI tools.</p>
               <Link className="prep-button prep-button-dark" to="/ai-tutor">Open the AI tutor <ArrowUpRight size={16} aria-hidden="true" /></Link>
             </div>
             <ul className="prep-ai-tools">

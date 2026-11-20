@@ -6,7 +6,7 @@ CadetSlate is a UPSC CAPF (Assistant Commandant) study app for both written pape
 
 | Area | Production route | Source |
 | --- | --- | --- |
-| Google sign-in | [Sign in](https://prepapp-five.vercel.app/login) | `src/components/LoginPage.tsx`, `src/context/AuthContext.tsx`, `proxy.ts` |
+| Public homepage and Google sign-in | [Homepage](https://prepapp-five.vercel.app/) · [Sign in](https://prepapp-five.vercel.app/login) | `src/components/HomePage.tsx`, `src/components/LoginPage.tsx`, `src/context/AuthContext.tsx`, `proxy.ts` |
 | Daily study plan | [Today](https://prepapp-five.vercel.app/dashboard) | `src/components/DailyPlan.tsx`, `src/utils/dailyPlan.ts`, `server/aiDailyPlan.ts` |
 | Official exam scope and chapter catalog | [CAPF syllabus](https://prepapp-five.vercel.app/capf-syllabus#complete-syllabus) | `src/components/CapfSyllabus.tsx`, `src/data/syllabusCatalog.ts` |
 | Chapter study and notes | [Learning](https://prepapp-five.vercel.app/learning) | `src/components/LearningHub.tsx`, `src/context/SyllabusContext.tsx` |
@@ -14,7 +14,7 @@ CadetSlate is a UPSC CAPF (Assistant Commandant) study app for both written pape
 | Timed Paper I practice and attempt reports | [CAPF Analytica](https://prepapp-five.vercel.app/practice/capf-analytica) | `src/components/CapfAnalytica.tsx`, `src/utils/capfAttempt.ts` |
 | Paper II writing practice | [Paper II lab](https://prepapp-five.vercel.app/paper-2) | `src/components/Paper2Lab.tsx` |
 
-Google sign-in at `/login` is required for the homepage and every study route. Protected page requests are redirected to sign-in with their destination. Express establishes a host-only, Secure, HttpOnly session cookie after validating the Firebase ID token. Vercel verifies the cookie before serving study routes and assets, and Express independently verifies authentication for the study API.
+The homepage at `/` and Google sign-in at `/login` are public. All study routes require sign-in and preserve the requested destination. Express establishes a host-only, Secure, HttpOnly session cookie after validating the Firebase ID token. Vercel verifies the cookie before serving study routes and assets, and Express independently verifies authentication for the study API.
 
 ## Data and known gaps
 

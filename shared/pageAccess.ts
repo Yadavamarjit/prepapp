@@ -1,9 +1,11 @@
 import { isLoginPath, loginPath } from './authRoutes.js';
 import { sessionToken, verifyFirebaseToken } from './firebaseIdentity.js';
 
-// Only the login entry, its shared styles, and the Firebase SDK are public.
+// Keep the landing page, sign-in, and their required assets separate from the study app.
 export function isPublicFrontendPath(pathname: string) {
-  return isLoginPath(pathname)
+  return pathname === '/' || isLoginPath(pathname)
+    || pathname === '/capf-study-hero.webp'
+    || pathname === '/capf-study-hero-mobile.webp'
     || /^\/assets\/(?:site-entry|firebase)-[\w-]+\.js$/.test(pathname)
     || /^\/assets\/index-[\w-]+\.css$/.test(pathname);
 }

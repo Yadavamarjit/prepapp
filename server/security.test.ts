@@ -99,7 +99,11 @@ test('secure sessions gate study APIs and frontend assets', async () => {
       value => verifyFirebaseToken(value, FIREBASE_PROJECT, keys));
     assert.deepEqual(await gate('/dashboard?view=today'), { denied: 302, location: '/login?next=%2Fdashboard%3Fview%3Dtoday' });
     assert.deepEqual(await gate('/index.html'), { denied: 302, location: '/login?next=%2Findex.html' });
+    assert.deepEqual(await gate('/'), { public: true });
     assert.deepEqual(await gate('/login'), { public: true });
+    assert.deepEqual(await gate('/capf-study-hero.webp'), { public: true });
+    assert.deepEqual(await gate('/capf-study-hero-mobile.webp'), { public: true });
+    assert.deepEqual(await gate('/assets/App-abc123.css'), { denied: 401 });
     assert.deepEqual(await gate('/assets/site-entry-abc123.js'), { public: true });
     assert.deepEqual(await gate('/assets/App-abc123.js'), { denied: 401 });
     assert.deepEqual(await gate('/upsc_capf_complete_syllabus.json'), { denied: 401 });
