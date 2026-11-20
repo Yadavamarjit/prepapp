@@ -168,12 +168,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       photoURL: null,
       isGuest: true,
     };
-    try {
-      localStorage.setItem(GUEST_SESSION_KEY, JSON.stringify(guestUser));
-      setUser(guestUser);
-    } catch (e) {
-      console.error('Failed to store guest session:', e);
-    }
+    localStorage.setItem(GUEST_SESSION_KEY, JSON.stringify(guestUser));
+    setUser(guestUser);
   };
 
   // ── Sign Out ──────────────────────────────────────────────────────────────

@@ -41,3 +41,16 @@ test('provider failure is explicit and never reported as a successful AI decisio
   await assert.rejects(decideDailyPlan(context, { apiKey: 'test', fetcher: (async () => new Response('{}', { status: 429 })) as typeof fetch }), /quota/);
   assert.throws(() => parseDecisionRequest({ ...context, budget: 999 }), /Invalid/);
 });
+
+test('CAPF catalog decisions and daily plans link to the same JSON chapter', () => {
+  const request = { exam: 'UPSC_CAPF', budget: 20, completed: [], dueCount: 0, catalog: true };
+  const catalogContext = parseDecisionRequest(request);
+  assert.equal(catalogContext.candidates[0].id, 'capf:anc-01');
+  assert.match(catalogContext.candidates[0].reference, /Palaeolithic/);
+  assert.ok(!parseDecisionRequest({ ...request, completed: ['capf:anc-01'] }).candidates.some(candidate => candidate.id === 'capf:anc-01'));
+  const plan = buildDailyPlan({ budget: 20, exam: catalogContext.exam, syllabusChapters: catalogContext.syllabusChapters, chapters: LEARNING_CHAPTERS, progress: {}, questions: [], mistakes: [], dueCount: 0 });
+  assert.match(plan.tasks.find(task => task.id === 'learn')!.path, /^\/learning\/capf-/);
+  const next = applyPlanDecision(plan, { ...decision, chapterId: 'capf:anc-01' }, [], catalogContext.syllabusChapters);
+  assert.equal(next.tasks.find(task => task.id === 'learn')?.path, '/learning/capf-anc-01');
+  assert.equal(next.tasks.find(task => task.id === 'practice')?.path, '/ai-tutor?chapter=anc-01');
+});

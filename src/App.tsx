@@ -23,6 +23,7 @@ import { LEARNING_CHAPTERS } from './data/learningLibrary';
 import { buildRecallCards, parseRecallProgress, RECALL_STORAGE_KEY, scheduleRecall, getDueRecallCards } from './utils/dailyReview';
 import type { RecallRating } from './utils/dailyReview';
 import { LoginPage } from './components/LoginPage';
+import { HomePage } from './components/HomePage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
 import { INITIAL_QUESTION_BANK } from './data/questionBank';
@@ -34,6 +35,7 @@ import { ShieldAlert, Compass } from 'lucide-react';
 const LoginPageWrapper: React.FC = () => {
   const { user } = useAuth();
   const location = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const requested = location.state?.from;
   const from = requested ? { pathname: requested.pathname, search: requested.search, hash: requested.hash } : '/';
 
@@ -72,7 +74,11 @@ const NotFoundPage: React.FC = () => {
 
 function ProtectedAppLayout() {
   const { pathname } = useLocation();
+  const { user, loading } = useAuth();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+
+  if (pathname === '/' && !loading && !user) return <HomePage />;
+
   return <ProtectedRoute>
     <div className="min-h-screen bg-[#F7F7F2] text-[#30392D] dark:bg-[#121816] dark:text-[#E6EAE8]">
       <a href="#study-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:p-3 focus:text-black">Skip to content</a>
