@@ -1,5 +1,5 @@
 import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from 'jose';
-import firebaseConfig from '../firebase-applet-config.json';
+import firebaseConfig from '../firebase-applet-config.json' with { type: 'json' };
 
 export const FIREBASE_PROJECT = firebaseConfig.projectId;
 export const PRIVATE_CACHE = 'private, no-store';

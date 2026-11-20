@@ -1,5 +1,5 @@
-import { isLoginPath, loginPath } from './authRoutes';
-import { sessionToken, verifyFirebaseToken } from './firebaseIdentity';
+import { isLoginPath, loginPath } from './authRoutes.js';
+import { sessionToken, verifyFirebaseToken } from './firebaseIdentity.js';
 
 // Only the login entry, its shared styles, and the Firebase SDK are public.
 export function isPublicFrontendPath(pathname: string) {

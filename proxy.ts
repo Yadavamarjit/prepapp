@@ -1,7 +1,7 @@
 import { next } from '@vercel/functions';
-import { PRIVATE_CACHE } from './shared/firebaseIdentity';
-import { isLoginPath } from './shared/authRoutes';
-import { pageAccess } from './shared/pageAccess';
+import { PRIVATE_CACHE } from './shared/firebaseIdentity.js';
+import { isLoginPath } from './shared/authRoutes.js';
+import { pageAccess } from './shared/pageAccess.js';
 
 export default async function proxy(request: Request) {
   const url = new URL(request.url);
