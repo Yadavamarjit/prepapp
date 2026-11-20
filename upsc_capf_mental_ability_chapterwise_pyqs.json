@@ -1,0 +1,2037 @@
+{
+  "exam": "UPSC CAPF (Assistant Commandants)",
+  "paper": "Paper I - General Ability and Intelligence",
+  "subjectId": "general-mental-ability",
+  "subjectName": "General Mental Ability (Quantitative Aptitude, Reasoning & Data Interpretation)",
+  "yearsIncluded": [
+    2025,
+    2024,
+    2022,
+    2021,
+    2020,
+    2019
+  ],
+  "totalQuestions": 100,
+  "totalSubSubjects": 3,
+  "totalChapters": 14,
+  "note": "All 100 General Mental Ability PYQs from UPSC CAPF (ACs) Paper I (2019, 2020, 2021, 2022, 2024, and 2025) mapped to exact subSubjectId and chapterId keys from upsc_capf_mental_ability_syllabus.json.",
+  "subSubjects": [
+    {
+      "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+      "subSubjectName": "Quantitative Aptitude & Numerical Ability",
+      "questionCount": 82,
+      "chapters": [
+        {
+          "chapterId": "gma-qa-01",
+          "chapterName": "Number System, Divisibility, HCF & LCM",
+          "questionCount": 15,
+          "questions": [
+            {
+              "id": "capf-2025-q056",
+              "year": 2025,
+              "questionNumber": 56,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "For any three natural numbers a, b and c, if (bc + 1)/(abc + a + c) = 11/43, then the value of abc is",
+              "options": {
+                "a": "30",
+                "b": "45",
+                "c": "60",
+                "d": "75"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "30",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q057",
+              "year": 2025,
+              "questionNumber": 57,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "If n is an integer larger than 1, then what is the least value of the integer n + n^{1/2} + n^{1/3}?",
+              "options": {
+                "a": "1",
+                "b": "3",
+                "c": "76",
+                "d": "785"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "76",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q058",
+              "year": 2025,
+              "questionNumber": 58,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System - Unit Digit",
+              "question": "The unit digit of (3 × 1 + 4 × 2 × 1 + 5 × 3 × 2 × 1 + … + 20 × 18 × 17 × ⋯ × 2 × 1) is",
+              "options": {
+                "a": "2",
+                "b": "3",
+                "c": "4",
+                "d": "5"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "5",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q067",
+              "year": 2025,
+              "questionNumber": 67,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System - HCF & LCM",
+              "question": "The sum of two numbers is 168. If their HCF is 14, how many such pairs of numbers are possible?",
+              "options": {
+                "a": "1",
+                "b": "2",
+                "c": "3",
+                "d": "0"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "2",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q068",
+              "year": 2025,
+              "questionNumber": 68,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System - LCM & Cycles",
+              "question": "There are four bulbs A, B, C and D in a room. A glows for 2 minutes, then goes off for 1 minute and the process continues in this manner. Similarly, B glows for 3 minutes and then goes off for 1 minute and the process continues. For C, it is 4 minutes and 1 minute, while for D, it is 5 minutes and 1 minute respectively for glowing and going off. A man enters the room and comes out of it as soon as he completes an hour. What is the maximum number of times that he may face complete darkness in the room?",
+              "options": {
+                "a": "3",
+                "b": "2",
+                "c": "0",
+                "d": "1"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "1",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q070",
+              "year": 2025,
+              "questionNumber": 70,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System - Digits",
+              "question": "The value at the tenth place of a three-digit number is twice the value at the unit's place. The value at the hundredth place is 75% of the value at the unit's place. How many such numbers are possible?",
+              "options": {
+                "a": "0",
+                "b": "1",
+                "c": "2",
+                "d": "3"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "1",
+              "status": "official"
+            },
+            {
+              "id": "capf-2024-q046",
+              "year": 2024,
+              "questionNumber": 46,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "The remainder, when 1 + (1 × 2) + (1 × 2 × 3) + … + (1 × 2 × 3 × … × 500) is divided by 8, is",
+              "options": {
+                "a": "1",
+                "b": "2",
+                "c": "3",
+                "d": "4"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "1",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q001",
+              "year": 2022,
+              "questionNumber": 1,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "Which one of the following is the difference of the sum of cubes of first ten natural numbers and the sum of squares of first ten natural numbers?",
+              "options": {
+                "a": "2400",
+                "b": "2640",
+                "c": "2880",
+                "d": "2000"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "2640",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q031",
+              "year": 2022,
+              "questionNumber": 31,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "A number is 124 more than its one-third. What is that number?",
+              "options": {
+                "a": "194",
+                "b": "180",
+                "c": "189",
+                "d": "186"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "186",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q078",
+              "year": 2021,
+              "questionNumber": 78,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "The smallest number which when added to 10000 becomes divisible by 20, 24 and 30 is",
+              "options": {
+                "a": "120",
+                "b": "800",
+                "c": "80",
+                "d": "83"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "80",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2020-q112",
+              "year": 2020,
+              "questionNumber": 112,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "Which one of the following is the greatest number by which the product of three consecutive even numbers would be exactly divisible?",
+              "options": {
+                "a": "12",
+                "b": "24",
+                "c": "48",
+                "d": "64"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "48",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q120",
+              "year": 2020,
+              "questionNumber": 120,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "A is the smallest positive integer which when divided by 9 and 12 leaves remainder 8. B is the smallest positive integer which when divided by 9 and 12 leaves remainder 5. Which one of the following is the value of A – B?",
+              "options": {
+                "a": "3",
+                "b": "2",
+                "c": "1",
+                "d": "0"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "3",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q040",
+              "year": 2019,
+              "questionNumber": 40,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "What is the natural number n for which 3^9 + 3^12 + 3^15 + 3^n is a perfect cube of an integer?",
+              "options": {
+                "a": "10",
+                "b": "11",
+                "c": "13",
+                "d": "14"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "14",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q103",
+              "year": 2019,
+              "questionNumber": 103,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "The least integer when multiplied by 2940 becomes a perfect square is",
+              "options": {
+                "a": "10",
+                "b": "15",
+                "c": "20",
+                "d": "35"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "15",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q104",
+              "year": 2019,
+              "questionNumber": 104,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-01",
+              "topic": "Number System",
+              "question": "When the digits of two-digit numbers are reversed, the number increases by 27, the sum of such two-digit numbers is",
+              "options": {
+                "a": "235",
+                "b": "249",
+                "c": "213",
+                "d": "180"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "249",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-02",
+          "chapterName": "Percentages, Profit & Loss, and Discount",
+          "questionCount": 11,
+          "questions": [
+            {
+              "id": "capf-2024-q052",
+              "year": 2024,
+              "questionNumber": 52,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Profit & Loss",
+              "question": "A shopkeeper sold a product at 30% loss. Had his selling price been ₹150 more, he would have made a profit of 10%. What was the cost price?",
+              "options": {
+                "a": "₹375",
+                "b": "₹400",
+                "c": "₹425",
+                "d": "₹450"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "₹375",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q056",
+              "year": 2024,
+              "questionNumber": 56,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Percentages",
+              "question": "There was a hike in petrol price by 12%. By how much percentage should a person decrease his petrol consumption such that there is no change in his expenditure on petrol?",
+              "options": {
+                "a": "8·6%",
+                "b": "9·8%",
+                "c": "10·7%",
+                "d": "12%"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "10·7%",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q062",
+              "year": 2024,
+              "questionNumber": 62,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Profit & Loss",
+              "question": "A shopkeeper sells two items, A and B. Item B's cost price is twice as that of item A. The shopkeeper sells item A at 10% profit and item B at 20% profit. Which one of the following is the value of net profit?",
+              "options": {
+                "a": "15%",
+                "b": "13.33%",
+                "c": "18%",
+                "d": "16.66%"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "16.66%",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q002",
+              "year": 2022,
+              "questionNumber": 2,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Percentage & Discount",
+              "question": "A person buys an item from a shop for which the shopkeeper offers a discount of 10% on the marked price. The person pays using an e-wallet which gives 10% cash back. Which one of the following is the value of effective discount?",
+              "options": {
+                "a": "20%",
+                "b": "18%",
+                "c": "19%",
+                "d": "21%"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "19%",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q076",
+              "year": 2021,
+              "questionNumber": 76,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Profit, Loss & Discount",
+              "question": "In a stock clearance sale, a shopkeeper gives 40% off on all his items. He incurs a loss of 25% by selling an item of marked price ₹2,000. Which one of the following is the cost price of this item?",
+              "options": {
+                "a": "₹1,800",
+                "b": "₹1,200",
+                "c": "₹1,600",
+                "d": "₹1,400"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "₹1,600",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q095",
+              "year": 2021,
+              "questionNumber": 95,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Percentage & Discount",
+              "question": "A shopkeeper gives two consecutive discounts of 10% and 5% respectively on his items. He then adds 20% GST on his items. If an item has marked price ₹2,000, how much more or less of the actual price of the item a customer has to pay?",
+              "options": {
+                "a": "2.6% less",
+                "b": "2.6% more",
+                "c": "Same price",
+                "d": "5.2% more"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "2.6% more",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q098",
+              "year": 2021,
+              "questionNumber": 98,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Percentage",
+              "question": "If 35% of a number is 416 more than 27% of the same number, then the number is",
+              "options": {
+                "a": "5200",
+                "b": "2600",
+                "c": "3900",
+                "d": "3328"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "5200",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2019-q082",
+              "year": 2019,
+              "questionNumber": 82,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Percentage",
+              "question": "One-sixth of a number is 53. What will be 57% of that number?",
+              "options": {
+                "a": "136.74",
+                "b": "149.46",
+                "c": "181.26",
+                "d": "197.16"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "181.26",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q083",
+              "year": 2019,
+              "questionNumber": 83,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Fractions & Percentage",
+              "question": "If the numerator of a fraction is increased by 200% and the denominator is increased by 300%, the resultant fraction is 9/17. What was the original fraction?",
+              "options": {
+                "a": "10/17",
+                "b": "11/17",
+                "c": "12/17",
+                "d": "13/17"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "12/17",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q100",
+              "year": 2019,
+              "questionNumber": 100,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Percentage",
+              "question": "In a test consisting of 150 questions, Neha answered 40% of the first 90 questions correctly. What per cent of the 60 questions does she need to answer correctly for her score in the entire test to be 60%?",
+              "options": {
+                "a": "75",
+                "b": "80",
+                "c": "85",
+                "d": "90"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "90",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q101",
+              "year": 2019,
+              "questionNumber": 101,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-02",
+              "topic": "Profit & Loss",
+              "question": "By selling an article for Rs. 2700, a man loses 10%. If he sells it for Rs. 3600, his gain per cent is",
+              "options": {
+                "a": "15",
+                "b": "18",
+                "c": "20",
+                "d": "25"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "20",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-03",
+          "chapterName": "Averages, Ratio & Proportion, Partnership & Alligation",
+          "questionCount": 16,
+          "questions": [
+            {
+              "id": "capf-2025-q064",
+              "year": 2025,
+              "questionNumber": 64,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Ratio & Proportion",
+              "question": "If a/b = 2, b/c = 3, c/d = 4, d/e = 3, e/f = 2 and f/g = 1.5, what is the value of (a+b+c)/(e-f+g)?",
+              "options": {
+                "a": "144",
+                "b": "216",
+                "c": "225",
+                "d": "120"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "144",
+              "status": "official"
+            },
+            {
+              "id": "capf-2024-q048",
+              "year": 2024,
+              "questionNumber": 48,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Averages",
+              "question": "Which one of the following is the average of first five multiples of each of the numbers from 11, 12, 13, ..., 20?",
+              "options": {
+                "a": "40.5",
+                "b": "42.5",
+                "c": "44.5",
+                "d": "46.5"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "46.5",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q049",
+              "year": 2024,
+              "questionNumber": 49,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Averages & Number System",
+              "question": "Which of the following statements is/are correct? 1. The average of four numbers 10, 15, 20 and 25 is 17.5 2. If a, b and c are three different natural numbers such that a + b + c = abc, then the average of a, b and c is 3 Select the answer using the code given below:",
+              "options": {
+                "a": "1 only",
+                "b": "2 only",
+                "c": "Both 1 and 2",
+                "d": "Neither 1 nor 2"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "1 only",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q050",
+              "year": 2024,
+              "questionNumber": 50,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Ratio & Ages",
+              "question": "The ratio of present ages (in years) of X to Y is equal to the ratio of present ages (in years) of Y to Z. If the present age of Y is 15 years, then which of the following can be the sum of the ages (in years) of X, Y and Z?",
+              "options": {
+                "a": "35",
+                "b": "40",
+                "c": "49",
+                "d": "55"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "49",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q057",
+              "year": 2024,
+              "questionNumber": 57,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Averages",
+              "question": "If 19a + 19b + 19c = 437, then what is the mean of a, b and c?",
+              "options": {
+                "a": "6·33",
+                "b": "7·66",
+                "c": "9·33",
+                "d": "11·55"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "7·66",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q060",
+              "year": 2024,
+              "questionNumber": 60,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Partnership",
+              "question": "In a partnership firm, A invests 1/6th of the total investment for 1/6th of the tenure. B invests 1/3rd of the total investment for 1/3rd of the tenure while C invests the remaining part for the full duration. Out of total profit of ₹46,00,000, what shall be C's share?",
+              "options": {
+                "a": "₹30,00,000",
+                "b": "₹32,00,000",
+                "c": "₹34,00,000",
+                "d": "₹36,00,000"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "₹36,00,000",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q030",
+              "year": 2022,
+              "questionNumber": 30,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Averages",
+              "question": "The average age of father and elder son is 35 years, the average age of father and younger son is 32 years and the average age of the two sons is 17 years. What is the average age of the father and his two sons?",
+              "options": {
+                "a": "30 years",
+                "b": "27 years",
+                "c": "28 years",
+                "d": "29 years"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "28 years",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q034",
+              "year": 2022,
+              "questionNumber": 34,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Averages",
+              "question": "If the average of the first four of five numbers in decreasing order is 25 and the average of the last four numbers is 20, then what is the difference between the first and the last number?",
+              "options": {
+                "a": "5",
+                "b": "10",
+                "c": "15",
+                "d": "20"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "20",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q052",
+              "year": 2021,
+              "questionNumber": 52,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Ratio & Proportion",
+              "question": "The ratio of monthly incomes of A and B is 7 : 10. The ratio of their expenditures is 2 : 3. If each of A and B saves ₹1,000 per month, then what will be the monthly income of B?",
+              "options": {
+                "a": "₹9,000",
+                "b": "₹10,000",
+                "c": "₹15,000",
+                "d": "₹12,000"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "₹10,000",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q075",
+              "year": 2021,
+              "questionNumber": 75,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Partnership & Ratio",
+              "question": "A, B and C start a business by investing ₹7,000, ₹8,000 and ₹12,000 respectively. After a year, B gets ₹3,200 as his share of profit. What is the total profit?",
+              "options": {
+                "a": "₹16,600",
+                "b": "₹10,000",
+                "c": "₹21,600",
+                "d": "₹10,800"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "₹10,800",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q077",
+              "year": 2021,
+              "questionNumber": 77,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Problems on Ages",
+              "question": "The average age of Raj and his father is 45 years. If the ages of the father and the grandfather of Raj are respectively two and three times that of Raj, then the age of Raj's grandfather is",
+              "options": {
+                "a": "75 years",
+                "b": "90 years",
+                "c": "81 years",
+                "d": "84 years"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "90 years",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q097",
+              "year": 2021,
+              "questionNumber": 97,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Mixture & Alligation",
+              "question": "How much water is to be added to 75 ml of alcohol so that the mixture contains 25% of alcohol?",
+              "options": {
+                "a": "100 ml",
+                "b": "225 ml",
+                "c": "250 ml",
+                "d": "125 ml"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "225 ml",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2020-q113",
+              "year": 2020,
+              "questionNumber": 113,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Ratio & Percentage",
+              "question": "If 15% of A is double of 30% of B, then what is the ratio of A to B?",
+              "options": {
+                "a": "1 : 2",
+                "b": "2 : 1",
+                "c": "1 : 4",
+                "d": "4 : 1"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "4 : 1",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q114",
+              "year": 2020,
+              "questionNumber": 114,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Variation & Profit/Loss",
+              "question": "The cost of gold varies directly as the cube of its weight. A gold piece weighing 20 decigram costs ₹1,000. If it is broken into two pieces whose weights are in the ratio 2 : 3, then what is the profit or loss incurred?",
+              "options": {
+                "a": "₹280 profit",
+                "b": "₹280 loss",
+                "c": "₹720 profit",
+                "d": "₹720 loss"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "₹720 loss",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q115",
+              "year": 2020,
+              "questionNumber": 115,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Averages",
+              "question": "The average age of the boys in a class is 12 years. The average age of the girls in the class is 11 years. There are 50% more girls than boys in the class. Which one of the following is the average age of the class (in years)?",
+              "options": {
+                "a": "11.2 years",
+                "b": "11.4 years",
+                "c": "11.6 years",
+                "d": "11.8 years"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "11.4 years",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q125",
+              "year": 2020,
+              "questionNumber": 125,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-03",
+              "topic": "Problems on Ages",
+              "question": "Two years ago, the age of A was three times the age of B. If B is currently 9 years old, then after how many years, the age of A will be double of the age of B?",
+              "options": {
+                "a": "2 years",
+                "b": "3 years",
+                "c": "4 years",
+                "d": "5 years"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "5 years",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-04",
+          "chapterName": "Simple Interest & Compound Interest",
+          "questionCount": 4,
+          "questions": [
+            {
+              "id": "capf-2022-q004",
+              "year": 2022,
+              "questionNumber": 4,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-04",
+              "topic": "Simple & Compound Interest",
+              "question": "Suppose a bank gives an interest of 10% per annum compounded annually for a fixed deposit for a period of two years. What should be the simple interest rate per annum if the maturity amount after two years is to remain the same?",
+              "options": {
+                "a": "10%",
+                "b": "10.5%",
+                "c": "11%",
+                "d": "12%"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "10.5%",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q054",
+              "year": 2021,
+              "questionNumber": 54,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-04",
+              "topic": "Percentage & Compound Growth",
+              "question": "A tree is at present 9 feet tall. If every year it grows 1/9th of its height, what will be the height of the tree after three years?",
+              "options": {
+                "a": "12 feet",
+                "b": "12·34 feet",
+                "c": "13 feet",
+                "d": "13·10 feet"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "12·34 feet",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q096",
+              "year": 2021,
+              "questionNumber": 96,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-04",
+              "topic": "Simple & Compound Interest",
+              "question": "The difference of compound interest and simple interest of a sum of money at the rate of 5% per year for 2 years is ₹250. The sum is",
+              "options": {
+                "a": "₹1,00,000",
+                "b": "₹80,000",
+                "c": "₹40,000",
+                "d": "₹1,20,000"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "₹1,00,000",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2020-q116",
+              "year": 2020,
+              "questionNumber": 116,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-04",
+              "topic": "Compound Interest",
+              "question": "A sum triples in ten years under compound interest at a certain rate of interest, the interest is being compounded annually. In how many years, it would become nine times?",
+              "options": {
+                "a": "20 years",
+                "b": "30 years",
+                "c": "40 years",
+                "d": "50 years"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "20 years",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-05",
+          "chapterName": "Time & Work, Pipes & Cisterns",
+          "questionCount": 4,
+          "questions": [
+            {
+              "id": "capf-2024-q053",
+              "year": 2024,
+              "questionNumber": 53,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-05",
+              "topic": "Time & Work",
+              "question": "A, B and C can finish a work in 20, 25 and 30 days, respectively. They start working together but B quits after working for 3 days. In how many days from the start shall the work be completed?",
+              "options": {
+                "a": "9 8/15 days",
+                "b": "10 1/15 days",
+                "c": "10 14/25 days",
+                "d": "11 1/10 days"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "10 14/25 days",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q054",
+              "year": 2024,
+              "questionNumber": 54,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-05",
+              "topic": "Pipes & Cisterns",
+              "question": "Two taps A and B can fill a tank with water in 20 minutes and 15 minutes, respectively. A third tap C can empty the full tank in 6 minutes. After the taps A and B fill the tank for 5 minutes, the tap C is opened to empty while A and B continue to fill it. In how many minutes after the start shall the tank get empty?",
+              "options": {
+                "a": "10 1/3 minutes",
+                "b": "10 2/5 minutes",
+                "c": "10 4/5 minutes",
+                "d": "11 2/3 minutes"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "11 2/3 minutes",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q033",
+              "year": 2022,
+              "questionNumber": 33,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-05",
+              "topic": "Time & Work",
+              "question": "Suppose A and B can complete a work together in 10 days. If B alone can complete the work in 15 days, then in how many days can A alone finish the work?",
+              "options": {
+                "a": "20 days",
+                "b": "24 days",
+                "c": "25 days",
+                "d": "30 days"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "30 days",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q053",
+              "year": 2021,
+              "questionNumber": 53,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-05",
+              "topic": "Time & Work",
+              "question": "A and B together can finish a job in 20 days. B and C together can finish the same job in 30 days. If A and C together can finish it in 24 days, in how many days can A alone finish the job?",
+              "options": {
+                "a": "35 2/7 days",
+                "b": "37 1/7 days",
+                "c": "34 2/7 days",
+                "d": "33 2/7 days"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "34 2/7 days",
+              "status": "provisional_derived"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-06",
+          "chapterName": "Time, Speed & Distance, Trains, Boats & Races",
+          "questionCount": 7,
+          "questions": [
+            {
+              "id": "capf-2025-q061",
+              "year": 2025,
+              "questionNumber": 61,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance",
+              "question": "P and Q are two points on a highway, 300 km apart. Two bikers A and B start at the same time from P towards Q. The speed of B is 12 km/h less than that of A. On reaching point Q, biker A immediately returns towards P. He meets B on the road at a place 60 km away from Q. What is the speed of A?",
+              "options": {
+                "a": "38 km/h",
+                "b": "30 km/h",
+                "c": "36 km/h",
+                "d": "35 km/h"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "36 km/h",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q066",
+              "year": 2025,
+              "questionNumber": 66,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance - Trains",
+              "question": "Two trains A and B are entering a railway platform from opposite direction. The length of the platform is 300 m. The speed of B is two times the speed of A. The time taken by B to cross the platform is one-third of the time taken by A to cross the platform. If the sum of the lengths of A and B is 500 m, what is the difference in their lengths?",
+              "options": {
+                "a": "220 m",
+                "b": "250 m",
+                "c": "200 m",
+                "d": "300 m"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "220 m",
+              "status": "official"
+            },
+            {
+              "id": "capf-2024-q055",
+              "year": 2024,
+              "questionNumber": 55,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance",
+              "question": "A and B start at the same time to reach the same destination. B travelled at 5/7 of A's speed and reached the destination 1 hour 20 minutes after A. What was the time taken by B to reach the destination?",
+              "options": {
+                "a": "4 hours 40 minutes",
+                "b": "4 hours 55 minutes",
+                "c": "5 hours 5 minutes",
+                "d": "5 hours 15 minutes"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "4 hours 40 minutes",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q059",
+              "year": 2024,
+              "questionNumber": 59,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance - Trains",
+              "question": "A train travelling at a speed of 60 km/hr crosses a platform in 20 seconds. The same train crosses a person who is walking at a speed of 6 km/hr in the same direction as that of the train in 12 seconds. What is the length of the train and that of the platform, respectively?",
+              "options": {
+                "a": "160 m and 153·33 m",
+                "b": "170 m and 166·66 m",
+                "c": "180 m and 153·33 m",
+                "d": "180 m and 170 m"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "180 m and 153·33 m",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q005",
+              "year": 2022,
+              "questionNumber": 5,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance",
+              "question": "A runner's average speed reduces by 25% every hour. If he runs 16 km in the first hour and he runs for 3 hours, then what is his overall average speed?",
+              "options": {
+                "a": "12 km/hr",
+                "b": "12.33 km/hr",
+                "c": "10.33 km/hr",
+                "d": "13 km/hr"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "12.33 km/hr",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q032",
+              "year": 2022,
+              "questionNumber": 32,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance",
+              "question": "A car travels 3/4th of the distance at a speed of 60 km/hr and the remaining 1/4th of the distance at a speed of v km/hr. If the average speed for the full journey is 50 km/hr, then the value of v is",
+              "options": {
+                "a": "40",
+                "b": "30",
+                "c": "100/3",
+                "d": "35"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "100/3",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q042",
+              "year": 2022,
+              "questionNumber": 42,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-06",
+              "topic": "Time, Speed & Distance",
+              "question": "Two friends 10 km apart start running towards each other at speeds of 10 km/hr and 14 km/hr respectively. After how much time will they meet each other?",
+              "options": {
+                "a": "20 minutes",
+                "b": "25 minutes",
+                "c": "28 minutes",
+                "d": "30 minutes"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "25 minutes",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-07",
+          "chapterName": "Permutations, Combinations, Probability & Set Theory",
+          "questionCount": 9,
+          "questions": [
+            {
+              "id": "capf-2024-q058",
+              "year": 2024,
+              "questionNumber": 58,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Permutations & Combinations",
+              "question": "Out of the six digits 1, 2, 3, 4, 5 and 6; how many two digit numbers can be formed without repetition of digits ?",
+              "options": {
+                "a": "6",
+                "b": "15",
+                "c": "30",
+                "d": "40"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "30",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q063",
+              "year": 2024,
+              "questionNumber": 63,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Set Theory & Venn Diagrams",
+              "question": "Out of a class of 100 students, 25 play at least cricket and football, 15 play at least cricket and hockey, 12 play at least football and hockey and 10 play all the three sports. The number of students playing cricket, football and hockey are 50, 37 and 22, respectively. The number of students who do NOT play any of the three sports is",
+              "options": {
+                "a": "33",
+                "b": "23",
+                "c": "27",
+                "d": "30"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "33",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q064",
+              "year": 2024,
+              "questionNumber": 64,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Permutations & Combinations",
+              "question": "A group of five people consisting a couple are to be seated on a round table for a meeting. What is the total number of ways in which the seating arrangement can be made so that the couple do NOT sit next to each other?",
+              "options": {
+                "a": "24",
+                "b": "18",
+                "c": "12",
+                "d": "6"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "12",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q065",
+              "year": 2024,
+              "questionNumber": 65,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Probability",
+              "question": "A fair coin is tossed three times and the outcomes are noted. What is the probability of getting exactly two heads?",
+              "options": {
+                "a": "2/3",
+                "b": "1/2",
+                "c": "5/8",
+                "d": "3/8"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "3/8",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q041",
+              "year": 2022,
+              "questionNumber": 41,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Permutations & Combinations",
+              "question": "There is a group of 5 people among which there is one couple. In how many ways can these 5 people be seated in a row having 5 chairs if the couple is to be seated next to each other?",
+              "options": {
+                "a": "24",
+                "b": "48",
+                "c": "60",
+                "d": "120"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "48",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q043",
+              "year": 2022,
+              "questionNumber": 43,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Probability",
+              "question": "A coin is tossed 3 times. The probability of getting exactly 2 heads is",
+              "options": {
+                "a": "1⁄3",
+                "b": "3⁄8",
+                "c": "1⁄2",
+                "d": "5⁄8"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "3⁄8",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q080",
+              "year": 2021,
+              "questionNumber": 80,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Permutations & Combinations",
+              "question": "How many different words, with or without meaning, can be formed by using the letters of the word COVID?",
+              "options": {
+                "a": "60",
+                "b": "150",
+                "c": "100",
+                "d": "120"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "120",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2020-q117",
+              "year": 2020,
+              "questionNumber": 117,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Permutations & Combinations",
+              "question": "The number of ways by which 6 distinct balls can be put in 5 distinct boxes are",
+              "options": {
+                "a": "7776",
+                "b": "15625",
+                "c": "720",
+                "d": "120"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "15625",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q124",
+              "year": 2020,
+              "questionNumber": 124,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-07",
+              "topic": "Set Theory & Venn Diagrams",
+              "question": "In a group of 100 children, 64 children like to play cricket, 53 children like to play football and 20 children like to play both cricket and football. How many children do NOT like to play cricket or football?",
+              "options": {
+                "a": "3",
+                "b": "5",
+                "c": "7",
+                "d": "9"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "3",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-qa-08",
+          "chapterName": "Basic Algebra, Progressions, Geometry & Mensuration (2D & 3D)",
+          "questionCount": 16,
+          "questions": [
+            {
+              "id": "capf-2025-q059",
+              "year": 2025,
+              "questionNumber": 59,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Geometry - Similar Triangles",
+              "question": "A point P on the ground is on the same line as the bases and the tips of a pair of trees A and B such that P is on the left of both these trees. The ratio of heights of A and B is 1 : 3. If the distance between P and A is a metre, then the distance between A and B, in metre, is",
+              "options": {
+                "a": "a",
+                "b": "2a",
+                "c": "3a",
+                "d": "4a"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "2a",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q060",
+              "year": 2025,
+              "questionNumber": 60,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Geometry & Mensuration",
+              "question": "Four cylindrical drums, each of radius 1 m, are placed such that each one touches other two drums. A sewer pipe is to be placed through the gap of these drums. What could be the maximum possible radius for this pipe?",
+              "options": {
+                "a": "(√2 + 1) m",
+                "b": "(√2 − 1) m",
+                "c": "(π√2 − 1) m",
+                "d": "(π√2 + 1) m"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "(√2 − 1) m",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q063",
+              "year": 2025,
+              "questionNumber": 63,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Geometry & Mensuration",
+              "question": "A triangle of sides 18 cm, 24 cm and 30 cm is inscribed in a circle. The ratio of the area of the circle to that of the triangle is approximately",
+              "options": {
+                "a": "1 : π",
+                "b": "√π : 1",
+                "c": "π : 1",
+                "d": "√π : 2"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "π : 1",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q069",
+              "year": 2025,
+              "questionNumber": 69,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Algebra - Exponents & Logarithms",
+              "question": "If a^{2x} = b^{3y} = c^{5z} and b = a^{2}c, then which one of the following is true?",
+              "options": {
+                "a": "2/x + 3/y = 5/z",
+                "b": "1/x − 3/5z = 1/3y",
+                "c": "1/x + 1/5z = 1/3y",
+                "d": "2/x − 5/z = 3/y"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "1/x + 1/5z = 1/3y",
+              "status": "official"
+            },
+            {
+              "id": "capf-2024-q047",
+              "year": 2024,
+              "questionNumber": 47,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Geometry & Mensuration",
+              "question": "The angle (in degrees) made by a sector having area one-sixth of the area of a semicircle is",
+              "options": {
+                "a": "15°",
+                "b": "30°",
+                "c": "45°",
+                "d": "60°"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "30°",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q051",
+              "year": 2024,
+              "questionNumber": 51,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Algebra",
+              "question": "If x + 1/x = 2, then which one of the following is the value of x³² + 1/x³²?",
+              "options": {
+                "a": "-1",
+                "b": "0",
+                "c": "1",
+                "d": "2"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "2",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2024-q061",
+              "year": 2024,
+              "questionNumber": 61,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Problems on Ages",
+              "question": "The sum of the ages of A and B (in years) is 22. The product of their ages two years back was 77. Which one of the following is the value of the difference of their current ages?",
+              "options": {
+                "a": "2",
+                "b": "3",
+                "c": "4",
+                "d": "5"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "4",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2022-q003",
+              "year": 2022,
+              "questionNumber": 3,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Mensuration",
+              "question": "A solid spherical ball made of iron is melted and two new balls are made whose diameters are in the ratio of 1 : 2. The ratio of the volume of the smaller new ball to the original ball is",
+              "options": {
+                "a": "1 : 3",
+                "b": "1 : 5",
+                "c": "2 : 9",
+                "d": "1 : 9"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "1 : 9",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q044",
+              "year": 2022,
+              "questionNumber": 44,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Linear Equations",
+              "question": "A test consists of 25 MCQs. Each correct answer gives +4 marks and incorrect answer gives −1 mark. If a candidate scores 74 marks, then how many questions were left unattempted?",
+              "options": {
+                "a": "4",
+                "b": "3",
+                "c": "5",
+                "d": "9"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "4",
+              "status": "official"
+            },
+            {
+              "id": "capf-2022-q045",
+              "year": 2022,
+              "questionNumber": 45,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Linear Equations",
+              "question": "A person has a total of 100 coins consisting of ₹2 and ₹5 coins. If the total value of the coins is ₹320, then the number of ₹2 coins is",
+              "options": {
+                "a": "40",
+                "b": "50",
+                "c": "60",
+                "d": "70"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "60",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q051",
+              "year": 2021,
+              "questionNumber": 51,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Mensuration",
+              "question": "Eight metallic balls of one centimetre radius each are melted into one ball. The diameter of the new ball is",
+              "options": {
+                "a": "2 cm",
+                "b": "6 cm",
+                "c": "4 cm",
+                "d": "1 cm"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "4 cm",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2021-q079",
+              "year": 2021,
+              "questionNumber": 79,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Algebra & Series",
+              "question": "Suppose the nth term of a series is 1 + n/2 + n²/2. If there are 20 terms in the series, then the sum of the series is equal to",
+              "options": {
+                "a": "1360",
+                "b": "1450",
+                "c": "1500",
+                "d": "1560"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "1560",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2020-q111",
+              "year": 2020,
+              "questionNumber": 111,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Numerical Ability",
+              "question": "In an exam, a candidate attempts 20 questions and scores 72 marks. If 5 marks are awarded for each correct answer and 2 marks are deducted for each wrong answer, then how many questions were answered correctly by him?",
+              "options": {
+                "a": "18",
+                "b": "17",
+                "c": "16",
+                "d": "15"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "16",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q118",
+              "year": 2020,
+              "questionNumber": 118,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Mensuration",
+              "question": "A wire of length 6 m is stretched such that its radius is reduced by 20%. Which one of the following is the value of increase in its length?",
+              "options": {
+                "a": "50%",
+                "b": "56.25%",
+                "c": "62.25%",
+                "d": "75%"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "56.25%",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q041",
+              "year": 2019,
+              "questionNumber": 41,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Mensuration",
+              "question": "If a circle and a square have the same perimeter, then",
+              "options": {
+                "a": "their areas are equal",
+                "b": "the area of the circle is greater than the area of the square",
+                "c": "the area of the square is greater than the area of circle",
+                "d": "the area of the circle is two times the area of the square"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "the area of the circle is greater than the area of the square",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q042",
+              "year": 2019,
+              "questionNumber": 42,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "quantitative-aptitude-and-numerical-ability",
+              "chapterId": "gma-qa-08",
+              "topic": "Algebra",
+              "question": "Let x^2 + y^2 = 1; u^2 + v^2 = 1 and xu + yv = 0, then\n1. x^2 + u^2 = 1\n2. y^2 + v^2 = 1\n3. xy + uv = 0\nWhich of the above is/are true?",
+              "options": {
+                "a": "3 only",
+                "b": "1 and 2 only",
+                "c": "1, 2 and 3",
+                "d": "2 and 3 only"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "1, 2 and 3",
+              "status": "official"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subSubjectId": "logical-and-analytical-reasoning",
+      "subSubjectName": "Logical & Analytical Reasoning",
+      "questionCount": 18,
+      "chapters": [
+        {
+          "chapterId": "gma-lr-01",
+          "chapterName": "Series, Coding-Decoding, Analogy & Classification",
+          "questionCount": 6,
+          "questions": [
+            {
+              "id": "capf-2020-q119",
+              "year": 2020,
+              "questionNumber": 119,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-01",
+              "topic": "Coding-Decoding",
+              "question": "The alphabets from A to J are numbered from 0 to 9 respectively. Which one of the following is the value of AGJ – CEG + EDB?",
+              "options": {
+                "a": "CFE",
+                "b": "DGF",
+                "c": "GFD",
+                "d": "FCE"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "CFE",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q080",
+              "year": 2019,
+              "questionNumber": 80,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-01",
+              "topic": "Coding-Decoding",
+              "question": "If in a certain language GAMBLE is coded as FBLCKF, how is FLOWER coded in that language?",
+              "options": {
+                "a": "GMPVDS",
+                "b": "GKPVFQ",
+                "c": "EMNXDS",
+                "d": "EMNTDS"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "EMNXDS",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q081",
+              "year": 2019,
+              "questionNumber": 81,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-01",
+              "topic": "Classification",
+              "question": "In this item, four words have been given, out of which three are alike in some manner and the fourth one is different. Choose the odd one out.",
+              "options": {
+                "a": "Friendship",
+                "b": "Intimacy",
+                "c": "Attachment",
+                "d": "Enmity"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "Enmity",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q102",
+              "year": 2019,
+              "questionNumber": 102,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-01",
+              "topic": "Letter Series",
+              "question": "The next term of the series BCYX, EFVU, HISR, KLPO, ....... is",
+              "options": {
+                "a": "NOML",
+                "b": "NOLM",
+                "c": "ONML",
+                "d": "ONLM"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "NOML",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q114",
+              "year": 2019,
+              "questionNumber": 114,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-01",
+              "topic": "Mathematical Operations",
+              "question": "If 2 [3] 4 = 14 and 3 [4] 6 = 60, then 4 [5] 7 = ?",
+              "options": {
+                "a": "72",
+                "b": "84",
+                "c": "96",
+                "d": "108"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "96",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q115",
+              "year": 2019,
+              "questionNumber": 115,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-01",
+              "topic": "Number Series",
+              "question": "Consider the following series: 1, 9, 17, 33, 49, 73, ...\nIdentify the missing number from the following:",
+              "options": {
+                "a": "99",
+                "b": "97",
+                "c": "95",
+                "d": "91"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "97",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-lr-02",
+          "chapterName": "Blood Relations, Direction Sense & Ranking/Order",
+          "questionCount": 4,
+          "questions": [
+            {
+              "id": "capf-2020-q121",
+              "year": 2020,
+              "questionNumber": 121,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-02",
+              "topic": "Direction Sense",
+              "question": "If South-east is called East, North-west is called West, South-west is called South and so-on, what will North be called?",
+              "options": {
+                "a": "East",
+                "b": "North-east",
+                "c": "North-west",
+                "d": "South"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "North-west",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q044",
+              "year": 2019,
+              "questionNumber": 44,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-02",
+              "topic": "Direction Sense",
+              "question": "A walks 10 metres in front and 10 metres to the right. Then every time turning to his left he walks 5, 15 and 15 metres respectively. How far is he now from his starting point?",
+              "options": {
+                "a": "55 metres",
+                "b": "23 metres",
+                "c": "5 metres",
+                "d": "None of these"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "5 metres",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q078",
+              "year": 2019,
+              "questionNumber": 78,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-02",
+              "topic": "Ordering & Ranking",
+              "question": "There are five friends – Sachin, Kunal, Mohit, Amit and Sohan. Sachin is shorter than Kunal but taller than Sohan. Mohit is the tallest. Amit is little shorter than Kunal and little taller than Sachin. If they stand in the order of increasing heights, who will be the third?",
+              "options": {
+                "a": "Amit",
+                "b": "Sohan",
+                "c": "Sachin",
+                "d": "Kunal"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "Amit",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q079",
+              "year": 2019,
+              "questionNumber": 79,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-02",
+              "topic": "Blood Relations",
+              "question": "If M is brother of N, B is brother of N and M is brother of D, then which one of the following statements is definitely true?",
+              "options": {
+                "a": "N is brother of B",
+                "b": "N is brother of M",
+                "c": "N is brother of D",
+                "d": "M is brother of B"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "M is brother of B",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-lr-03",
+          "chapterName": "Syllogism, Logical Venn Diagrams & Statement-Conclusion",
+          "questionCount": 0,
+          "questions": []
+        },
+        {
+          "chapterId": "gma-lr-04",
+          "chapterName": "Seating Arrangements, Puzzles, Clocks & Calendars",
+          "questionCount": 7,
+          "questions": [
+            {
+              "id": "capf-2025-q062",
+              "year": 2025,
+              "questionNumber": 62,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Logical Reasoning - Clocks",
+              "question": "A clock is set right at 8:00 AM in the morning. The minute hand and the hour hand of the clock come together after every 65 minutes. What is the actual time when the clock shows 8:00 PM, approximated to the nearest minutes?",
+              "options": {
+                "a": "8:05 PM",
+                "b": "8:00 PM",
+                "c": "7:55 PM",
+                "d": "8:02 PM"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "8:05 PM",
+              "status": "official"
+            },
+            {
+              "id": "capf-2025-q065",
+              "year": 2025,
+              "questionNumber": 65,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Logical Reasoning - Calendar",
+              "question": "Which one of the following years will have identical calendar with the year 2025?",
+              "options": {
+                "a": "2028",
+                "b": "2029",
+                "c": "2030",
+                "d": "2031"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "2031",
+              "status": "official"
+            },
+            {
+              "id": "capf-2021-q055",
+              "year": 2021,
+              "questionNumber": 55,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Calendar & Reasoning",
+              "question": "If first March of a year is Sunday, which day will be the first February of the next year?",
+              "options": {
+                "a": "Friday",
+                "b": "Tuesday",
+                "c": "Saturday",
+                "d": "Monday"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "Monday",
+              "status": "provisional_derived"
+            },
+            {
+              "id": "capf-2020-q122",
+              "year": 2020,
+              "questionNumber": 122,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Calendar & Days",
+              "question": "If the day before yesterday was Tuesday, when will Saturday be?",
+              "options": {
+                "a": "Today",
+                "b": "Tomorrow",
+                "c": "Day after tomorrow",
+                "d": "Two days after tomorrow"
+              },
+              "correctOption": "c",
+              "correctAnswerText": "Day after tomorrow",
+              "status": "official"
+            },
+            {
+              "id": "capf-2020-q123",
+              "year": 2020,
+              "questionNumber": 123,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Missing Number Puzzle",
+              "question": "What is the value of the missing number?",
+              "options": {
+                "a": "9",
+                "b": "7",
+                "c": "5",
+                "d": "3"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "9",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q043",
+              "year": 2019,
+              "questionNumber": 43,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Calendar",
+              "question": "If the first day of the year (other than the leap year) was Sunday, then what will be the last day of that year?",
+              "options": {
+                "a": "Monday",
+                "b": "Sunday",
+                "c": "Saturday",
+                "d": "None of these"
+              },
+              "correctOption": "b",
+              "correctAnswerText": "Sunday",
+              "status": "official"
+            },
+            {
+              "id": "capf-2019-q105",
+              "year": 2019,
+              "questionNumber": 105,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-04",
+              "topic": "Number Puzzles",
+              "question": "If 5472 = 9, 6342 = 6 and 7584 = 6, then what is 9236?",
+              "options": {
+                "a": "2",
+                "b": "3",
+                "c": "4",
+                "d": "5"
+              },
+              "correctOption": "a",
+              "correctAnswerText": "2",
+              "status": "official"
+            }
+          ]
+        },
+        {
+          "chapterId": "gma-lr-05",
+          "chapterName": "Non-Verbal & Spatial Reasoning",
+          "questionCount": 1,
+          "questions": [
+            {
+              "id": "capf-2019-q116",
+              "year": 2019,
+              "questionNumber": 116,
+              "subjectId": "general-mental-ability",
+              "subSubjectId": "logical-and-analytical-reasoning",
+              "chapterId": "gma-lr-05",
+              "topic": "Missing Number Figure",
+              "question": "Consider the following figure:\nFind out the missing number from among the following:",
+              "options": {
+                "a": "12",
+                "b": "16",
+                "c": "32",
+                "d": "48"
+              },
+              "correctOption": "d",
+              "correctAnswerText": "48",
+              "status": "official"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subSubjectId": "data-interpretation",
+      "subSubjectName": "Data Interpretation & Basic Statistics",
+      "questionCount": 0,
+      "chapters": [
+        {
+          "chapterId": "gma-di-01",
+          "chapterName": "Tables, Charts, Graphs & Basic Statistics",
+          "questionCount": 0,
+          "questions": []
+        }
+      ]
+    }
+  ]
+}

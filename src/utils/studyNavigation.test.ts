@@ -59,6 +59,10 @@ test('chapterwise PYQs open the requested subject and chapter from a direct link
     ['/general-science/phy-01', 'Units, Measurements &amp; Motion', 2],
     ['/geography/geo-phy-01', 'Origin &amp; Evolution of Earth', 10],
     ['/history/anc-02', 'Indus Valley Civilization', 5],
+    ['/indian-polity/pol-01', 'Historical Background, Making &amp; Salient Features', 10],
+    ['/indian-economy/eco-01', 'Microeconomics Basics', 14],
+    ['/general-mental-ability/gma-qa-01', 'Number System, Divisibility, HCF &amp; LCM', 15],
+    ['/current-events/ce-01', 'Government Schemes, Bills, Supreme Court Judgments', 20],
   ] as const) {
     const html = renderPyq(path);
     assert.match(html, new RegExp(`<h2 id="pyq-chapter-title"[^>]*>${heading}`));

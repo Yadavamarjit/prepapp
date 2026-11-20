@@ -19,7 +19,7 @@ export function SectionNavigation() {
 
 export function PracticeHome() {
   const tools = [
-    { to: '/practice/chapterwise-pyq', title: 'Chapterwise PYQ', description: 'Practise previous-year questions in Science, Geography, and History with answer keys.', detail: 'CAPF Paper I', icon: FileText },
+    { to: '/practice/chapterwise-pyq', title: 'Chapterwise PYQ', description: 'Choose a subject and chapter, then practise previous-year questions with answer keys.', detail: 'CAPF Paper I', icon: FileText },
     { to: '/practice/capf-analytica', title: 'CAPF Analytica', description: 'Take a timed Paper I sectional, see your net marks and retry the questions you missed.', detail: 'Timed practice and revision', icon: Clock },
     { to: '/calculation-coach', title: 'Calculation Coach', description: 'Build confidence with arithmetic and fractions. Learn visually, fix mistakes, and build speed at your own pace.', detail: 'Phone-friendly / No timer to start', icon: PencilLine },
     { to: '/ai-tutor', title: 'Topic practice', description: 'Choose a subject and topic. Get a short explanation and questions at your level.', detail: 'Your selected topic only', icon: BookOpen },

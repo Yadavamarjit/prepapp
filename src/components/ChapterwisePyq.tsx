@@ -4,8 +4,20 @@ import { Link, useParams } from 'react-router-dom';
 import science from '../../upsc_capf_science_chapterwise_pyqs.json';
 import geography from '../../upsc_capf_geography_chapterwise_pyqs.json';
 import history from '../../upsc_capf_history_chapterwise_pyqs.json';
+import polity from '../../upsc_capf_polity_chapterwise_pyqs.json';
+import economy from '../../upsc_capf_economy_chapterwise_pyqs.json';
+import mentalAbility from '../../upsc_capf_mental_ability_chapterwise_pyqs.json';
+import currentEvents from '../../upsc_capf_current_events_chapterwise_pyqs.json';
 
-const subjects = [science, geography, history];
+const subjects = [
+  { ...science, label: 'Science' },
+  { ...geography, label: 'Geography' },
+  { ...history, label: 'History' },
+  { ...polity, label: 'Polity' },
+  { ...economy, label: 'Economy' },
+  { ...mentalAbility, label: 'Mental Ability' },
+  { ...currentEvents, label: 'Current Events' },
+];
 const base = '/practice/chapterwise-pyq';
 const optionKeys = ['a', 'b', 'c', 'd'] as const;
 type Option = typeof optionKeys[number];
@@ -15,7 +27,7 @@ export default function ChapterwisePyq() {
   const { subjectId, chapterId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, Option>>({});
-  const subject = subjectId ? subjects.find(item => item.subjectId === subjectId) : science;
+  const subject = subjectId ? subjects.find(item => item.subjectId === subjectId) : subjects[0];
   const chapters = subject?.subSubjects.flatMap(group => group.chapters);
   const chapter = chapterId ? chapters?.find(item => item.chapterId === chapterId) : chapters?.find(item => item.questions.length) ?? chapters?.[0];
 
@@ -30,7 +42,7 @@ export default function ChapterwisePyq() {
         const active = subject?.subjectId === item.subjectId;
         return <Link key={item.subjectId} to={`${base}/${item.subjectId}`} aria-current={active ? 'true' : undefined}
           className={active ? 'primary-button' : 'secondary-button'}>
-          {item.subjectName}<span className="opacity-80">{item.totalQuestions}</span>
+          {item.label}<span className="opacity-80">{item.totalQuestions}<span className="sr-only"> questions</span></span>
         </Link>;
       })}
     </nav>
@@ -42,7 +54,7 @@ export default function ChapterwisePyq() {
           <ChevronDown size={16} aria-hidden="true" className={`ml-auto ${menuOpen ? 'rotate-180' : ''}`} />
         </button>
         <nav id="pyq-chapters" aria-label={`${subject.subjectName} chapters`} className={`${menuOpen ? 'block' : 'hidden'} space-y-2 p-3 md:block`}>
-          <h2 className="hidden px-2 py-2 text-sm font-semibold md:block">Chapters</h2>
+          <h2 className="px-2 py-2 text-sm font-semibold">{subject.subjectName}</h2>
           {subject.subSubjects.map(group => <details key={group.subSubjectId} open={group.chapters.some(item => item.chapterId === chapter.chapterId)} className="group">
             <summary className="flex cursor-pointer list-none items-start gap-2 rounded-lg px-2 py-2 text-sm font-medium hover:bg-[#EFF2E9] dark:hover:bg-[#273C2E] [&::-webkit-details-marker]:hidden">
               <ChevronDown size={15} aria-hidden="true" className="mt-0.5 shrink-0 -rotate-90 group-open:rotate-0" />
