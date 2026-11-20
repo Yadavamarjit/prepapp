@@ -1,71 +1,100 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { clearApiSession } from '../lib/api';
-
-const GUEST_SESSION_KEY = 'dutydeck_guest_session';
-const JWT_KEY = 'ncert_jwt';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { clearApiSession, openApiSession } from '../lib/api';
 
 interface AppUser {
   uid: string;
   email: string | null;
   displayName: string | null;
-  isGuest?: boolean;
 }
 
 interface AuthState {
   user: AppUser | null;
   loading: boolean;
+  error: string;
 }
 
+const signedOut = { user: null, loading: false, error: '' };
 const AuthContext = createContext<AuthState & {
   canUseAi: boolean;
   signOutUser: () => Promise<void>;
-}>({ user: null, loading: false, canUseAi: false, signOutUser: async () => {} });
-
-function readLegacyGuest(): AppUser | null {
-  try {
-    const saved = JSON.parse(localStorage.getItem(GUEST_SESSION_KEY) || 'null');
-    if (saved?.isGuest === true && typeof saved.uid === 'string') return saved;
-  } catch { /* The browser can still open the workspace without saved storage. */ }
-  return null;
-}
+}>({ ...signedOut, canUseAi: false, signOutUser: async () => {} });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [{ user, loading }, setState] = useState<AuthState>(() => ({ user: readLegacyGuest(), loading: true }));
+  const [state, setState] = useState<AuthState>({ ...signedOut, loading: true });
+  const sessionWrites = useRef(Promise.resolve());
+  const revision = useRef(0);
+  const signingOut = useRef(false);
 
   useEffect(() => {
     let disposed = false;
-    let unsubscribe: (() => void) | undefined;
-    const finishWithoutAccount = () => {
-      if (!disposed) setState({ user: readLegacyGuest(), loading: false });
-    };
+    let cleanup: (() => void) | undefined;
 
-    void import('../lib/firebase').then(({ auth, onAuthStateChanged }) => {
+    void import('../lib/firebase').then(({ auth, onIdTokenChanged }) => {
       if (disposed) return;
-      unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        if (!currentUser) return finishWithoutAccount();
-        setState({
-          loading: false,
-          user: { uid: currentUser.uid, email: currentUser.email, displayName: currentUser.displayName },
+      const unsubscribe = onIdTokenChanged(auth, (account) => {
+        const version = ++revision.current;
+        if (!account) {
+          setState(signedOut);
+          return;
+        }
+
+        const isCurrent = () => !disposed && !signingOut.current && version === revision.current;
+        sessionWrites.current = sessionWrites.current.then(async () => {
+          if (!isCurrent()) return;
+          try {
+            const token = await account.getIdToken();
+            if (!isCurrent()) return;
+            await openApiSession(token);
+            if (isCurrent()) setState({
+              loading: false,
+              error: '',
+              user: { uid: account.uid, email: account.email, displayName: account.displayName },
+            });
+          } catch {
+            if (isCurrent()) setState(previous => ({
+              ...previous, loading: false, error: 'Could not start a secure session. Try signing in again.',
+            }));
+          }
         });
-      }, finishWithoutAccount);
-    }).catch(finishWithoutAccount);
+      }, () => { if (!disposed) setState(signedOut); });
+
+      // Asking for the token near expiration triggers Firebase's refresh listener.
+      const refresh = () => { void auth.currentUser?.getIdToken().catch(() => {}); };
+      const timer = window.setInterval(refresh, 60_000);
+      window.addEventListener('focus', refresh);
+      cleanup = () => {
+        unsubscribe();
+        window.clearInterval(timer);
+        window.removeEventListener('focus', refresh);
+      };
+    }).catch(() => { if (!disposed) setState(signedOut); });
 
     return () => {
       disposed = true;
-      unsubscribe?.();
+      cleanup?.();
     };
   }, []);
 
   async function signOutUser() {
-    await Promise.allSettled([
-      import('../lib/firebase').then(({ auth, signOut }) => signOut(auth)),
-      clearApiSession(),
-    ]);
-    try { localStorage.removeItem(JWT_KEY); } catch { /* Storage may be disabled. */ }
+    if (signingOut.current) return;
+    signingOut.current = true;
+    revision.current++;
+    try {
+      await sessionWrites.current;
+      await clearApiSession();
+      const { auth, signOut } = await import('../lib/firebase');
+      await signOut(auth);
+      try { localStorage.removeItem('ncert_jwt'); } catch { /* Storage may be disabled. */ }
+      window.location.replace('/login');
+    } catch {
+      setState(previous => ({ ...previous, error: 'Could not sign out. Please try again.' }));
+    } finally {
+      signingOut.current = false;
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, canUseAi: !!user && !user.isGuest, signOutUser }}>
+    <AuthContext.Provider value={{ ...state, canUseAi: !!state.user, signOutUser }}>
       {children}
     </AuthContext.Provider>
   );

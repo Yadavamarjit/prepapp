@@ -1,24 +1,11 @@
 import express, { type Express, type Request, type Response, type NextFunction } from 'express';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
-import { createRemoteJWKSet, jwtVerify, SignJWT, type JWTVerifyGetKey } from 'jose';
-import { randomBytes } from 'node:crypto';
+import type { JWTVerifyGetKey } from 'jose';
+import { bearerToken, FIREBASE_PROJECT, PRIVATE_CACHE, sessionCookieName, sessionToken, verifyFirebaseToken } from '../shared/firebaseIdentity';
 import { DatabaseSync } from 'node:sqlite';
 import path from 'node:path';
 import fs from 'node:fs';
-
-export interface Identity { uid: string; guest: boolean; }
-const googleKeys = createRemoteJWKSet(new URL('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'));
-
-export async function verifyFirebaseToken(token: string, project: string, keys: JWTVerifyGetKey = googleKeys): Promise<Identity> {
-  const { payload } = await jwtVerify(token, keys, {
-    algorithms: ['RS256'], audience: project, issuer: `https://securetoken.google.com/${project}`,
-    requiredClaims: ['exp', 'iat', 'auth_time', 'sub'], clockTolerance: 5,
-  });
-  if (!payload.sub || payload.sub.length > 128 || typeof payload.iat !== 'number' || payload.iat > Date.now() / 1000 + 5 || typeof payload.auth_time !== 'number' || payload.auth_time < 0 || payload.auth_time > Date.now() / 1000 + 5) throw new Error('Invalid identity');
-  if ((payload.firebase as { sign_in_provider?: string } | undefined)?.sign_in_provider !== 'google.com' || payload.email_verified !== true) throw new Error('Google sign-in is required');
-  return { uid: payload.sub, guest: false };
-}
 
 export class PrivateStore {
   readonly db: DatabaseSync;
@@ -45,12 +32,11 @@ export class PrivateStore {
   }
 }
 
-export function installSecurity(app: Express, directory: string) {
+export function installSecurity(app: Express, directory: string, keys?: JWTVerifyGetKey) {
   const production = process.env.NODE_ENV === 'production';
-  if (production && (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 48 || !process.env.FIREBASE_PROJECT_ID)) throw new Error('Production authentication configuration is missing');
-  const secret = new TextEncoder().encode(process.env.SESSION_SECRET || randomBytes(48).toString('hex'));
-  const project = process.env.FIREBASE_PROJECT_ID || 'gen-lang-client-0456258653';
-  const cookieName = production ? '__Host-dutydeck' : 'dutydeck';
+  const cookieName = sessionCookieName(production);
+  const cookieOptions = { httpOnly: true, secure: production, sameSite: 'lax', path: '/' } as const;
+  const project = process.env.FIREBASE_PROJECT_ID || FIREBASE_PROJECT;
   const allowedOrigins = new Set((process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:5173').split(',').filter(Boolean));
   const store = new PrivateStore(directory);
   app.disable('x-powered-by');
@@ -59,7 +45,7 @@ export function installSecurity(app: Express, directory: string) {
   app.get('/api/health', (_req, res) => res.set('Cache-Control', 'no-store').json({ status: 'ok' }));
   app.use('/api', rateLimit({ windowMs: 60000, limit: 240, standardHeaders: 'draft-8', legacyHeaders: false }));
   app.use('/api', (req, res, next) => {
-    res.set('Cache-Control', 'private, no-store');
+    res.set('Cache-Control', PRIVATE_CACHE);
     if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
       if ((req.headers.origin && !allowedOrigins.has(req.headers.origin)) || req.headers['sec-fetch-site'] === 'cross-site') return res.status(403).json({ error: 'Request origin is not allowed.' });
       if (req.headers['x-dutydeck-request'] !== '1' && !req.headers.authorization) return res.status(403).json({ error: 'A same-origin API request is required.' });
@@ -79,41 +65,37 @@ export function installSecurity(app: Express, directory: string) {
     if (req.body && !valid(req.body)) return res.status(400).json({ error: 'Request values exceed allowed limits.' });
     next();
   });
-  app.post('/api/session', rateLimit({ windowMs: 3600000, limit: 30, legacyHeaders: false }), async (req, res, next) => {
+  app.post('/api/session', rateLimit({ windowMs: 3600000, limit: 30, legacyHeaders: false }), async (req, res) => {
+    const token = bearerToken(req.headers.authorization);
     try {
-      let uid: string | undefined;
-      const token = req.headers.cookie?.split(';').map(v => v.trim()).find(v => v.startsWith(`${cookieName}=`))?.slice(cookieName.length + 1);
-      if (token) { try { const { payload } = await jwtVerify(token, secret, { algorithms: ['HS256'], issuer: 'dutydeck', audience: 'guest' }); uid = payload.sub; } catch {} }
-      uid ||= `guest:${randomBytes(24).toString('hex')}`;
-      const signed = await new SignJWT({ guest: true }).setProtectedHeader({ alg: 'HS256' }).setSubject(uid).setIssuer('dutydeck').setAudience('guest').setIssuedAt().setExpirationTime('7d').sign(secret);
-      res.cookie(cookieName, signed, { httpOnly: true, secure: production, sameSite: 'lax', path: '/', maxAge: 7 * 86400000 });
-      res.json({ success: true });
-    } catch (error) { next(error); }
+      const { expiresAt } = await verifyFirebaseToken(token, project, keys);
+      const maxAge = expiresAt - Date.now();
+      if (maxAge <= 0) throw new Error('Session expired');
+      res.cookie(cookieName, token, { ...cookieOptions, maxAge }).json({ authenticated: true });
+    } catch {
+      res.status(401).json({ error: 'Sign in with Google to start a secure session.' });
+    }
   });
-  app.delete('/api/session', (_req, res) => { res.clearCookie(cookieName, { httpOnly: true, secure: production, sameSite: 'lax', path: '/' }); res.json({ success: true }); });
+
+  app.delete('/api/session', (_req, res) => {
+    res.clearCookie(cookieName, cookieOptions).status(204).end();
+  });
+
   const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const bearer = req.headers.authorization;
-      if (bearer) {
-        if (!/^Bearer [A-Za-z0-9_.-]{20,10000}$/.test(bearer)) throw new Error('Invalid bearer');
-        res.locals.identity = await verifyFirebaseToken(bearer.slice(7), project);
-      } else {
-        const token = req.headers.cookie?.split(';').map(v => v.trim()).find(v => v.startsWith(`${cookieName}=`))?.slice(cookieName.length + 1);
-        if (!token) throw new Error('Missing session');
-        const { payload } = await jwtVerify(token, secret, { algorithms: ['HS256'], issuer: 'dutydeck', audience: 'guest' });
-        if (!payload.sub?.startsWith('guest:') || payload.guest !== true) throw new Error('Invalid guest');
-        res.locals.identity = { uid: payload.sub, guest: true };
-      }
+      const token = req.headers.authorization
+        ? bearerToken(req.headers.authorization)
+        : sessionToken(req.headers.cookie, production);
+      res.locals.identity = await verifyFirebaseToken(token, project, keys);
       next();
-    } catch { res.status(401).json({ success: false, error: 'Please sign in again to continue.' }); }
+    } catch {
+      res.status(401).json({ success: false, error: 'Please sign in to continue.' });
+    }
   };
-  app.use('/api/ncert/notes', authenticate);
+
+  app.use('/api', authenticate);
   const paidRoutes = ['/api/ai', '/api/current-affairs/:id/learn'];
-  app.use(paidRoutes, authenticate, (req, res, next) => {
-    const identity = res.locals.identity as Identity;
-    if (identity.guest) return res.status(403).json({ error: 'Sign in with Google to use AI features. Guest reading remains available.' });
-    next();
-  }, rateLimit({ windowMs: 60000, limit: 6, keyGenerator: (_req, res) => res.locals.identity.uid, standardHeaders: 'draft-8', legacyHeaders: false }), (_req, res, next) => {
+  app.use(paidRoutes, rateLimit({ windowMs: 60000, limit: 6, keyGenerator: (_req, res) => res.locals.identity.uid, standardHeaders: 'draft-8', legacyHeaders: false }), (_req, res, next) => {
     if (!store.consumeAI(res.locals.identity.uid, Number(process.env.AI_USER_DAILY_LIMIT) || 30, Number(process.env.AI_GLOBAL_DAILY_LIMIT) || 100)) return res.status(429).json({ error: 'The daily AI request limit has been reached. Please try tomorrow.' });
     next();
   });

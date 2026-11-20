@@ -6,6 +6,9 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
+    build: {
+      rolldownOptions: { output: { entryFileNames: 'assets/site-entry-[hash].js' } },
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

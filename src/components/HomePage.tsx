@@ -4,7 +4,6 @@ import {
   Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, Pause, PenLine, Play, RotateCcw, Sparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { APP_NAME } from '../data/brand';
 import { ARTICLE_33_QUESTION } from '../data/learningLibrary';
 import './HomePage.css';
@@ -175,7 +174,6 @@ function SessionPlanner() {
 }
 
 export function HomePage() {
-  const { canUseAi } = useAuth();
   const heroFrame = useRef<HTMLDivElement>(null);
   const [motionPaused, setMotionPaused] = useState(false);
 
@@ -211,7 +209,6 @@ export function HomePage() {
             <a href="#ai-tools">AI tools</a>
           </div>
           <div className="prep-nav-actions">
-            {!canUseAi && <Link className="prep-nav-sign-in" to="/login">Sign in</Link>}
             <Link className="prep-nav-cta" to="/dashboard" aria-label="Open workspace">
               <span className="prep-nav-workspace-full">Open workspace</span><span className="prep-nav-workspace-short">Workspace</span>
               <ArrowUpRight size={16} aria-hidden="true" />
@@ -244,7 +241,6 @@ export function HomePage() {
                 <a className="prep-hero-link" href="#sample-question">Try a sample question <ArrowDown size={16} aria-hidden="true" /></a>
               </div>
               <div className="prep-hero-access">
-                <p className="prep-no-account"><Check size={16} aria-hidden="true" /> No account needed to study</p>
                 <a className="prep-hero-ai" href="#ai-tools">Explore AI tools <ArrowUpRight size={14} aria-hidden="true" /></a>
               </div>
             </div>
@@ -344,12 +340,8 @@ export function HomePage() {
             <div className="prep-section-copy">
               <p className="prep-eyebrow"><Sparkles size={16} aria-hidden="true" /> AI study tools</p>
               <h2 id="prep-ai-heading">Get help when you get stuck.</h2>
-              <p>Ask for a clearer explanation, get feedback on a draft or figure out what to study next. Google sign-in gives you access to the AI tools.</p>
-              {canUseAi ? (
-                <Link className="prep-button prep-button-dark" to="/ai-tutor">Open the AI tutor <ArrowUpRight size={16} aria-hidden="true" /></Link>
-              ) : (
-                <Link className="prep-button prep-button-dark" to="/login?for=ai">Sign in to use AI <ArrowRight size={16} aria-hidden="true" /></Link>
-              )}
+              <p>Ask for a clearer explanation, get feedback on a draft or figure out what to study next.</p>
+              <Link className="prep-button prep-button-dark" to="/ai-tutor">Open the AI tutor <ArrowUpRight size={16} aria-hidden="true" /></Link>
             </div>
             <ul className="prep-ai-tools">
               {aiTools.map(({ title, detail, icon: Icon }) => (
@@ -366,8 +358,8 @@ export function HomePage() {
           <h2 id="prep-faq-heading">Before you start</h2>
           <div>
             <details className="prep-disclosure">
-              <summary>Do I need an account? <ChevronDown size={17} aria-hidden="true" /></summary>
-              <p>Open the workspace, library, practice and revision tools directly. Your progress is saved in this browser. Google sign-in is optional and gives you access to the AI tools.</p>
+              <summary>Where is my study progress saved? <ChevronDown size={17} aria-hidden="true" /></summary>
+              <p>Your study plan and progress are saved in this browser. Sign in with the same Google account to access your saved textbook notes.</p>
             </details>
             <details className="prep-disclosure">
               <summary>Where should I start if I’m new to CAPF? <ChevronDown size={17} aria-hidden="true" /></summary>

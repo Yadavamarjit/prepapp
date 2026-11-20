@@ -6,7 +6,7 @@ CadetSlate is a UPSC CAPF (Assistant Commandant) study app for both written pape
 
 | Area | Production route | Source |
 | --- | --- | --- |
-| Public homepage and guest entry | [Homepage](https://prepapp-five.vercel.app/) | `src/components/HomePage.tsx`, `src/App.tsx` |
+| Google sign-in | [Sign in](https://prepapp-five.vercel.app/login) | `src/components/LoginPage.tsx`, `src/context/AuthContext.tsx`, `proxy.ts` |
 | Daily study plan | [Today](https://prepapp-five.vercel.app/dashboard) | `src/components/DailyPlan.tsx`, `src/utils/dailyPlan.ts`, `server/aiDailyPlan.ts` |
 | Official exam scope and chapter catalog | [CAPF syllabus](https://prepapp-five.vercel.app/capf-syllabus#complete-syllabus) | `src/components/CapfSyllabus.tsx`, `src/data/syllabusCatalog.ts` |
 | Chapter study and notes | [Learning](https://prepapp-five.vercel.app/learning) | `src/components/LearningHub.tsx`, `src/context/SyllabusContext.tsx` |
@@ -14,14 +14,14 @@ CadetSlate is a UPSC CAPF (Assistant Commandant) study app for both written pape
 | Timed Paper I practice and attempt reports | [CAPF Analytica](https://prepapp-five.vercel.app/practice/capf-analytica) | `src/components/CapfAnalytica.tsx`, `src/utils/capfAttempt.ts` |
 | Paper II writing practice | [Paper II lab](https://prepapp-five.vercel.app/paper-2) | `src/components/Paper2Lab.tsx` |
 
-The public homepage is at `/` and **Start studying** opens `/dashboard`. Study routes and direct links are available without an account, with progress saved in the browser. Optional Google sign-in at `/login` enables the AI tools. `/login?for=ai` opens the AI tutor after sign-in.
+Google sign-in at `/login` is required for the homepage and every study route. Protected page requests are redirected to sign-in with their destination. Express establishes a host-only, Secure, HttpOnly session cookie after validating the Firebase ID token. Vercel verifies the cookie before serving study routes and assets, and Express independently verifies authentication for the study API.
 
 ## Data and known gaps
 
 - The tracked chapter catalog is [`public/upsc_capf_complete_syllabus.json`](public/upsc_capf_complete_syllabus.json). The root syllabus JSON copies and audit output are ignored. Edit the tracked public copy to update the catalog used by the web app and the backend planner.
 - The syllabus page shows the UPSC notice summary and labels the chapter breakdown as a study guide. The daily planner uses unfinished catalog chapters, priorities, topics and references. Chapter completion and daily plans are stored in the browser. The chapter reader links to the matching tutor topic.
 - PYQ coverage currently consists of provisional subject totals from an independent index of 620 of 625 Paper I questions from 2022 to 2026. Analytica reports performance on the app's timed sectional. A full, sourced question-by-question PYQ library is still open work.
-- This rename updates the visible app name and metadata. The React name comes from `src/data/brand.ts`. Existing `dutydeck_*` browser storage keys, the guest cookie and API request header deliberately retain their original names so existing progress and sessions carry over.
+- The React app name comes from `src/data/brand.ts`. Existing `dutydeck_*` progress keys and the API request header retain their original names. Study API requests require a verified Google session.
 
 ## Build and release
 

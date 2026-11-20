@@ -14,11 +14,11 @@ const items = [
   { path: '/analytics', label: 'Progress', icon: ChartNoAxesCombined, matches: ['/analytics'] },
 ];
 export function Navbar() {
-  const { user, signOutUser } = useAuth();
+  const { user, error, signOutUser } = useAuth();
   const { dark, setDark } = useStudyPreferences();
   const { pathname } = useLocation();
   const active = (matches: string[]) => matches.some(path => pathname === path || pathname.startsWith(path + '/'));
-  const hasAccount = !!user && !user.isGuest;
+  const hasAccount = !!user;
   const current = items.find(item => active(item.matches))?.label || 'Study';
   const links = (mobile = false) => items.map(({ path, label, icon: Icon, matches }) => <Link key={path} to={path} aria-current={active(matches) ? 'page' : undefined}
     className={`${mobile ? 'flex-col gap-1 py-2 text-[11px]' : 'gap-3 rounded-lg px-3 py-3 text-sm'} flex items-center font-medium transition-colors ${active(matches) ? 'bg-[#E9EFE9] text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : 'text-[#686C65] hover:bg-[#EFEFE9] dark:text-slate-400 dark:hover:bg-[#202C25]'}`}>
@@ -41,10 +41,10 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-xs font-semibold">UPSC CAPF</span>
           <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
-          {!hasAccount && <Link to="/login" className="inline-flex min-h-11 shrink-0 items-center px-1 text-xs font-semibold hover:underline sm:px-2">Sign in</Link>}
           {hasAccount && <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>}
         </div>
       </div>
+      {error && <p role="alert" className="mx-auto max-w-6xl px-5 pb-3 text-sm text-rose-800 dark:text-rose-300">{error}</p>}
     </header>
     <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-[#E4E4DB] bg-[#FAFAF6] px-2 pb-[max(8px,env(safe-area-inset-bottom))] pt-1 lg:hidden dark:border-slate-800 dark:bg-[#151D18]">{links(true)}</nav>
   </>;

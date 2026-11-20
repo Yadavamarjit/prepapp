@@ -11,6 +11,9 @@ import { registerCurrentAffairs } from './server/currentAffairs';
 import { installSecurity } from './server/security';
 import { ensurePdf, validBookChapter, validateBookRequest, limitPdfWork } from './server/pdf';
 import { randomUUID } from 'node:crypto';
+import { PRIVATE_CACHE } from './shared/firebaseIdentity';
+import { isLoginPath } from './shared/authRoutes';
+import { pageAccess } from './shared/pageAccess';
 
 dotenv.config();
 
@@ -1024,7 +1027,20 @@ app.delete('/api/ncert/notes/:bookCode/:chapterNumber/all', (req, res) => {
 
 // Vite middleware for development or static serving for production
 async function startServer() {
-  if (process.env.NODE_ENV !== 'production') {
+  app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found' }));
+  const production = process.env.NODE_ENV === 'production';
+  if (process.env.API_ONLY !== 'true') {
+    app.use(async (req, res, next) => {
+      const url = new URL(req.originalUrl, 'http://localhost');
+      if (!production && /^\/(?:@|src\/|shared\/|node_modules\/)/.test(url.pathname)) return next();
+      const access = await pageAccess(url, req.headers.cookie, production);
+      if (!access.public || isLoginPath(url.pathname)) res.set('Cache-Control', PRIVATE_CACHE).set('X-Robots-Tag', 'noindex, nofollow');
+      if (access.denied === 302) return res.redirect(302, access.location);
+      if (access.denied === 401) return res.status(401).send('Sign in required.');
+      next();
+    });
+  }
+  if (!production) {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -1038,7 +1054,6 @@ async function startServer() {
     });
   }
 
-  app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found' }));
   app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
     const status = error?.type === 'entity.too.large' ? 413 : error instanceof SyntaxError ? 400 : 500;
     console.error('[API request failed]', error?.type || error?.name || 'Unknown error');
