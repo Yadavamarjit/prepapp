@@ -1,3 +1,6 @@
+import { useSyllabus } from '../context/SyllabusContext';
+import { SyllabusOutline, SyllabusStatus } from './SyllabusOutline';
+import type { CatalogChapter } from '../data/syllabusCatalog';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, BookOpen, Check, CheckCircle2, Clock, Search } from 'lucide-react';
@@ -14,15 +17,32 @@ interface LearningHubProps {
 export function LearningHub(props: LearningHubProps) {
   const { chapterId } = useParams();
   const { exam } = useStudyPreferences();
+  const catalog = useSyllabus();
+  const [catalogSearch, setCatalogSearch] = useState('');
+  const [catalogSubject, setCatalogSubject] = useState('');
   const [search, setSearch] = useState('');
   const [subject, setSubject] = useState('');
   const chapter = LEARNING_CHAPTERS.find(item => item.id === chapterId);
   const chapters = LEARNING_CHAPTERS.filter(item => (exam === 'BOTH' || item.examRelevance.includes(exam)) && (!subject || item.subject === subject) &&
     `${item.subject} ${item.chapterTitle} ${item.coreConcepts.join(' ')}`.toLowerCase().includes(search.toLowerCase()));
   const subjects = [...new Set(LEARNING_CHAPTERS.filter(item => exam === 'BOTH' || item.examRelevance.includes(exam)).map(item => item.subject))];
+  const syllabusChapter = catalog.chapters.find(item => `capf-${item.id}` === chapterId);
+  if (syllabusChapter) return <SyllabusChapterReader key={syllabusChapter.id} chapter={syllabusChapter} {...props} />;
+  if (chapterId?.startsWith('capf-') && catalog.status !== 'ready') return <SyllabusStatus />;
   if (chapterId && chapter) return <ChapterReader key={chapter.id} chapter={chapter} {...props} />;
   if (chapterId) return <section className="study-panel p-8"><h1 className="page-title">Lesson not found</h1><Link to="/learning" className="quiet-link mt-4">Back to subjects</Link></section>;
   return <div className="space-y-7"><header className="flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">Your learning library</p><h1 className="page-title mt-2">Topic lessons</h1><p className="page-description">Choose a subject. Take it one chapter at a time.</p></div><Link to="/books" className="quiet-link"><BookOpen size={16} />Read full textbooks<ArrowRight size={14} /></Link></header>
+    {exam !== 'SSC_CPO' && <section className="space-y-4">
+      <h2 className="section-title">CAPF syllabus chapters</h2>
+      <div className="flex flex-wrap gap-3">
+        <input className="study-input" aria-label="Search CAPF chapters" placeholder="Search CAPF chapters" value={catalogSearch} onChange={event => setCatalogSearch(event.target.value)} />
+        <select className="study-input" aria-label="CAPF subject" value={catalogSubject} onChange={event => setCatalogSubject(event.target.value)}>
+          <option value="">All CAPF subjects</option>{catalog.subjects.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+        </select>
+      </div>
+      <SyllabusOutline search={catalogSearch} subjectId={catalogSubject} progressMap={props.progressMap} />
+    </section>}
+    <h2 className="section-title">Textbook lessons</h2>
     <div className="flex flex-col gap-3 sm:flex-row"><label className="flex flex-1 items-center gap-2 rounded-lg border border-[#DEE1D4] bg-white px-3 dark:border-slate-700 dark:bg-[#1A2420]"><Search size={16} className="text-[#818879]" /><input value={search} onChange={event => setSearch(event.target.value)} placeholder="Search chapters or concepts" aria-label="Search chapters" className="w-full bg-transparent py-3 text-sm outline-none" /></label><select aria-label="Filter by subject" value={subject} onChange={event => setSubject(event.target.value)} className="rounded-lg border border-[#DEE1D4] bg-white px-3 py-3 text-sm dark:border-slate-700 dark:bg-[#1A2420]"><option value="">All subjects</option>{subjects.map(item => <option key={item}>{item}</option>)}</select></div>
     {chapters.length ? subjects.filter(item => chapters.some(chapter => chapter.subject === item)).map(item => {
       const group = chapters.filter(chapter => chapter.subject === item);
@@ -47,5 +67,46 @@ function ChapterReader({ chapter, progressMap, onToggleChapterCompleted, onSelec
     {tab === 'Practise' && <div className="space-y-5"><p className="text-sm leading-6 text-[#818879]">These questions cover this chapter. Choose an answer to see the explanation.</p>{chapter.comprehensionQuiz.map((quiz, index) => <section key={index} className="study-panel space-y-4 p-6"><h2 className="text-sm font-medium leading-7">{index + 1}. {quiz.question}</h2><div className="grid gap-2">{quiz.options.map((option, optionIndex) => <button key={optionIndex} type="button" disabled={answers[index] !== undefined} onClick={() => setAnswers(previous => ({ ...previous, [index]: optionIndex }))} className={`rounded-lg border px-4 py-3 text-left text-sm leading-6 ${answers[index] !== undefined && optionIndex === quiz.correctIndex ? 'border-[#8FA980] bg-[#EEF4E9] text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : answers[index] === optionIndex ? 'border-[#BF8F7C] bg-[#F8EEEA] text-[#92533B]' : 'border-[#E1E3D8] hover:bg-[#F7F8F3] dark:border-slate-700 dark:hover:bg-[#273C2E]'}`}>{option}</button>)}</div>{answers[index] !== undefined && <div role="status" className="space-y-2 text-sm leading-7"><p className="font-medium">{answers[index] === quiz.correctIndex ? 'Correct.' : 'Not quite ? compare with the highlighted answer.'}</p><p className="text-[#717B64] dark:text-slate-400">{quiz.explanation}</p></div>}</section>)}<div className="flex flex-wrap gap-3"><button type="button" className="secondary-button" onClick={() => setAnswers({})}>Try again</button><button type="button" className="secondary-button" onClick={() => onSelectTopicForAi(chapter.chapterTitle, chapter.subject, chapter.ncertBook)}>Ask for topic help<ArrowRight size={15} /></button></div></div>}
     {tab === 'Revise' && <div className="space-y-5"><section className="study-panel space-y-4 p-6"><h2 className="section-title">What can you remember?</h2><p className="text-sm leading-6 text-[#818879]">Explain the main ideas without checking your notes. Then reveal the checklist.</p><textarea aria-label="Recall the chapter" rows={4} className="study-input" placeholder="Write what you remember?" /><button type="button" className="secondary-button" onClick={() => setRecall(!recall)}>{recall ? 'Hide checklist' : 'Reveal checklist'}</button>{recall && <ul className="list-disc space-y-3 pl-5 text-sm leading-7">{chapter.coreConcepts.map(concept => <li key={concept}>{concept}</li>)}</ul>}</section><section className="study-panel space-y-4 p-6"><h2 className="section-title">Memory aids & common mistakes</h2>{[...chapter.highYieldMnemonics, ...chapter.examinerTraps].map((item, index) => <p key={index} className="border-l-2 border-[#C8D0BA] pl-4 text-sm leading-7 text-[#717B64] dark:text-slate-300">{item}</p>)}</section><div className="flex flex-wrap gap-3">{completed ? <Link to={`/daily-review?${reviewQuery}`} className="primary-button">Review this chapter?s cards<ArrowRight size={15} /></Link> : <button type="button" className="primary-button" onClick={() => onToggleChapterCompleted(chapter.id)}>Complete lesson & add recall cards</button>}</div></div>}
     {tab === 'Notes' && <section className="study-panel space-y-4 p-6"><h2 className="section-title">Your notes</h2><p className="text-sm text-[#818879]">Keep a short summary, a useful example, or something you keep forgetting.</p><label htmlFor="chapter-notes" className="sr-only">Notes for this chapter</label><textarea id="chapter-notes" className="study-input" rows={10} value={notes} onChange={event => { setNotes(event.target.value); setSaveMessage(''); }} placeholder="In my own words?" /><div className="flex items-center gap-4"><button type="button" className="primary-button" onClick={() => setSaveMessage(onSaveNotes(chapter.id, notes) ? 'Saved in this browser.' : 'Could not save. Check your browser storage and try again.')}>Save notes</button><p role="status" className="text-xs text-[#818879]">{saveMessage}</p></div></section>}
+  </div>;
+}
+
+function SyllabusChapterReader({ chapter, progressMap, onToggleChapterCompleted, onSaveNotes }: LearningHubProps & { chapter: CatalogChapter }) {
+  const { subjects } = useSyllabus();
+  const group = subjects.find(subject => subject.id === chapter.subjectId)?.subSubjects.find(item => item.id === chapter.groupId);
+  const completed = !!progressMap[chapter.progressId]?.isCompleted;
+  const [notes, setNotes] = useState(progressMap[chapter.progressId]?.notes || '');
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    try { localStorage.setItem('dutydeck_last_chapter', chapter.progressId); } catch {}
+  }, [chapter.progressId]);
+
+  return <div className="mx-auto max-w-4xl space-y-6">
+    <Link to="/learning" className="quiet-link"><ArrowLeft size={14} /> All subjects</Link>
+    <header>
+      <p className="text-sm opacity-75">{chapter.subject} · {chapter.groupTitle} · Chapter {chapter.order}</p>
+      <h1 className="page-title mt-2">{chapter.title}</h1>
+      <p className="mt-2 text-sm">Priority: {chapter.priority}</p>
+    </header>
+    <section className="study-panel space-y-4 p-5">
+      <h2 className="section-title">Topics to study</h2>
+      <ul className="list-disc space-y-2 pl-5 text-sm">{chapter.topics.map(topic => <li key={topic}>{topic}</li>)}</ul>
+      <div className="flex flex-wrap gap-3">
+        <Link className="primary-button" to={chapter.practicePath}>Learn and practise with AI <ArrowRight size={15} /></Link>
+        <button type="button" className="secondary-button" onClick={() => onToggleChapterCompleted(chapter.progressId)}>{completed ? 'Mark as not completed' : 'Mark chapter completed'}</button>
+        {completed && <Link className="quiet-link" to={`/daily-review?${new URLSearchParams({ topic: JSON.stringify([chapter.subject, chapter.title]) })}`}>Review chapter</Link>}
+      </div>
+    </section>
+    <section className="study-panel space-y-4 p-5">
+      <h2 className="section-title">Suggested reading</h2>
+      <ul className="list-disc space-y-2 pl-5 text-sm">{group?.primaryBooks.map(book => <li key={book}>{book}</li>)}
+        {chapter.bookReferences?.map(ref => <li key={`${ref.book}:${ref.chapter}`}><a className="underline" href={ref.sourceUrl} target="_blank" rel="noreferrer">{ref.book}: {ref.chapter}</a></li>)}
+      </ul>
+    </section>
+    <section className="study-panel space-y-4 p-5">
+      <label htmlFor="syllabus-notes" className="section-title">Your notes</label>
+      <textarea id="syllabus-notes" className="study-input w-full" rows={6} value={notes} onChange={event => { setNotes(event.target.value); setMessage(''); }} />
+      <button type="button" className="primary-button" onClick={() => setMessage(onSaveNotes(chapter.progressId, notes) ? 'Notes saved.' : 'Could not save notes.')}>Save notes</button>
+      <p role="status" className="text-sm">{message}</p>
+    </section>
   </div>;
 }

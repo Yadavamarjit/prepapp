@@ -1,3 +1,5 @@
+import { useSyllabus } from '../context/SyllabusContext';
+import { SyllabusStatus } from './SyllabusOutline';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, BookOpen, Clock, PencilLine, RotateCcw, CheckCircle2, FileText } from 'lucide-react';
@@ -37,13 +39,17 @@ export function ProgressPage({ chapterProgress, questions, mistakes, solvedQuest
   chapterProgress: Record<string, ChapterProgress>; questions: Question[]; mistakes: MistakeRecord[]; solvedQuestionIds: string[]; submissions: Paper2Submission[]; reviewedToday: number;
 }) {
   const { exam } = useStudyPreferences();
-  const chapters = LEARNING_CHAPTERS.filter(chapter => exam === 'BOTH' || chapter.examRelevance.includes(exam));
+  const { chapters: catalog } = useSyllabus();
+  const chapters = [
+    ...(exam === 'SSC_CPO' ? [] : catalog.map(chapter => ({ id: chapter.progressId, subject: chapter.subject }))),
+    ...LEARNING_CHAPTERS.filter(chapter => exam === 'BOTH' || chapter.examRelevance.includes(exam)),
+  ];
   const eligible = questions.filter(question => exam === 'BOTH' || question.targetExam.includes(exam));
   const attempted = eligible.filter(question => solvedQuestionIds.includes(question.id));
   const completed = chapters.filter(chapter => chapterProgress[chapter.id]?.isCompleted).length;
   const mistakesToReview = eligible.filter(question => mistakes.some(mistake => mistake.questionId === question.id)).length;
   const subjects = [...new Set(chapters.map(chapter => chapter.subject))];
-  return <div className="space-y-7"><header><p className="eyebrow">See how far you?ve come</p><h1 className="page-title mt-2">Your progress</h1><p className="page-description">Your completed lessons and recorded practice, one step at a time.</p>{exam !== 'SSC_CPO' && <Link to="/practice/capf-analytica" className="quiet-link mt-4 min-h-11">Open CAPF Analytica <ArrowRight size={16} /></Link>}</header><div className="grid grid-cols-2 gap-4 xl:grid-cols-4">{[[completed, 'Chapters completed'], [attempted.length, 'Questions attempted'], [reviewedToday, 'Cards reviewed today'], [mistakesToReview, 'Mistakes to revisit']].map(([count, label]) => <div key={label} className="study-panel p-5"><p className="text-3xl font-semibold">{count}</p><p className="mt-2 text-xs text-[#818879]">{label}</p></div>)}</div><section className="study-panel p-6"><h2 className="section-title">By subject</h2><div className="mt-6 space-y-6">{subjects.map(subject => {
+  return <div className="space-y-7"><header><p className="eyebrow">See how far you?ve come</p><h1 className="page-title mt-2">Your progress</h1><p className="page-description">Your completed lessons and recorded practice, one step at a time.</p>{exam !== 'SSC_CPO' && <Link to="/practice/capf-analytica" className="quiet-link mt-4 min-h-11">Open CAPF Analytica <ArrowRight size={16} /></Link>}</header><div className="grid grid-cols-2 gap-4 xl:grid-cols-4">{[[completed, 'Chapters completed'], [attempted.length, 'Questions attempted'], [reviewedToday, 'Cards reviewed today'], [mistakesToReview, 'Mistakes to revisit']].map(([count, label]) => <div key={label} className="study-panel p-5"><p className="text-3xl font-semibold">{count}</p><p className="mt-2 text-xs text-[#818879]">{label}</p></div>)}</div><section className="study-panel p-6"><h2 className="section-title">By subject</h2>{exam !== 'SSC_CPO' && <SyllabusStatus />}<div className="mt-6 space-y-6">{subjects.map(subject => {
     const group = chapters.filter(chapter => chapter.subject === subject);
     const done = group.filter(chapter => chapterProgress[chapter.id]?.isCompleted).length;
     return <div key={subject}><div className="mb-2 flex justify-between gap-3 text-sm"><span>{subject}</span><span className="shrink-0 text-xs text-[#818879]">{done} / {group.length} chapters</span></div><progress className="study-progress" max={group.length} value={done} aria-label={`${subject} completion`} /></div>;

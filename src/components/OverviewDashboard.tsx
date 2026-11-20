@@ -1,7 +1,7 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight, BookOpen, PenLine, CalendarDays, RotateCcw } from 'lucide-react';
-import { LEARNING_CHAPTERS } from '../data/learningLibrary';
+import { useSyllabus } from '../context/SyllabusContext';
 import { DailyPlan } from './DailyPlan';
 import { useAuth } from '../context/AuthContext';
 import { attemptKey, loadAttemptBook, paper, report } from '../utils/capfAttempt';
@@ -36,8 +36,9 @@ export function OverviewDashboard({ chapterProgress, dueCount, reviewedToday, qu
 
   let lastId: string | null = null;
   try { lastId = localStorage.getItem('dutydeck_last_chapter'); } catch {}
-  const chapters = LEARNING_CHAPTERS.filter(c => c.examRelevance.includes('UPSC_CAPF'));
-  const chapter = chapters.find(c => c.id === lastId && !chapterProgress[c.id]?.isCompleted) || chapters.find(c => !chapterProgress[c.id]?.isCompleted);
+  const { chapters, status } = useSyllabus();
+  const unfinished = chapters.filter(item => !chapterProgress[item.progressId]?.isCompleted);
+  const chapter = unfinished.find(item => item.progressId === lastId) || unfinished[0];
   const score = a?.finished ? report(a) : null;
   const count = a?.ids.length || paper.length;
   const practicePath = '/practice/capf-analytica';
@@ -45,7 +46,7 @@ export function OverviewDashboard({ chapterProgress, dueCount, reviewedToday, qu
   const action = !a ? 'Start sectional' : !a.finished ? `Resume at question ${a.index + 1} of ${count}` : missed ? `Retry ${missed} missed ${missed === 1 ? 'question' : 'questions'}` : 'View your report';
   const rows = [
     { to: '/paper-2', icon: PenLine, title: 'Paper II writing', detail: 'Essays, arguments and précis' },
-    { to: chapter ? '/learning/' + chapter.id : '/learning', icon: BookOpen, title: chapter?.id === lastId ? 'Continue your lesson' : 'Study a lesson', detail: chapter?.chapterTitle || 'Browse completed lessons' },
+    { to: chapter?.path || '/learning', icon: BookOpen, title: chapter?.progressId === lastId ? 'Continue your lesson' : 'Study a lesson', detail: chapter?.title || (status === 'ready' ? 'Browse syllabus chapters' : 'Open the CAPF syllabus catalog') },
     { to: '/daily-review', icon: RotateCcw, title: dueCount ? `Review ${dueCount} recall cards` : 'Revision', detail: reviewedToday ? `${reviewedToday} reviewed today` : dueCount ? 'Due today' : 'Cards appear as you study' }
   ];
   return <div className="mx-auto max-w-5xl">

@@ -51,7 +51,7 @@ function RecallExercise({ card, progress, onReview }: {
           <p><strong>Correct answer:</strong> {card.answer}</p>
           <p>{card.explanation}</p>
           {card.memoryHook && <p><strong>Memory hook / shortcut:</strong> {card.memoryHook}</p>}
-          <details><summary className="cursor-pointer font-semibold">Original options</summary><ul className="mt-2 space-y-1">{card.options.map((option, index) => <li key={index}>{option}</li>)}</ul></details>
+          {card.options.length > 0 && <details><summary className="cursor-pointer font-semibold">Original options</summary><ul className="mt-2 space-y-1">{card.options.map((option, index) => <li key={index}>{option}</li>)}</ul></details>}
           <p className="text-xs text-[#5C646B] dark:text-slate-400">Source: {card.source}</p>
         </div>
         <p className="text-sm font-semibold">Compare your answer, then rate your recall. Your written answer is not automatically graded.</p>
@@ -64,7 +64,7 @@ function RecallExercise({ card, progress, onReview }: {
             if (!onReview(card.id, rating)) setSubmitting(false);
           }}>{label}<span className="mt-1 block text-xs font-normal">Review in {delay}</span></button>;
         })}</div>
-        {card.chapterId && <Link className="inline-block text-sm underline underline-offset-4" to={`/learning/${card.chapterId}`}>Revisit this lesson</Link>}
+        {card.chapterId && <Link className="inline-block text-sm underline underline-offset-4" to={`/learning/${card.chapterId.replace(/^capf:/, 'capf-')}`}>Revisit this lesson</Link>}
       </div>}
     </article>
   );

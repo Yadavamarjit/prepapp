@@ -1,11 +1,12 @@
 import { apiFetch } from '../lib/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { useStudyPreferences } from '../context/StudyPreferences';
-import { SYLLABUS_MODULES } from '../data/syllabusData';
+import { useSyllabus } from '../context/SyllabusContext';
+import { SyllabusStatus } from './SyllabusOutline';
+import { useSearchParams } from 'react-router-dom';
 import { Question, MistakeRecord, MistakeReason, AdaptiveAssessment, QuestionComplexityTier } from '../types';
 import { calculateTopicProficiency, determineAdaptiveAssessment } from '../utils/adaptiveEngine';
 
-const capfModules = SYLLABUS_MODULES.map(module => ({ ...module, subtopics: module.subtopics.filter(topic => topic.examFocus.includes('CAPF')) })).filter(module => module.subtopics.length);
 
 interface AiTopicBreakdownProps {
   initialTopic?: string;
@@ -40,9 +41,16 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
   onQuestionAttempted,
   onAddQuestionsToBank,
 }) => {
-  const [selectedTopic, setSelectedTopic] = useState(initialTopic || 'Emergency Provisions (Art 352, 356, 360)');
-  const [selectedSubject, setSelectedSubject] = useState(initialSubject || 'Polity & Constitution');
-  const [standardRef, setStandardRef] = useState(initialRef || 'M. Laxmikanth Ch. 16');
+  const { subjects, chapters, status } = useSyllabus();
+  const [params, setParams] = useSearchParams();
+  const chapterId = params.get('chapter');
+  const chapter = chapterId ? chapters.find(item => item.id === chapterId) : initialTopic ? undefined : chapters[0];
+  const topicIndex = Number(params.get('topic'));
+  const focus = chapter && params.has('topic') ? chapter.topics[topicIndex] : undefined;
+  const selectedTopic = focus || chapter?.title || (chapterId ? '' : initialTopic || '');
+  const selectedSubject = chapter?.subject || initialSubject || '';
+  const standardRef = chapter?.reference || initialRef || '';
+  const changeChapter = (id: string) => setParams({ chapter: id });
   const [customGap, setCustomGap] = useState('');
   const { exam: examTrackChoice } = useStudyPreferences();
 
@@ -214,21 +222,33 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
   return <div className="mx-auto max-w-4xl space-y-6">
     <header><p className="eyebrow">A little help, right where you need it</p><h1 className="page-title mt-2">Topic practice</h1><p className="page-description">Understand one topic, then check what you know. Questions stay within your selection.</p></header>
     <section className="study-panel space-y-5 p-5 sm:p-6">
+      <SyllabusStatus />
+      {status === 'ready' && chapterId && !chapter && <p role="alert">This syllabus chapter is unavailable. Choose another subject below.</p>}
       <div className="grid gap-4 sm:grid-cols-2">
-        <div><label htmlFor="tutor-subject" className="mb-2 block text-xs font-medium">Subject</label><select id="tutor-subject" value={selectedSubject} onChange={event => {
-          const subject = event.target.value;
-          setSelectedSubject(subject);
-          const topic = capfModules.find(module => module.subject === subject)?.subtopics[0];
-          if (topic) { setSelectedTopic(topic.title); setStandardRef(topic.standardRef); }
-        }} className="study-input !py-3">{capfModules.map(module => <option key={module.id} value={module.subject}>{module.subject}</option>)}</select></div>
-        <div><label htmlFor="tutor-topic" className="mb-2 block text-xs font-medium">Topic</label><select id="tutor-topic" value={selectedTopic} onChange={event => {
-          setSelectedTopic(event.target.value);
-          const topic = capfModules.find(module => module.subject === selectedSubject)?.subtopics.find(item => item.title === event.target.value);
-          if (topic) setStandardRef(topic.standardRef);
-        }} className="study-input !py-3">
-          {!capfModules.find(module => module.subject === selectedSubject)?.subtopics.some(item => item.title === selectedTopic) && <option value={selectedTopic}>{selectedTopic}</option>}
-          {capfModules.find(module => module.subject === selectedSubject)?.subtopics.map(topic => <option key={topic.id} value={topic.title}>{topic.title}</option>)}
-        </select></div>
+        <label className="text-sm">Subject
+          <select className="study-input mt-2 w-full" value={chapter?.subjectId || ''} onChange={event => {
+            const next = chapters.find(item => item.subjectId === event.target.value);
+            if (next) changeChapter(next.id);
+          }}>
+            <option value="" disabled>{initialSubject && !chapterId ? initialSubject : 'Choose a subject'}</option>
+            {subjects.map(subject => <option key={subject.id} value={subject.id}>{subject.name}</option>)}
+          </select>
+        </label>
+        <label className="text-sm">Chapter
+          <select className="study-input mt-2 w-full" value={chapter?.id || ''} onChange={event => changeChapter(event.target.value)} disabled={!chapter}>
+            {!chapter && <option value="">{selectedTopic || 'Choose a chapter'}</option>}
+            {subjects.find(subject => subject.id === chapter?.subjectId)?.subSubjects.map(group => <optgroup key={group.id} label={group.name}>
+              {group.chapters.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}
+            </optgroup>)}
+          </select>
+        </label>
+        {chapter && <label className="text-sm sm:col-span-2">Topic
+          <select className="study-input mt-2 w-full" value={focus ? String(topicIndex) : ''} onChange={event =>
+            setParams(event.target.value ? { chapter: chapter.id, topic: event.target.value } : { chapter: chapter.id })}>
+            <option value="">Entire chapter</option>
+            {chapter.topics.map((topic, index) => <option key={index} value={index}>{topic}</option>)}
+          </select>
+        </label>}
       </div>
       <p className="text-xs leading-6 text-[#818879]">Reference: {standardRef}</p>
       <details className="border-t border-[#E6E7DE] pt-4 dark:border-slate-800"><summary className="cursor-pointer text-xs font-medium">Practice settings <span className="ml-2 font-normal text-[#818879]">{effectiveAssessment.statementDepth === 1 ? 'Direct questions' : `${effectiveAssessment.statementDepth}-statement questions`} ? {questionCount} questions</span></summary>
@@ -242,7 +262,7 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
           <label className="block text-xs font-medium sm:col-span-2">Anything you find difficult? <span className="font-normal text-[#818879]">Optional</span><input value={customGap} onChange={event => setCustomGap(event.target.value)} placeholder="For example: I confuse the approval timelines" className="study-input mt-2 !py-2" /></label>
         </div>
       </details>
-      <div className="flex flex-wrap gap-3"><button type="button" disabled={isLoadingBreakdown} onClick={handleFetchBreakdown} className="secondary-button">{isLoadingBreakdown ? 'Preparing explanation?' : 'Explain this topic'}</button><button type="button" disabled={isGeneratingQuestions} onClick={handleGenerateQuestions} className="primary-button">{isGeneratingQuestions ? 'Preparing questions?' : 'Practise this topic'}</button></div>
+      <div className="flex flex-wrap gap-3"><button type="button" disabled={!selectedTopic || isLoadingBreakdown} onClick={handleFetchBreakdown} className="secondary-button">{isLoadingBreakdown ? 'Preparing explanation?' : 'Explain this topic'}</button><button type="button" disabled={!selectedTopic || isGeneratingQuestions} onClick={handleGenerateQuestions} className="primary-button">{isGeneratingQuestions ? 'Preparing questions?' : 'Practise this topic'}</button></div>
       {(breakdownError || generationError) && <p role="alert" className="rounded-lg bg-[#FBEAE8] p-3 text-sm text-[#9B3E33]">{breakdownError || generationError}</p>}
     </section>
     {breakdownData && <section className="study-panel space-y-6 p-5 sm:p-7"><h2 className="section-title">Understand the essentials</h2><ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-[#626B59] dark:text-slate-300">{breakdownData.eli5Summary.map((point, index) => <li key={index}>{point}</li>)}</ul>{[

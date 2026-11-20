@@ -1,3 +1,4 @@
+import { SyllabusOutline } from './SyllabusOutline';
 import { apiFetch } from '../lib/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
@@ -196,6 +197,11 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
         {/* Left Column (4 cols): Prompt Selector & Scaffolding Guides */}
         <div className="lg:col-span-4 space-y-4">
           
+          <section className="space-y-3" aria-label="Paper II syllabus">
+            <h2 className="section-title">Paper II syllabus chapters</h2>
+            <SyllabusOutline paper="paper2" />
+          </section>
+
           {/* Prompt Selector */}
           <div className="bg-[#FFFFFF] dark:bg-[#1A2420] p-4 rounded-xl border border-[#E2E6DD] dark:border-slate-800 shadow-sm space-y-3">
             <label className="text-xs font-bold uppercase tracking-wider text-[#5C646B] dark:text-slate-400 block">

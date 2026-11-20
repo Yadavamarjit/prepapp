@@ -1,3 +1,4 @@
+import { useSyllabus } from './context/SyllabusContext';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Routes, Route, Outlet, useNavigate, useLocation, Navigate, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
@@ -33,7 +34,8 @@ import { ShieldAlert, Compass } from 'lucide-react';
 const LoginPageWrapper: React.FC = () => {
   const { user } = useAuth();
   const location = useLocation();
-  const from = (location.state as any)?.from?.pathname || '/';
+  const requested = location.state?.from;
+  const from = requested ? { pathname: requested.pathname, search: requested.search, hash: requested.hash } : '/';
 
   if (user) {
     return <Navigate to={from} replace />;
@@ -83,7 +85,9 @@ function ProtectedAppLayout() {
 }
 
 export default function App() {
+  const { chapters: syllabusChapters } = useSyllabus();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Question Bank (seeded + dynamic AI generated questions)
   const [savedQuestions, setQuestions] = useState<Question[]>(() => {
@@ -162,9 +166,15 @@ export default function App() {
   };
   const recallCards = useMemo(() => [
     ...buildRecallCards(LEARNING_CHAPTERS, chapterProgress, questions, solvedQuestionIds, mistakes),
+    ...syllabusChapters.filter(chapter => chapterProgress[chapter.progressId]?.isCompleted).map(chapter => ({
+      id: `syllabus:${chapter.id}`, chapterId: chapter.progressId, topic: chapter.title, subject: chapter.subject,
+      prompt: `Explain the main ideas in ${chapter.title} from memory.`, statements: [], options: [],
+      answer: 'Compare your recall with the chapter checklist.',
+      explanation: chapter.topics.join(' ? '), source: 'CAPF syllabus', isMistake: false,
+    })),
     ...buildReelRecallCards(reelsProgress),
     ...affairProgress.cards,
-  ], [chapterProgress, questions, solvedQuestionIds, mistakes, reelsProgress, affairProgress]);
+  ], [chapterProgress, questions, solvedQuestionIds, mistakes, reelsProgress, affairProgress, syllabusChapters]);
 
   const handleRecallReview = (id: string, rating: RecallRating): boolean => {
     const now = Date.now();
@@ -184,17 +194,6 @@ export default function App() {
   const handleQuestionAttempted = useCallback((questionId: string) => {
     setSolvedQuestionIds(previous => previous.includes(questionId) ? previous : [...previous, questionId]);
   }, []);
-
-  // Selected topic passed directly to AI Tutor
-  const [aiTutorTopic, setAiTutorTopic] = useState<{
-    title: string;
-    subject: string;
-    standardRef: string;
-  }>({
-    title: 'Emergency Provisions (Art 352, 356, 360)',
-    subject: 'Polity & Constitution',
-    standardRef: 'M. Laxmikanth Ch. 16',
-  });
 
   // Save to localStorage
   useEffect(() => {
@@ -287,8 +286,7 @@ export default function App() {
 
   // Handler: Select topic for AI tutor from other views
   const handleSelectTopicForAi = (title: string, subject: string, standardRef: string) => {
-    setAiTutorTopic({ title, subject, standardRef });
-    navigate('/ai-tutor');
+    navigate('/ai-tutor', { state: { title, subject, standardRef } });
   };
 
   // Handler: Toggle Chapter Completion
@@ -350,7 +348,7 @@ export default function App() {
         <Route path="practice" element={<PracticeHome />} />
         <Route path="practice/capf-analytica" element={<CapfAnalytica />} />
         <Route path="current-affairs" element={<CurrentAffairs progress={affairProgress} onChange={handleAffairChange} storageError={affairStorageError} />} />
-        <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} progressMap={chapterProgress} onToggleChapterCompleted={handleToggleChapterCompleted} onSelectTopicForAi={handleSelectTopicForAi} />} />
+        <Route path="capf-syllabus" element={<CapfSyllabus questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} progressMap={chapterProgress} />} />
         <Route path="calculation-coach" element={<CalculationCoach />} />
         <Route path="reels" element={<LearnReels progress={reelsProgress} onChange={handleReelsChange} storageError={reelsStorageError} />} />
         <Route path="reels/:courseId/:chapterNumber" element={<LearnReels progress={reelsProgress} onChange={handleReelsChange} storageError={reelsStorageError} />} />
@@ -392,9 +390,9 @@ export default function App() {
           path="ai-tutor"
           element={
             <AiTopicBreakdown
-              initialTopic={aiTutorTopic.title}
-              initialSubject={aiTutorTopic.subject}
-              initialRef={aiTutorTopic.standardRef}
+              initialTopic={location.state?.title}
+              initialSubject={location.state?.subject}
+              initialRef={location.state?.standardRef}
               mistakes={mistakes}
               solvedQuestionIds={solvedQuestionIds}
               allQuestions={questions}
