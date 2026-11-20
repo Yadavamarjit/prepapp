@@ -1,9 +1,10 @@
 import { useRef, useState, type FormEvent, type PointerEvent } from 'react';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Calculator, Check, ChevronDown, CircleX,
-  Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, Pause, PenLine, Play, RotateCcw,
+  Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, Pause, PenLine, Play, RotateCcw, Sparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { APP_NAME } from '../data/brand';
 import { ARTICLE_33_QUESTION } from '../data/learningLibrary';
 import './HomePage.css';
@@ -25,6 +26,14 @@ const resources = [
   { title: 'NCERT library', detail: 'Read original textbooks and track the chapters you’ve covered.', icon: BookOpen, path: '/books' },
   { title: 'Current affairs', detail: 'Read exam-relevant news and save key facts for recall.', icon: Newspaper, path: '/current-affairs' },
   { title: 'Calculation Coach', detail: 'Build speed with focused arithmetic and mental maths drills.', icon: Calculator, path: '/calculation-coach' },
+];
+
+const aiTools = [
+  { title: 'AI study planner', detail: 'Get a daily plan based on your available time, unfinished chapters and recent mistakes.', icon: Clock3 },
+  { title: 'Topic tutor and practice questions', detail: 'Break down a difficult topic and generate practice questions at your level.', icon: ListChecks },
+  { title: 'Paper II feedback', detail: 'Get feedback on your answer’s structure, reasoning and writing style.', icon: PenLine },
+  { title: 'Textbook passage help', detail: 'Turn a highlighted passage into a simpler explanation or a short quiz.', icon: BookOpen },
+  { title: 'Mistake diagnosis', detail: 'See why a wrong option looked tempting and what to review next.', icon: RotateCcw },
 ];
 
 function SampleQuestion() {
@@ -166,6 +175,7 @@ function SessionPlanner() {
 }
 
 export function HomePage() {
+  const { canUseAi } = useAuth();
   const heroFrame = useRef<HTMLDivElement>(null);
   const [motionPaused, setMotionPaused] = useState(false);
 
@@ -198,8 +208,15 @@ export function HomePage() {
             <a href="#study-path">Study path</a>
             <a href="#practice">Try practice</a>
             <a href="#resources">Resources</a>
+            <a href="#ai-tools">AI tools</a>
           </div>
-          <Link className="prep-nav-cta" to="/dashboard">Open workspace <ArrowUpRight size={16} aria-hidden="true" /></Link>
+          <div className="prep-nav-actions">
+            {!canUseAi && <Link className="prep-nav-sign-in" to="/login">Sign in</Link>}
+            <Link className="prep-nav-cta" to="/dashboard" aria-label="Open workspace">
+              <span className="prep-nav-workspace-full">Open workspace</span><span className="prep-nav-workspace-short">Workspace</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
         </nav>
       </header>
 
@@ -226,7 +243,10 @@ export function HomePage() {
                 <Link className="prep-button prep-button-gold" to="/dashboard">Start studying <ArrowRight size={18} aria-hidden="true" /></Link>
                 <a className="prep-hero-link" href="#sample-question">Try a sample question <ArrowDown size={16} aria-hidden="true" /></a>
               </div>
-              <p className="prep-no-account"><Check size={16} aria-hidden="true" /> No account needed</p>
+              <div className="prep-hero-access">
+                <p className="prep-no-account"><Check size={16} aria-hidden="true" /> No account needed to study</p>
+                <a className="prep-hero-ai" href="#ai-tools">Explore AI tools <ArrowUpRight size={14} aria-hidden="true" /></a>
+              </div>
             </div>
             <a className="prep-scroll-link" href="#study-path"><ArrowDown size={17} aria-hidden="true" /> Explore the study path</a>
             <button className="prep-hero-motion" type="button" onClick={toggleSceneMotion}>
@@ -319,12 +339,35 @@ export function HomePage() {
           </div>
         </section>
 
+        <section className="prep-ai" id="ai-tools" aria-labelledby="prep-ai-heading">
+          <div className="prep-container prep-section">
+            <div className="prep-section-copy">
+              <p className="prep-eyebrow"><Sparkles size={16} aria-hidden="true" /> AI study tools</p>
+              <h2 id="prep-ai-heading">Get help when you get stuck.</h2>
+              <p>Ask for a clearer explanation, get feedback on a draft or figure out what to study next. Google sign-in gives you access to the AI tools.</p>
+              {canUseAi ? (
+                <Link className="prep-button prep-button-dark" to="/ai-tutor">Open the AI tutor <ArrowUpRight size={16} aria-hidden="true" /></Link>
+              ) : (
+                <Link className="prep-button prep-button-dark" to="/login?for=ai">Sign in to use AI <ArrowRight size={16} aria-hidden="true" /></Link>
+              )}
+            </div>
+            <ul className="prep-ai-tools">
+              {aiTools.map(({ title, detail, icon: Icon }) => (
+                <li key={title}>
+                  <span className="prep-task-icon"><Icon size={19} aria-hidden="true" /></span>
+                  <div><h3>{title}</h3><p>{detail}</p></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         <section className="prep-container prep-section prep-faq" aria-labelledby="prep-faq-heading">
           <h2 id="prep-faq-heading">Before you start</h2>
           <div>
             <details className="prep-disclosure">
               <summary>Do I need an account? <ChevronDown size={17} aria-hidden="true" /></summary>
-              <p>Open the workspace, library, practice and revision tools directly. Your study progress is saved in this browser.</p>
+              <p>Open the workspace, library, practice and revision tools directly. Your progress is saved in this browser. Google sign-in is optional and gives you access to the AI tools.</p>
             </details>
             <details className="prep-disclosure">
               <summary>Where should I start if I’m new to CAPF? <ChevronDown size={17} aria-hidden="true" /></summary>

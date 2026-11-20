@@ -23,6 +23,7 @@ import { LEARNING_CHAPTERS } from './data/learningLibrary';
 import { buildRecallCards, parseRecallProgress, RECALL_STORAGE_KEY, scheduleRecall, getDueRecallCards } from './utils/dailyReview';
 import type { RecallRating } from './utils/dailyReview';
 import { HomePage } from './components/HomePage';
+import { LoginPage } from './components/LoginPage';
 import { useAuth } from './context/AuthContext';
 import { INITIAL_QUESTION_BANK } from './data/questionBank';
 import { Question, MistakeRecord, MistakeReason, Paper2Submission, ChapterProgress } from './types';
@@ -345,7 +346,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/login" element={<LoginPage />} />
 
       <Route element={<StudyLayout />}>
         <Route

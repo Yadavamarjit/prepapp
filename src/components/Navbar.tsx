@@ -41,6 +41,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-xs font-semibold">UPSC CAPF</span>
           <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
+          {!hasAccount && <Link to="/login" className="inline-flex min-h-11 shrink-0 items-center px-1 text-xs font-semibold hover:underline sm:px-2">Sign in</Link>}
           {hasAccount && <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>}
         </div>
       </div>
