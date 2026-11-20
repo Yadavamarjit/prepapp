@@ -1,3 +1,4 @@
+import { Spinner } from './LoadingIndicator';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { House, BookOpen, PencilLine, RotateCcw, ChartNoAxesCombined, LogOut, Moon, Sun } from 'lucide-react';
@@ -14,7 +15,7 @@ const items = [
   { path: '/analytics', label: 'Progress', icon: ChartNoAxesCombined, matches: ['/analytics'] },
 ];
 export function Navbar() {
-  const { user, error, signOutUser } = useAuth();
+  const { user, error, isSigningOut, signOutUser } = useAuth();
   const { dark, setDark } = useStudyPreferences();
   const { pathname } = useLocation();
   const active = (matches: string[]) => matches.some(path => pathname === path || pathname.startsWith(path + '/'));
@@ -31,7 +32,7 @@ export function Navbar() {
       <nav aria-label="Main navigation" className="space-y-1">{links()}</nav>
       <div className="mt-auto space-y-5 px-2">
         <div className="border-t border-[#E4E4DB] pt-5 dark:border-slate-800"><p className="text-sm font-medium">A little, every day.</p><p className="mt-1 text-xs leading-5 text-[#777C71] dark:text-slate-400">Learn one concept. Recall it tomorrow.</p></div>
-        {hasAccount && <div className="flex items-center justify-between gap-2"><p className="min-w-0 truncate text-sm font-medium">{user.displayName || user.email?.split('@')[0]}</p><button type="button" onClick={() => void signOutUser()} className="rounded-lg p-2 hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" aria-label="Sign out"><LogOut size={16} /></button></div>}
+        {hasAccount && <div className="flex items-center justify-between gap-2"><p className="min-w-0 truncate text-sm font-medium">{user.displayName || user.email?.split('@')[0]}</p><button type="button" onClick={() => void signOutUser()} className="rounded-lg p-2 hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" disabled={isSigningOut} aria-busy={isSigningOut} aria-label={isSigningOut ? 'Signing out' : 'Sign out'}>{isSigningOut ? <Spinner /> : <LogOut size={16} />}</button></div>}
         {!hasAccount && <p className="text-xs text-[#626B59] dark:text-slate-400">Progress is saved in this browser.</p>}
       </div>
     </aside>
@@ -41,7 +42,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-xs font-semibold">UPSC CAPF</span>
           <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
-          {hasAccount && <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>}
+          {hasAccount && <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} disabled={isSigningOut} aria-busy={isSigningOut} aria-label={isSigningOut ? 'Signing out' : 'Sign out'}>{isSigningOut ? <Spinner /> : <LogOut size={17} />}</button>}
         </div>
       </div>
       {error && <p role="alert" className="mx-auto max-w-6xl px-5 pb-3 text-sm text-rose-800 dark:text-rose-300">{error}</p>}

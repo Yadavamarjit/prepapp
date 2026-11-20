@@ -1,3 +1,4 @@
+import { LoadingIndicator } from './LoadingIndicator';
 import { Link } from 'react-router-dom';
 import { useSyllabus } from '../context/SyllabusContext';
 import { PAPER_2_SUBJECT } from '../data/syllabusCatalog';
@@ -6,7 +7,7 @@ import type { ChapterProgress } from '../types';
 export function SyllabusStatus() {
   const { status, reload } = useSyllabus();
   if (status === 'ready') return null;
-  if (status === 'loading') return <p role="status" className="text-sm">Loading CAPF syllabus…</p>;
+  if (status === 'loading') return <LoadingIndicator className="text-sm" label="Loading CAPF syllabus…" />;
   return <p role="alert" className="text-sm">The CAPF syllabus could not be loaded. <button type="button" className="underline" onClick={reload}>Retry</button></p>;
 }
 

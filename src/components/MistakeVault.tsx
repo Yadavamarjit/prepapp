@@ -1,3 +1,4 @@
+import { Spinner } from './LoadingIndicator';
 import { apiFetch } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import React, { useState } from 'react';
@@ -333,10 +334,10 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
                   <div className="flex items-center gap-2">
                     {canUseAi && <button
                       onClick={() => handleDiagnoseMistake(record, question)}
-                      disabled={diagnosingId === record.id}
+                      disabled={diagnosingId !== null} aria-busy={diagnosingId === record.id}
                       className="px-3 py-1.5 rounded-lg border border-[#36624B]/30 hover:bg-[#E3EFE8]/50 text-[#36624B] dark:text-[#88D4A8] text-xs font-semibold flex items-center gap-1.5 transition-all"
                     >
-                      <Brain className="w-3.5 h-3.5" />
+                      {diagnosingId === record.id ? <Spinner className="size-3.5" /> : <Brain className="w-3.5 h-3.5" />}
                       <span>{diagnosingId === record.id ? 'Diagnosing...' : 'AI Mistake Diagnosis'}</span>
                     </button>}
 

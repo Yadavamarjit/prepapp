@@ -1,3 +1,4 @@
+import { LoadingIndicator } from './LoadingIndicator';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Clock, Crosshair } from 'lucide-react';
@@ -11,7 +12,7 @@ const primary = 'min-h-12 rounded-xl bg-[#315840] px-5 py-3 font-semibold text-w
 export function CapfAnalytica() {
   const { user, loading } = useAuth();
   const storageKey = attemptKey(user?.uid ?? '');
-  if (loading) return <p role="status">Opening your practice workspace…</p>;
+  if (loading) return <LoadingIndicator label="Opening your practice workspace…" />;
   return <Workspace key={storageKey} storageKey={storageKey} />;
 }
 

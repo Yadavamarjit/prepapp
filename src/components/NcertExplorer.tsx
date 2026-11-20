@@ -42,6 +42,8 @@ import {
   Filter,
 } from 'lucide-react';
 import { NCERT_STUDY_LIBRARY, NCERTBook, NCERTChapter } from '../data/ncertCurriculum';
+import { LoadingIndicator, Spinner } from './LoadingIndicator';
+import { TextbookPageImage, TextbookPdfFrame } from './TextbookMedia';
 import { MarkdownRenderer } from './MarkdownRenderer';
 
 interface NcertExplorerProps {
@@ -108,6 +110,9 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   // Persistent Chapter Study Notes Feed (Right Panel Accordion)
   const [savedNotes, setSavedNotes] = useState<ChapterStudyNote[]>([]);
   const [notesLoading, setNotesLoading] = useState<boolean>(false);
+  const [notesLoadError, setNotesLoadError] = useState(false);
+  const [deletingNote, setDeletingNote] = useState<{ id?: string } | null>(null);
+  const [deleteError, setDeleteError] = useState('');
   const [expandedNoteIds, setExpandedNoteIds] = useState<Set<string>>(new Set());
   const [notesFilter, setNotesFilter] = useState<'ALL' | 'EXPLAIN' | 'QUESTIONS'>('ALL');
   const [newlyCreatedId, setNewlyCreatedId] = useState<string | null>(null);
@@ -225,8 +230,6 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
       setActiveBook(match.book);
       setActiveChapter(match.chapter);
       setViewMode('READER');
-      setRenderedPages([]);
-      fetchChapterNotes(match.book.code, match.chapter.chapterNumber);
     } else if (!grade && !subject && !bookCode) {
       if (location.pathname === '/ncert' || location.pathname === '/learning') {
         setViewMode('CATALOG');
@@ -234,31 +237,32 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
     }
   }, [grade, subject, chapterNumber, bookCode, location.pathname]);
 
-  // Fetch persistent notes for the active chapter from DB
-  const fetchChapterNotes = (bookCode: string, chNum: number) => {
+  useEffect(() => {
+    if (viewMode !== 'READER') return;
+    const controller = new AbortController();
     setNotesLoading(true);
-    apiFetch(`/api/ncert/notes/${bookCode}/${chNum}`)
+    setNotesLoadError(false);
+    setSavedNotes([]);
+    setExpandedNoteIds(new Set());
+    apiFetch(`/api/ncert/notes/${activeBook.code}/${activeChapter.chapterNumber}`, { signal: controller.signal })
       .then((r) => r.json())
       .then((d) => {
-        if (d.success && Array.isArray(d.notes)) {
-          setSavedNotes(d.notes);
-          // By default, past notes are collapsed
-          setExpandedNoteIds(new Set());
-        }
+        if (controller.signal.aborted) return;
+        if (!d.success || !Array.isArray(d.notes)) throw new Error('Could not load chapter notes');
+        setSavedNotes(d.notes);
       })
-      .catch((e) => console.warn('Failed to fetch chapter notes:', e))
-      .finally(() => setNotesLoading(false));
-  };
+      .catch(() => { if (!controller.signal.aborted) setNotesLoadError(true); })
+      .finally(() => { if (!controller.signal.aborted) setNotesLoading(false); });
+    return () => controller.abort();
+  }, [activeBook.code, activeChapter.chapterNumber, viewMode]);
 
   // Launch Reader for a chapter with clean route URL
   const handleOpenChapterInReader = (book: NCERTBook, chapter: NCERTChapter) => {
     setActiveBook(book);
     setActiveChapter(chapter);
-    setRenderedPages([]);
     setSelectedSnippet('');
     setFloatingToolbar({ x: 0, y: 0, visible: false });
     setViewMode('READER');
-    fetchChapterNotes(book.code, chapter.chapterNumber);
 
     // Update URL to /ncert/:grade/:subject/:chapterNumber
     navigate(`/ncert/${book.grade}/${book.subject.toLowerCase()}/${chapter.chapterNumber}`);
@@ -267,10 +271,8 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   // Select another chapter from the left drawer outline
   const handleSelectChapterFromOutline = (ch: NCERTChapter) => {
     setActiveChapter(ch);
-    setRenderedPages([]);
     setSelectedSnippet('');
     setFloatingToolbar({ x: 0, y: 0, visible: false });
-    fetchChapterNotes(activeBook.code, ch.chapterNumber);
 
     // Update URL
     navigate(`/ncert/${activeBook.grade}/${activeBook.subject.toLowerCase()}/${ch.chapterNumber}`);
@@ -282,33 +284,29 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
     navigate('/ncert');
   };
 
-  // Fetch notes on chapter change when in reader
-  useEffect(() => {
-    if (viewMode === 'READER') {
-      fetchChapterNotes(activeBook.code, activeChapter.chapterNumber);
-    }
-  }, [activeBook.code, activeChapter.chapterNumber, viewMode]);
-
   // Fetch full rendered book pages with bounding-box selectable text layers
   useEffect(() => {
     if (viewMode === 'READER' && readingTab === 'OFFICIAL_PDF' && pdfDisplayMode === 'VISUAL_BOOK') {
+      const controller = new AbortController();
       setPdfPagesLoading(true);
-      apiFetch(`/api/ncert/pdf-rendered-pages/${activeBook.code}/${activeChapter.chapterNumber}`)
+      setRenderedPages([]);
+      apiFetch(`/api/ncert/pdf-rendered-pages/${activeBook.code}/${activeChapter.chapterNumber}`, { signal: controller.signal })
         .then((r) => r.json())
         .then((d) => {
-          if (d.success && Array.isArray(d.pages)) {
+          if (!controller.signal.aborted && d.success && Array.isArray(d.pages)) {
             setRenderedPages(d.pages);
           }
         })
-        .catch((e) => console.warn('Failed to load rendered PDF book pages:', e))
-        .finally(() => setPdfPagesLoading(false));
+        .catch((e) => { if (!controller.signal.aborted) console.warn('Failed to load rendered PDF book pages:', e); })
+        .finally(() => { if (!controller.signal.aborted) setPdfPagesLoading(false); });
+      return () => controller.abort();
     }
   }, [viewMode, readingTab, pdfDisplayMode, activeBook.code, activeChapter.chapterNumber]);
 
   // Request AI Explanation or Question Generation & Save to DB
   const handleTriggerAiAction = async (action: 'EXPLAIN' | 'GENERATE_QUESTIONS', textToUse?: string) => {
     const targetText = (textToUse || selectedSnippet).trim();
-    if (!targetText || !canUseAi) return;
+    if (!targetText || !canUseAi || aiLoading || deletingNote || notesLoading) return;
 
     setIsRightPanelOpen(true);
     setFloatingToolbar((prev) => ({ ...prev, visible: false }));
@@ -388,34 +386,45 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   // Delete a saved note from DB
   const handleDeleteNote = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    if (deletingNote || notesLoading || aiLoading) return;
+    setDeletingNote({ id });
+    setDeleteError('');
     try {
       const res = await apiFetch(`/api/ncert/notes/${id}`, { method: 'DELETE' });
       const data = await res.json();
-      if (data.success) {
-        setSavedNotes((prev) => prev.filter((n) => n.id !== id));
-        setExpandedNoteIds((prev) => {
-          const next = new Set(prev);
-          next.delete(id);
-          return next;
-        });
-      }
+      if (!res.ok || !data.success) throw new Error('Could not delete note');
+      setSavedNotes((prev) => prev.filter((n) => n.id !== id));
+      setExpandedNoteIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
     } catch (err) {
       console.error('Failed to delete note:', err);
+      setDeleteError('Could not delete this note. Try again.');
+    } finally {
+      setDeletingNote(null);
     }
   };
 
   // Clear all notes for chapter
   const handleClearAllNotes = async () => {
+    if (deletingNote || notesLoading || aiLoading) return;
     if (!window.confirm('Are you sure you want to clear all saved notes and questions for this chapter?')) return;
+    setDeletingNote({});
+    setDeleteError('');
+    const clearedIds = new Set(savedNotes.map(note => note.id));
     try {
       const res = await apiFetch(`/api/ncert/notes/${activeBook.code}/${activeChapter.chapterNumber}/all`, { method: 'DELETE' });
       const data = await res.json();
-      if (data.success) {
-        setSavedNotes([]);
-        setExpandedNoteIds(new Set());
-      }
+      if (!res.ok || !data.success) throw new Error('Could not clear notes');
+      setSavedNotes(previous => previous.filter(note => !clearedIds.has(note.id)));
+      setExpandedNoteIds(previous => new Set([...previous].filter(id => !clearedIds.has(id))));
     } catch (err) {
       console.error('Failed to clear notes:', err);
+      setDeleteError('Could not clear saved notes. Try again.');
+    } finally {
+      setDeletingNote(null);
     }
   };
 
@@ -902,12 +911,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
               {pdfDisplayMode === 'VISUAL_BOOK' && (
                 <div className="w-full flex flex-col items-center space-y-8">
                   {pdfPagesLoading ? (
-                    <div className="p-24 text-center space-y-3 bg-[#131A16] rounded-2xl border border-slate-800 w-full max-w-lg my-12">
-                      <div className="w-9 h-9 mx-auto border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-                      <p className="text-xs font-semibold text-slate-300">
-                        Rendering high-resolution NCERT pages with interactive text selection...
-                      </p>
-                    </div>
+                    <LoadingIndicator className="p-12 text-center bg-[#131A16] rounded-2xl border border-slate-800 w-full max-w-lg my-12 text-xs font-semibold text-slate-300" label="Rendering high-resolution NCERT pages…" />
                   ) : renderedPages.length > 0 ? (
                     renderedPages.map((page) => (
                       <div
@@ -920,7 +924,8 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
                         }}
                       >
                         {/* 1. Underlying Real High-Res Rendered Book Page Image */}
-                        <img
+                        <TextbookPageImage
+                          key={page.imagePath}
                           src={page.imagePath}
                           alt={`NCERT Page ${page.pageNumber}`}
                           className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
@@ -954,8 +959,8 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
                       </div>
                     ))
                   ) : (
-                    <div className="p-12 text-center bg-[#131A16] rounded-2xl border border-slate-800 text-xs text-slate-400">
-                      Preparing pages... If rendering takes time, switch to "Raw PDF" above.
+                    <div role="alert" className="p-12 text-center bg-[#131A16] rounded-2xl border border-slate-800 text-xs text-slate-400">
+                      Rendered pages are unavailable. Switch to "Raw PDF" above.
                     </div>
                   )}
                 </div>
@@ -964,7 +969,8 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
               {/* Mode B: Raw PDF iframe */}
               {pdfDisplayMode === 'RAW_PDF' && (
                 <div className="w-full h-[calc(100vh-140px)] rounded-xl overflow-hidden border border-slate-800 bg-[#525659] shadow-inner relative">
-                  <iframe
+                  <TextbookPdfFrame
+                    key={`${activeBook.code}:${activeChapter.chapterNumber}`}
                     src={`/api/ncert/pdf/${activeBook.code}/${activeChapter.chapterNumber}#toolbar=1&navpanes=0`}
                     className="w-full h-full border-0"
                     title={`NCERT ${activeBook.bookTitle} Chapter ${activeChapter.chapterNumber}`}
@@ -1199,10 +1205,13 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
             {savedNotes.length > 0 && (
               <button
                 onClick={handleClearAllNotes}
+                disabled={!!deletingNote || notesLoading || aiLoading}
+                aria-label={deletingNote && !deletingNote.id ? 'Clearing saved notes' : 'Clear all saved notes for this chapter'}
+                aria-busy={!!deletingNote && !deletingNote.id}
                 title="Clear all saved notes for this chapter"
                 className="p-1 rounded text-slate-500 hover:text-rose-400 cursor-pointer transition-colors"
               >
-                <Trash2 className="w-3.5 h-3.5" />
+                {deletingNote && !deletingNote.id ? <Spinner className="size-3.5" /> : <Trash2 className="w-3.5 h-3.5" />}
               </button>
             )}
           </div>
@@ -1255,15 +1264,15 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
               {/* Action Buttons */}
               {canUseAi && <div className="grid grid-cols-2 gap-2 pt-0.5">
                 <button
-                  disabled={!selectedSnippet.trim() || aiLoading}
+                  disabled={!selectedSnippet.trim() || aiLoading || !!deletingNote || notesLoading}
                   onClick={() => handleTriggerAiAction('EXPLAIN')}
                   className="px-2.5 py-1.5 rounded-lg bg-[#36624B] hover:bg-[#2A4F3C] disabled:opacity-40 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs"
                 >
                   <Sparkles className="w-3 h-3 text-yellow-300" />
-                  <span>{aiLoading ? 'Analyzing...' : 'Easy Explain'}</span>
+                  <span>Easy Explain</span>
                 </button>
                 <button
-                  disabled={!selectedSnippet.trim() || aiLoading}
+                  disabled={!selectedSnippet.trim() || aiLoading || !!deletingNote || notesLoading}
                   onClick={() => handleTriggerAiAction('GENERATE_QUESTIONS')}
                   className="px-2.5 py-1.5 rounded-lg bg-[#1e3a8a] hover:bg-[#1d4ed8] disabled:opacity-40 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs"
                 >
@@ -1273,21 +1282,16 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
               </div>}
             </div>
 
-            {/* Loading shimmer when generating */}
             {aiLoading && (
-              <div className="p-4 text-center space-y-2 bg-[#16201B] rounded-xl border border-emerald-500/40 animate-pulse">
-                <div className="w-6 h-6 mx-auto border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-                <p className="text-xs font-semibold text-emerald-300">
-                  Formulating targeted exam breakdown & saving to notebook...
-                </p>
-              </div>
+              <LoadingIndicator className="p-4 text-center bg-[#16201B] rounded-xl border border-emerald-500/40 text-xs font-semibold text-emerald-300" label="Preparing study material and saving to your notebook…" />
             )}
+            {deleteError && <p role="alert" className="text-xs text-rose-300">{deleteError}</p>}
 
             {/* Accordion Feed of Saved Chapter Notes */}
             {notesLoading ? (
-              <div className="p-8 text-center text-xs text-slate-500">
-                Loading saved notes...
-              </div>
+              <LoadingIndicator className="p-8 text-center text-xs text-slate-300" label="Loading saved notes…" />
+            ) : notesLoadError ? (
+              <p role="alert" className="p-8 text-center text-xs text-rose-300">Could not load saved notes. Reopen the chapter to try again.</p>
             ) : filteredNotes.length === 0 ? (
               <div className="p-6 text-center bg-[#141C18] rounded-xl border border-dashed border-slate-800 space-y-2 text-xs text-slate-400">
                 <Lightbulb className="w-6 h-6 mx-auto text-amber-400/80" />
@@ -1346,10 +1350,13 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
 
                           <button
                             onClick={(e) => handleDeleteNote(note.id, e)}
+                            disabled={!!deletingNote || aiLoading}
+                            aria-label={deletingNote?.id === note.id ? 'Deleting saved card' : 'Delete this saved card'}
+                            aria-busy={deletingNote?.id === note.id}
                             className="p-1 rounded text-slate-500 hover:text-rose-400 transition-colors cursor-pointer"
                             title="Delete this saved card"
                           >
-                            <Trash2 className="w-3 h-3" />
+                            {deletingNote?.id === note.id ? <Spinner className="size-3" /> : <Trash2 className="w-3 h-3" />}
                           </button>
 
                           <div className="text-slate-400">

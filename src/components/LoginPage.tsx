@@ -1,3 +1,4 @@
+import { Spinner } from './LoadingIndicator';
 import { useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Layers3 } from 'lucide-react';
 import { Link, Navigate, useLocation, useSearchParams } from 'react-router-dom';
@@ -58,8 +59,9 @@ export function LoginPage() {
         <h1 id="sign-in-heading" className="font-serif text-5xl leading-none tracking-tight sm:text-6xl">Sign in to CadetSlate</h1>
         <p className="mt-4 max-w-sm text-sm leading-7">Use your Google account to open the study workspace, practise both CAPF papers and access the AI tools.</p>
         <div className="mt-7 grid gap-3">
-          <button type="button" className="flex min-h-12 items-center justify-between gap-3 rounded-lg bg-[#17281f] px-4 text-sm font-semibold text-white hover:bg-[#2d4635] disabled:opacity-60 dark:bg-[#f2bf78] dark:text-[#17281f]" onClick={continueWithGoogle} disabled={loading || pending}>
-            {pending ? 'Opening Google sign-in…' : 'Continue with Google'} <ArrowRight size={17} aria-hidden="true" />
+          <button type="button" className="flex min-h-12 items-center justify-between gap-3 rounded-lg bg-[#17281f] px-4 text-sm font-semibold text-white hover:bg-[#2d4635] disabled:opacity-60 dark:bg-[#f2bf78] dark:text-[#17281f]" onClick={continueWithGoogle} disabled={loading || pending} aria-busy={loading || pending}>
+            {pending ? 'Opening Google sign-in…' : loading ? 'Checking your session…' : 'Continue with Google'}
+            {loading || pending ? <Spinner /> : <ArrowRight size={17} aria-hidden="true" />}
           </button>
         </div>
         {(error || sessionError) && <p role="alert" className="mt-4 text-sm leading-6 text-[#9b382b] dark:text-[#ffd2c9]">{error || sessionError}</p>}

@@ -1,3 +1,4 @@
+import { Spinner } from './LoadingIndicator';
 import { SyllabusOutline } from './SyllabusOutline';
 import { apiFetch } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
@@ -375,10 +376,10 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
 
               {canUseAi ? <button
                 onClick={handleRunEvaluation}
-                disabled={isEvaluating}
+                disabled={isEvaluating} aria-busy={isEvaluating}
                 className="px-5 py-2.5 rounded-lg bg-[#36624B] hover:bg-[#2A4F3C] text-white text-xs font-semibold shadow-sm flex items-center gap-2 disabled:opacity-50 transition-all"
               >
-                <Sparkles className="w-4 h-4 text-[#E3EFE8]" />
+                {isEvaluating ? <Spinner className="size-4 text-[#E3EFE8]" /> : <Sparkles className="w-4 h-4 text-[#E3EFE8]" />}
                 <span>{isEvaluating ? 'Evaluating with UPSC Rubrics...' : 'Submit for AI Rubric Evaluation'}</span>
               </button> : <button type="button" className="primary-button" disabled={!content.trim() || content === draftFor(activePrompt) || content === getScaffoldTemplate(activePrompt.type, activePrompt.title)} onClick={() => saveDraft()}>
                 Save writing draft

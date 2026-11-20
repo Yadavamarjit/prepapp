@@ -16,11 +16,13 @@ interface AuthState {
 const signedOut = { user: null, loading: false, error: '' };
 const AuthContext = createContext<AuthState & {
   canUseAi: boolean;
+  isSigningOut: boolean;
   signOutUser: () => Promise<void>;
-}>({ ...signedOut, canUseAi: false, signOutUser: async () => {} });
+}>({ ...signedOut, canUseAi: false, isSigningOut: false, signOutUser: async () => {} });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>({ ...signedOut, loading: true });
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const sessionWrites = useRef(Promise.resolve());
   const revision = useRef(0);
   const signingOut = useRef(false);
@@ -34,10 +36,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const unsubscribe = onIdTokenChanged(auth, (account) => {
         const version = ++revision.current;
         if (!account) {
+          if (signingOut.current) return;
           setState(signedOut);
           return;
         }
 
+        setState(previous => previous.user ? previous : { ...previous, loading: true, error: '' });
         const isCurrent = () => !disposed && !signingOut.current && version === revision.current;
         sessionWrites.current = sessionWrites.current.then(async () => {
           if (!isCurrent()) return;
@@ -78,6 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function signOutUser() {
     if (signingOut.current) return;
     signingOut.current = true;
+    setIsSigningOut(true);
     revision.current++;
     try {
       await sessionWrites.current;
@@ -90,11 +95,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setState(previous => ({ ...previous, error: 'Could not sign out. Please try again.' }));
     } finally {
       signingOut.current = false;
+      setIsSigningOut(false);
     }
   }
 
   return (
-    <AuthContext.Provider value={{ ...state, canUseAi: !!state.user, signOutUser }}>
+    <AuthContext.Provider value={{ ...state, canUseAi: !!state.user, isSigningOut, signOutUser }}>
       {children}
     </AuthContext.Provider>
   );

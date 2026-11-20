@@ -1,3 +1,4 @@
+import { LoadingIndicator } from './components/LoadingIndicator';
 import { SyllabusProvider, useSyllabus } from './context/SyllabusContext';
 import { StudyPreferencesProvider } from './context/StudyPreferences';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
@@ -76,7 +77,7 @@ function PublicTopicPractice({ loading }: { loading: boolean }) {
   return (
     <div className="study-panel space-y-4 p-6">
       <h1 className="page-title">{chapter?.title || 'Topic practice'}</h1>
-      {loading || (chapterId && status === 'loading') ? <p role="status" className="page-description">Opening study tools…</p> : <>
+      {loading || (chapterId && status === 'loading') ? <LoadingIndicator className="page-description" label="Opening study tools…" /> : <>
         {chapter ? <>
           <p className="page-description">Recall the main ideas from this chapter before checking your notes.</p>
           <ul className="list-disc space-y-2 pl-5 text-sm">{chapter.topics.map((topic) => <li key={topic}>{topic}</li>)}</ul>
@@ -348,6 +349,7 @@ function App() {
 
   return (
     <Routes>
+
       <Route element={<StudyLayout />}>
         <Route
           path="dashboard"

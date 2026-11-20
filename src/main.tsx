@@ -1,3 +1,4 @@
+import { LoadingIndicator } from './components/LoadingIndicator';
 import { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Navigate, useLocation } from 'react-router-dom';
@@ -5,12 +6,11 @@ import { isLoginPath, loginPath } from '../shared/authRoutes';
 import { HomePage } from './components/HomePage';
 import { LoginPage } from './components/LoginPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import './index.css';
 
 const StudyApp = lazy(() => import('./App'));
 
 function LoadingWorkspace() {
-  return <main className="grid min-h-dvh place-items-center p-5" role="status">Opening CadetSlate…</main>;
+  return <main className="grid min-h-dvh place-items-center p-5"><LoadingIndicator label="Opening CadetSlate…" /></main>;
 }
 
 function Entry() {

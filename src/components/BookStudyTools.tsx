@@ -1,3 +1,4 @@
+import { LoadingIndicator } from './LoadingIndicator';
 import { apiFetch } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
@@ -87,12 +88,12 @@ export function BookStudyTools(props: Props) {
         <button type="button" disabled={busy || !!draft || passage.trim().length < 5} onClick={() => void run('EXPLAIN')} className="secondary-button disabled:opacity-50">Explain simply</button>
         <button type="button" disabled={busy || !!draft || passage.trim().length < 5} onClick={() => void run('GENERATE_QUESTIONS')} className="secondary-button disabled:opacity-50">Generate questions</button>
       </>}
-      {busy && <p role="status" className="self-center text-xs text-[#818879]">Saving study material…</p>}
+      {busy && <LoadingIndicator className="self-center text-xs text-[#818879]" label="Preparing and saving study material…" />}
     </div>
     {error && <p role="alert" className="rounded-lg bg-[#FBEAE8] p-3 text-sm text-[#9B3E33]">{error}</p>}
     {draft && <div className="space-y-3 rounded-lg border border-[#DDE1D2] p-4 dark:border-slate-700"><p className="text-xs font-medium">Unsaved study material</p><MarkdownRenderer content={draft.content} />{!busy && <div className="flex flex-wrap gap-3"><button type="button" className="primary-button" onClick={() => void run()}>Retry saving</button><button type="button" className="secondary-button" onClick={() => { setDraft(null); setError(''); }}>Discard result</button></div>}</div>}
     <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E6E7DE] pt-5 dark:border-slate-800"><h2 className="section-title">Saved for this chapter <span className="ml-1 text-xs font-normal text-[#818879]">({notes.length})</span></h2><select aria-label="Filter saved study material" value={filter} onChange={event => setFilter(event.target.value)} className="rounded-lg border border-[#DDE1D2] bg-transparent p-2 text-xs dark:border-slate-700"><option value="ALL">Everything</option><option value="EXPLAIN">Explanations</option><option value="QUESTIONS">Questions</option></select></div>
-    {loading && <p role="status" className="text-xs text-[#818879]">Loading saved study material...</p>}
+    {loading && <LoadingIndicator className="text-xs text-[#818879]" label="Loading saved study material…" />}
     {loadError && <div role="alert" className="text-sm"><p>{loadError}</p><button type="button" className="quiet-link mt-2 text-xs" onClick={() => setReload(value => value + 1)}>Reload saved notes</button></div>}
     {!loading && !loadError && !filtered.length && <p className="text-xs text-[#818879]">{notes.length ? 'No saved items in this category.' : 'Your saved study material will appear here.'}</p>}
     <div className="space-y-3">{filtered.map(note => <details key={note.id} open={expanded === note.id} onToggle={event => { if (event.currentTarget.open) setExpanded(note.id); else setExpanded(current => current === note.id ? '' : current); }} className="rounded-lg border border-[#E1E3D8] p-4 dark:border-slate-700"><summary className="cursor-pointer text-sm font-medium">{note.title}<span className="ml-2 text-xs font-normal text-[#818879]">{note.type === 'QUESTIONS' ? 'Questions' : note.title === 'Reading note' ? 'Note' : 'Explanation'}{note.pageNumber ? ` / page ${note.pageNumber}` : ''}</span></summary><div className="mt-4 space-y-3">{note.selectedText && <blockquote className="border-l-2 border-[#BCCBAC] pl-3 text-xs leading-6 text-[#818879]">{note.selectedText}</blockquote>}<MarkdownRenderer content={note.content} />{note.pageNumber && <button type="button" className="quiet-link text-xs" onClick={() => props.onJumpPage(note.pageNumber!)}>Back to page {note.pageNumber}</button>}<p className="text-[11px] text-[#818879]">Saved {new Date(note.createdAt).toLocaleDateString()}</p></div></details>)}</div>

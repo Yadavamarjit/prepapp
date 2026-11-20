@@ -1,3 +1,4 @@
+import { Spinner } from './LoadingIndicator';
 import { apiFetch } from '../lib/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { useStudyPreferences } from '../context/StudyPreferences';
@@ -262,7 +263,7 @@ export const AiTopicBreakdown: React.FC<AiTopicBreakdownProps> = ({
           <label className="block text-xs font-medium sm:col-span-2">Anything you find difficult? <span className="font-normal text-[#818879]">Optional</span><input value={customGap} onChange={event => setCustomGap(event.target.value)} placeholder="For example: I confuse the approval timelines" className="study-input mt-2 !py-2" /></label>
         </div>
       </details>
-      <div className="flex flex-wrap gap-3"><button type="button" disabled={!selectedTopic || isLoadingBreakdown} onClick={handleFetchBreakdown} className="secondary-button">{isLoadingBreakdown ? 'Preparing explanation?' : 'Explain this topic'}</button><button type="button" disabled={!selectedTopic || isGeneratingQuestions} onClick={handleGenerateQuestions} className="primary-button">{isGeneratingQuestions ? 'Preparing questions?' : 'Practise this topic'}</button></div>
+      <div className="flex flex-wrap gap-3"><button type="button" disabled={!selectedTopic || isLoadingBreakdown} aria-busy={isLoadingBreakdown} onClick={handleFetchBreakdown} className="secondary-button">{isLoadingBreakdown && <Spinner />}{isLoadingBreakdown ? 'Preparing explanation…' : 'Explain this topic'}</button><button type="button" disabled={!selectedTopic || isGeneratingQuestions} aria-busy={isGeneratingQuestions} onClick={handleGenerateQuestions} className="primary-button">{isGeneratingQuestions && <Spinner />}{isGeneratingQuestions ? 'Preparing questions…' : 'Practise this topic'}</button></div>
       {(breakdownError || generationError) && <p role="alert" className="rounded-lg bg-[#FBEAE8] p-3 text-sm text-[#9B3E33]">{breakdownError || generationError}</p>}
     </section>
     {breakdownData && <section className="study-panel space-y-6 p-5 sm:p-7"><h2 className="section-title">Understand the essentials</h2><ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-[#626B59] dark:text-slate-300">{breakdownData.eli5Summary.map((point, index) => <li key={index}>{point}</li>)}</ul>{[
