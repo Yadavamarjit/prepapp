@@ -1,4 +1,5 @@
 import { apiFetch } from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, BookOpen, Check, ExternalLink, Search } from 'lucide-react';
@@ -61,6 +62,7 @@ function BookReader({ book, chapter, progress, onPosition, onComplete }: {
   onPosition: (code: string, chapter: number, page: number) => void;
   onComplete: (code: string, chapter: number, page: number) => void;
 }) {
+  const { canUseAi } = useAuth();
   const [page, setPage] = useState(progress?.chapter === chapter.number ? progress.page : 1);
   const [pages, setPages] = useState<BookPage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -107,8 +109,10 @@ function BookReader({ book, chapter, progress, onPosition, onComplete }: {
   const complete = progress?.completed.includes(chapter.number);
   return <div className="space-y-5">
     {selection.text && selection.page === page && <div role="toolbar" aria-label="Selected passage actions" className="fixed bottom-24 left-1/2 z-40 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 flex-wrap justify-center gap-2 rounded-xl border border-[#DDE1D2] bg-white p-2 shadow-lg lg:bottom-6 dark:border-slate-700 dark:bg-[#1A2420]">
+      {canUseAi ? <>
       <button type="button" className="secondary-button" onPointerDown={event => event.preventDefault()} onClick={() => { studyActions.current?.generate('EXPLAIN'); studyPanel.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}>Explain simply</button>
       <button type="button" className="primary-button" onPointerDown={event => event.preventDefault()} onClick={() => { studyActions.current?.generate('GENERATE_QUESTIONS'); studyPanel.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}>Generate questions</button>
+      </> : <button type="button" className="secondary-button" onPointerDown={event => event.preventDefault()} onClick={() => studyPanel.current?.querySelector('textarea')?.focus()}>Add reading note</button>}
       <button type="button" aria-label="Dismiss text selection actions" className="px-2 text-sm" onClick={() => setSelection({ text: '', page })}>Close</button>
     </div>}
     <Link to={`/books/${book.code}`} className="quiet-link text-xs"><ArrowLeft size={14} />{book.title}<span className="text-[#818879]">/ Class {book.grade}</span></Link>

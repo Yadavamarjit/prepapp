@@ -9,8 +9,10 @@ const panel = 'study-panel space-y-4 p-5 sm:p-7';
 const button = 'min-h-11 rounded-xl border border-current/30 px-4 py-2 font-medium';
 const primary = 'min-h-12 rounded-xl bg-[#315840] px-5 py-3 font-semibold text-white hover:bg-[#254532]';
 export function CapfAnalytica() {
-  const { user } = useAuth();
-  return user && <Workspace key={user.uid} storageKey={attemptKey(user.uid)} />;
+  const { user, loading } = useAuth();
+  const storageKey = attemptKey(user?.uid ?? '');
+  if (loading) return <p role="status">Opening your practice workspace…</p>;
+  return <Workspace key={storageKey} storageKey={storageKey} />;
 }
 
 function Workspace({ storageKey }: { storageKey: string }) {

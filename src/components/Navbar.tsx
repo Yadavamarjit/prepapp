@@ -7,7 +7,7 @@ import { APP_NAME } from '../data/brand';
 
 export type NavTab = 'OVERVIEW' | 'LEARNING' | 'ANALYTICS' | 'CPO_SPEED' | 'CAPF_ELIMINATION' | 'PAPER_2' | 'AI_TUTOR' | 'MISTAKE_VAULT' | 'DAILY_REVIEW';
 const items = [
-  { path: '/', label: 'Today', icon: House, matches: ['/', '/dashboard'] },
+  { path: '/dashboard', label: 'Today', icon: House, matches: ['/dashboard'] },
   { path: '/books', label: 'Learn', icon: BookOpen, matches: ['/books', '/learning', '/ncert', '/reels', '/capf-syllabus', '/current-affairs'] },
   { path: '/practice', label: 'Practice', icon: PencilLine, matches: ['/practice', '/calculation-coach', '/capf-elimination', '/paper-2', '/ai-tutor'] },
   { path: '/revision', label: 'Revision', icon: RotateCcw, matches: ['/revision', '/daily-review', '/mistake-vault'] },
@@ -17,7 +17,8 @@ export function Navbar() {
   const { user, signOutUser } = useAuth();
   const { dark, setDark } = useStudyPreferences();
   const { pathname } = useLocation();
-  const active = (matches: string[]) => matches.some(path => path === '/' ? pathname === '/' : pathname === path || pathname.startsWith(path + '/'));
+  const active = (matches: string[]) => matches.some(path => pathname === path || pathname.startsWith(path + '/'));
+  const hasAccount = !!user && !user.isGuest;
   const current = items.find(item => active(item.matches))?.label || 'Study';
   const links = (mobile = false) => items.map(({ path, label, icon: Icon, matches }) => <Link key={path} to={path} aria-current={active(matches) ? 'page' : undefined}
     className={`${mobile ? 'flex-col gap-1 py-2 text-[11px]' : 'gap-3 rounded-lg px-3 py-3 text-sm'} flex items-center font-medium transition-colors ${active(matches) ? 'bg-[#E9EFE9] text-[#315840] dark:bg-[#273C2E] dark:text-[#B2D7BA]' : 'text-[#686C65] hover:bg-[#EFEFE9] dark:text-slate-400 dark:hover:bg-[#202C25]'}`}>
@@ -30,7 +31,8 @@ export function Navbar() {
       <nav aria-label="Main navigation" className="space-y-1">{links()}</nav>
       <div className="mt-auto space-y-5 px-2">
         <div className="border-t border-[#E4E4DB] pt-5 dark:border-slate-800"><p className="text-sm font-medium">A little, every day.</p><p className="mt-1 text-xs leading-5 text-[#777C71] dark:text-slate-400">Learn one concept. Recall it tomorrow.</p></div>
-        <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="truncate text-sm font-medium">{user?.displayName || user?.email?.split('@')[0] || 'Your account'}</p><p className="mt-0.5 text-xs text-[#777C71]">Study workspace</p></div><button type="button" onClick={() => void signOutUser()} className="rounded-lg p-2 hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" aria-label="Sign out"><LogOut size={16} /></button></div>
+        {hasAccount && <div className="flex items-center justify-between gap-2"><p className="min-w-0 truncate text-sm font-medium">{user.displayName || user.email?.split('@')[0]}</p><button type="button" onClick={() => void signOutUser()} className="rounded-lg p-2 hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" aria-label="Sign out"><LogOut size={16} /></button></div>}
+        {!hasAccount && <p className="text-xs text-[#626B59] dark:text-slate-400">Progress is saved in this browser.</p>}
       </div>
     </aside>
     <header className="sticky top-0 z-30 border-b border-[#E4E4DB] bg-[#F7F7F2]/95 backdrop-blur-sm lg:ml-56 dark:border-slate-800 dark:bg-[#121816]/95">
@@ -39,7 +41,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-xs font-semibold">UPSC CAPF</span>
           <button type="button" className="rounded-lg p-2 text-[#777C71] hover:bg-[#E9EFE9] dark:hover:bg-[#273C2E]" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light appearance' : 'Use dark appearance'}>{dark ? <Sun size={17} /> : <Moon size={17} />}</button>
-          <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>
+          {hasAccount && <button type="button" className="p-2 lg:hidden" onClick={() => void signOutUser()} aria-label="Sign out"><LogOut size={17} /></button>}
         </div>
       </div>
     </header>

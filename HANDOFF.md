@@ -14,7 +14,7 @@ CadetSlate is a UPSC CAPF (Assistant Commandant) study app for both written pape
 | Timed Paper I practice and attempt reports | [CAPF Analytica](https://prepapp-five.vercel.app/practice/capf-analytica) | `src/components/CapfAnalytica.tsx`, `src/utils/capfAttempt.ts` |
 | Paper II writing practice | [Paper II lab](https://prepapp-five.vercel.app/paper-2) | `src/components/Paper2Lab.tsx` |
 
-The public homepage has **Start studying** for guest access. Workspace links lead through sign-in when opened without a session. Paid AI calls require a signed-in Google account.
+The public homepage is at `/` and **Start studying** opens `/dashboard`. Study routes and direct links are available without an account, with progress saved in the browser. `/login` redirects to the dashboard. Paid AI tools remain available to existing authenticated sessions.
 
 ## Data and known gaps
 

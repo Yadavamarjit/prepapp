@@ -114,7 +114,7 @@ export function DailyReview({ cards, progress, onReview, storageError }: DailyRe
       <h2 className="text-lg font-semibold">{filtered.length ? 'You’re caught up!' : 'Build your first review cards'}</h2>
       <p className="text-sm text-[#5C646B] dark:text-slate-300">{filtered.length
         ? `Next review: ${Number.isFinite(nextDue) ? new Date(nextDue).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : 'after your next lesson'}. Take a break or learn one small concept.`
-        : 'Complete a chapter in the Study Hub or attempt a question in the AI Tutor. Your recall cards will appear here.'}</p>
+        : 'Complete a topic lesson or attempt a practice question. Your recall cards will appear here.'}</p>
       <Link to="/learning" className="inline-block rounded-lg bg-[#36624B] px-5 py-3 text-sm font-semibold text-white">Learn one small topic</Link>
     </section>}
   </div>;

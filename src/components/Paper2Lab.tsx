@@ -1,5 +1,6 @@
 import { SyllabusOutline } from './SyllabusOutline';
 import { apiFetch } from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   PenTool, 
@@ -22,7 +23,7 @@ import { getScaffoldTemplate, countWords, checkPrecisCompliance, analyzeArgument
 import { formatTimer } from '../utils/cbtEngine';
 
 interface Paper2LabProps {
-  onSaveSubmission: (submission: Paper2Submission) => void;
+  onSaveSubmission: (submission: Paper2Submission) => boolean;
   submissions: Paper2Submission[];
 }
 
@@ -30,12 +31,15 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
   onSaveSubmission,
   submissions,
 }) => {
+  const { canUseAi } = useAuth();
   const [selectedPromptId, setSelectedPromptId] = useState<string>(PAPER_2_PROMPTS[0].id);
   const activePrompt: Paper2Prompt = PAPER_2_PROMPTS.find((p) => p.id === selectedPromptId) || PAPER_2_PROMPTS[0];
+  const draftFor = (prompt: Paper2Prompt) => submissions.find((item) => item.promptId === prompt.id)?.content;
 
   const [content, setContent] = useState<string>(() =>
-    getScaffoldTemplate(activePrompt.type, activePrompt.title)
+    draftFor(activePrompt) ?? getScaffoldTemplate(activePrompt.type, activePrompt.title)
   );
+  const [draftStatus, setDraftStatus] = useState('');
 
   // Timer: defaults to prompt's suggestedMinutes (e.g. 20 min = 1200s)
   const [secondsRemaining, setSecondsRemaining] = useState<number>(activePrompt.suggestedMinutes * 60);
@@ -54,7 +58,8 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
     const nextPrompt = PAPER_2_PROMPTS.find((p) => p.id === promptId);
     if (!nextPrompt) return;
     setSelectedPromptId(promptId);
-    setContent(getScaffoldTemplate(nextPrompt.type, nextPrompt.title));
+    setContent(draftFor(nextPrompt) ?? getScaffoldTemplate(nextPrompt.type, nextPrompt.title));
+    setDraftStatus('');
     setSecondsRemaining(nextPrompt.suggestedMinutes * 60);
     setIsTimerRunning(false);
     setTimeSpentSeconds(0);
@@ -90,7 +95,28 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
   // Insert Scaffolding
   const handleInsertScaffold = () => {
     setContent(getScaffoldTemplate(activePrompt.type, activePrompt.title));
+    setDraftStatus('');
   };
+
+  function saveDraft(feedback?: Paper2Feedback) {
+    const saved = onSaveSubmission({
+      id: crypto.randomUUID(),
+      topicType: activePrompt.type,
+      promptId: activePrompt.id,
+      promptTitle: activePrompt.title,
+      content,
+      wordCount: currentWordCount,
+      timeSpentSeconds,
+      submittedAt: Date.now(),
+      aiFeedback: feedback,
+    });
+    if (saved) {
+      setDraftStatus('Draft saved in this browser.');
+      setEvalError(null);
+    } else {
+      setEvalError('Could not save your draft. Keep this tab open and try again.');
+    }
+  }
 
   // Run AI Evaluation
   const handleRunEvaluation = async () => {
@@ -123,20 +149,7 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
       const feedback: Paper2Feedback = data.feedback;
       setEvaluationFeedback(feedback);
 
-      // Save submission record
-      const submissionRecord: Paper2Submission = {
-        id: `sub-${Date.now()}`,
-        topicType: activePrompt.type,
-        promptId: activePrompt.id,
-        promptTitle: activePrompt.title,
-        content,
-        wordCount: currentWordCount,
-        timeSpentSeconds,
-        submittedAt: Date.now(),
-        aiFeedback: feedback,
-      };
-
-      onSaveSubmission(submissionRecord);
+      saveDraft(feedback);
     } catch (err: any) {
       setEvalError(err.message || 'Error communicating with AI evaluator.');
     } finally {
@@ -162,7 +175,7 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
               </span>
             </div>
             <p className="text-xs text-[#5C646B] dark:text-slate-400">
-              Simulated timed writing desk for Counter-Arguments, Reports, Essays, and Précis with Gemini rubric evaluation.
+              Practise arguments, reports, essays, and précis with a timer, a writing outline and a word count.
             </p>
           </div>
         </div>
@@ -346,8 +359,9 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
 
             {/* Writing Textarea */}
             <textarea
+              aria-label="Writing draft"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => { setContent(e.target.value); setDraftStatus(''); }}
               placeholder="Draft your answer here according to UPSC CAPF Paper 2 structure..."
               rows={16}
               className="w-full p-4 text-sm font-serif leading-relaxed text-[#1E252B] dark:text-slate-100 bg-[#F7F8F5] dark:bg-[#121816] border border-[#EEF0EA] dark:border-slate-800 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#36624B] transition-all resize-y"
@@ -359,18 +373,22 @@ export const Paper2Lab: React.FC<Paper2LabProps> = ({
                 Exam tip: Maintain objective, constitutional diction without partisan or hyperbolic rhetoric.
               </div>
 
-              <button
+              {canUseAi ? <button
                 onClick={handleRunEvaluation}
                 disabled={isEvaluating}
                 className="px-5 py-2.5 rounded-lg bg-[#36624B] hover:bg-[#2A4F3C] text-white text-xs font-semibold shadow-sm flex items-center gap-2 disabled:opacity-50 transition-all"
               >
                 <Sparkles className="w-4 h-4 text-[#E3EFE8]" />
                 <span>{isEvaluating ? 'Evaluating with UPSC Rubrics...' : 'Submit for AI Rubric Evaluation'}</span>
-              </button>
+              </button> : <button type="button" className="primary-button" disabled={!content.trim() || content === draftFor(activePrompt) || content === getScaffoldTemplate(activePrompt.type, activePrompt.title)} onClick={() => saveDraft()}>
+                Save writing draft
+              </button>}
             </div>
 
+            {draftStatus && <p role="status" className="text-sm text-[#36624B] dark:text-[#88D4A8]">{draftStatus}</p>}
+
             {evalError && (
-              <div className="p-3 rounded-lg bg-[#FBEAE8] text-[#C25345] text-xs flex items-center gap-2">
+              <div role="alert" className="p-3 rounded-lg bg-[#FBEAE8] text-[#C25345] text-xs flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                 <span>{evalError}</span>
               </div>

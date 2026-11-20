@@ -57,10 +57,11 @@ test('empty and excessive passages do not make a paid generation request', async
   assert.equal(called, false);
 });
 
-test('book reader study tools expose selection actions, previous saved material and filters', () => {
+test('book reader lets visitors save notes and view saved material without an account', () => {
   const html = renderToStaticMarkup(React.createElement(BookStudyTools, { ...input, selectedText: '', selectedPage: 3, onJumpPage: () => {} }));
-  assert.ok(html.includes('Explain simply'));
-  assert.ok(html.includes('Generate questions'));
+  assert.ok(html.includes('Save reading note'));
+  assert.ok(!html.includes('Explain simply'));
+  assert.ok(!html.includes('Generate questions'));
   assert.ok(html.includes('Saved for this chapter'));
   assert.ok(html.includes('Filter saved study material'));
   assert.ok(html.includes('Loading saved study material'));

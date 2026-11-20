@@ -21,6 +21,7 @@ test('confidence survives reload while corrupt values and unknown subjects are d
 });
 test('empty learner sees unassessed subjects, source limitations and usable actions', () => {
   const html = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(CapfSyllabus, { questions: [], mistakes: [], solvedQuestionIds: [] })));
-  for (const text of ['Not assessed', '620 of 625', 'Missing from index', 'How confident', 'Official UPSC syllabus', 'href="/books"', 'href="/paper-2"']) assert.ok(html.includes(text), text);
+  for (const text of ['Not assessed', 'Missing from index', 'How confident', 'Official UPSC notice', 'href="/books"', 'href="/paper-2"']) assert.ok(html.includes(text), text);
+  assert.match(html, /620 (?:out )?of 625/);
   assert.ok(!html.includes('100%'));
 });

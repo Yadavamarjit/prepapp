@@ -1,6 +1,6 @@
 import { useSyllabus } from './context/SyllabusContext';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Routes, Route, Outlet, useNavigate, useLocation, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, Outlet, useNavigate, useLocation, useSearchParams, Navigate, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { OverviewDashboard } from './components/OverviewDashboard';
 import { CapfEliminationMode } from './components/CapfEliminationMode';
@@ -22,29 +22,12 @@ import { DailyReview } from './components/DailyReview';
 import { LEARNING_CHAPTERS } from './data/learningLibrary';
 import { buildRecallCards, parseRecallProgress, RECALL_STORAGE_KEY, scheduleRecall, getDueRecallCards } from './utils/dailyReview';
 import type { RecallRating } from './utils/dailyReview';
-import { LoginPage } from './components/LoginPage';
 import { HomePage } from './components/HomePage';
-import { ProtectedRoute } from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
 import { INITIAL_QUESTION_BANK } from './data/questionBank';
 import { Question, MistakeRecord, MistakeReason, Paper2Submission, ChapterProgress } from './types';
 import { calculateNextSrsDate } from './utils/srsVault';
 import { ShieldAlert, Compass } from 'lucide-react';
-
-// Wrapper for LoginPage to automatically redirect authenticated users
-const LoginPageWrapper: React.FC = () => {
-  const { user } = useAuth();
-  const location = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  const requested = location.state?.from;
-  const from = requested ? { pathname: requested.pathname, search: requested.search, hash: requested.hash } : '/';
-
-  if (user) {
-    return <Navigate to={from} replace />;
-  }
-
-  return <LoginPage />;
-};
 
 // 404 Route Not Found Component
 const NotFoundPage: React.FC = () => {
@@ -61,7 +44,7 @@ const NotFoundPage: React.FC = () => {
       </p>
       <div className="pt-2">
         <Link
-          to="/"
+          to="/dashboard"
           className="inline-flex items-center gap-2 px-4 py-2 bg-[#36624B] hover:bg-[#2A4F3C] text-white rounded-xl text-xs font-semibold shadow-xs"
         >
           <Compass className="w-4 h-4" />
@@ -72,14 +55,8 @@ const NotFoundPage: React.FC = () => {
   );
 };
 
-function ProtectedAppLayout() {
-  const { pathname } = useLocation();
-  const { user, loading } = useAuth();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
-
-  if (pathname === '/' && !loading && !user) return <HomePage />;
-
-  return <ProtectedRoute>
+function StudyLayout() {
+  return (
     <div className="min-h-screen bg-[#F7F7F2] text-[#30392D] dark:bg-[#121816] dark:text-[#E6EAE8]">
       <a href="#study-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:p-3 focus:text-black">Skip to content</a>
       <Navbar />
@@ -87,13 +64,43 @@ function ProtectedAppLayout() {
         <main id="study-content" className="mx-auto min-h-[calc(100vh-72px)] max-w-6xl px-5 pb-28 pt-7 sm:px-8 lg:px-10 lg:pb-12 lg:pt-10"><SectionNavigation /><Outlet /></main>
       </div>
     </div>
-  </ProtectedRoute>;
+  );
+}
+
+function PublicTopicPractice({ loading }: { loading: boolean }) {
+  const [params] = useSearchParams();
+  const { chapters, status } = useSyllabus();
+  const chapterId = params.get('chapter');
+  const chapter = chapters.find((item) => item.id === chapterId);
+
+  return (
+    <div className="study-panel space-y-4 p-6">
+      <h1 className="page-title">{chapter?.title || 'Topic practice'}</h1>
+      {loading || (chapterId && status === 'loading') ? <p role="status" className="page-description">Opening study tools…</p> : <>
+        {chapter ? <>
+          <p className="page-description">Recall the main ideas from this chapter before checking your notes.</p>
+          <ul className="list-disc space-y-2 pl-5 text-sm">{chapter.topics.map((topic) => <li key={topic}>{topic}</li>)}</ul>
+        </> : <p className="page-description">Review a topic in the lesson library or practise elimination with worked explanations.</p>}
+        <div className="flex flex-wrap gap-3">
+          <Link className="primary-button" to={chapter?.path || '/learning'}>{chapter ? 'Open chapter outline' : 'Browse topic lessons'}</Link>
+          <Link className="secondary-button" to="/capf-elimination">Practise Paper I</Link>
+        </div>
+      </>}
+    </div>
+  );
 }
 
 export default function App() {
   const { chapters: syllabusChapters } = useSyllabus();
   const navigate = useNavigate();
   const location = useLocation();
+  const { pathname, hash } = location;
+  const { canUseAi, loading } = useAuth();
+
+  useEffect(() => {
+    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }, [pathname, hash]);
 
   // Question Bank (seeded + dynamic AI generated questions)
   const [savedQuestions, setQuestions] = useState<Question[]>(() => {
@@ -206,11 +213,10 @@ export default function App() {
     try {
       localStorage.setItem('dutydeck_questions', JSON.stringify(savedQuestions));
       localStorage.setItem('dutydeck_mistakes', JSON.stringify(savedMistakes));
-      localStorage.setItem('dutydeck_submissions', JSON.stringify(submissions));
       localStorage.setItem('dutydeck_solved', JSON.stringify(savedSolvedIds));
       localStorage.setItem('dutydeck_chapter_progress', JSON.stringify(chapterProgress));
     } catch (e) {}
-  }, [savedQuestions, savedMistakes, submissions, savedSolvedIds, chapterProgress]);
+  }, [savedQuestions, savedMistakes, savedSolvedIds, chapterProgress]);
 
   // Handler: Log Mistake to Vault
   const handleSaveMistake = (
@@ -278,7 +284,14 @@ export default function App() {
 
   // Handler: Save Paper 2 Submission
   const handleSaveSubmission = (submission: Paper2Submission) => {
-    setSubmissions((prev) => [submission, ...prev]);
+    const next = [submission, ...submissions];
+    try {
+      localStorage.setItem('dutydeck_submissions', JSON.stringify(next));
+      setSubmissions(next);
+      return true;
+    } catch {
+      return false;
+    }
   };
 
   // Handler: Add dynamically generated AI questions
@@ -326,25 +339,15 @@ export default function App() {
     setChapterProgress(next);
     return true;
   };
-  const learningPage = <LearningHub progressMap={chapterProgress} onToggleChapterCompleted={handleToggleChapterCompleted} onSelectTopicForAi={handleSelectTopicForAi} onSaveNotes={saveChapterNotes} />;
+  const selectTopicForAi = canUseAi ? handleSelectTopicForAi : undefined;
+  const learningPage = <LearningHub progressMap={chapterProgress} onToggleChapterCompleted={handleToggleChapterCompleted} onSelectTopicForAi={selectTopicForAi} onSaveNotes={saveChapterNotes} />;
 
   return (
     <Routes>
-      {/* Public Authentication Gate (Cadet Login) */}
-      <Route path="/login" element={<LoginPageWrapper />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<Navigate to="/dashboard" replace />} />
 
-      {/* Protected Multi-Page Application Layout */}
-      <Route
-        element={
-          <ProtectedAppLayout />
-        }
-      >
-        <Route
-          index
-          element={
-            <OverviewDashboard chapterProgress={chapterProgress} dueCount={dueCount} reviewedToday={reviewedToday} questions={questions} mistakes={mistakes} solvedQuestionIds={solvedQuestionIds} />
-          }
-        />
+      <Route element={<StudyLayout />}>
         <Route
           path="dashboard"
           element={
@@ -367,10 +370,10 @@ export default function App() {
         <Route path="learning/:chapterId" element={learningPage} />
         
         {/* Dedicated Direct-Access NCERT Routes (Class / Subject / Chapter URL accessible on refresh) */}
-        <Route path="ncert" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
-        <Route path="ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
-        <Route path="ncert/:bookCode/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
-        <Route path="learning/ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={handleSelectTopicForAi} />} />
+        <Route path="ncert" element={<NcertExplorer onSelectTopicForAi={selectTopicForAi} />} />
+        <Route path="ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={selectTopicForAi} />} />
+        <Route path="ncert/:bookCode/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={selectTopicForAi} />} />
+        <Route path="learning/ncert/:grade/:subject/:chapterNumber" element={<NcertExplorer onSelectTopicForAi={selectTopicForAi} />} />
         <Route path="cpo-speed" element={<Navigate to="/practice" replace />} />
         <Route
           path="capf-elimination"
@@ -379,7 +382,7 @@ export default function App() {
               questions={questions}
               onSaveMistake={handleSaveMistake}
               onQuestionAttempted={handleQuestionAttempted}
-              onSelectTopicForAi={handleSelectTopicForAi}
+              onSelectTopicForAi={selectTopicForAi}
             />
           }
         />
@@ -395,7 +398,7 @@ export default function App() {
         <Route
           path="ai-tutor"
           element={
-            <AiTopicBreakdown
+            canUseAi ? <AiTopicBreakdown
               initialTopic={location.state?.title}
               initialSubject={location.state?.subject}
               initialRef={location.state?.standardRef}
@@ -405,7 +408,7 @@ export default function App() {
               onSaveMistake={handleSaveMistake}
               onQuestionAttempted={handleQuestionAttempted}
               onAddQuestionsToBank={handleAddQuestionsToBank}
-            />
+            /> : <PublicTopicPractice loading={loading} />
           }
         />
         <Route
@@ -416,7 +419,7 @@ export default function App() {
               questions={questions}
               onUpdateMistakeReview={handleUpdateMistakeReview}
               onClearMistake={handleClearMistake}
-              onSelectTopicForAi={handleSelectTopicForAi}
+              onSelectTopicForAi={selectTopicForAi}
             />
           }
         />

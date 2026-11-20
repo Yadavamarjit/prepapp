@@ -1,4 +1,5 @@
 import { apiFetch } from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -76,6 +77,7 @@ interface ChapterStudyNote {
 }
 
 export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi }) => {
+  const { canUseAi } = useAuth();
   // Router Hooks for direct URL access (e.g. /ncert/:grade/:subject/:chapterNumber)
   const { grade, subject, chapterNumber, bookCode } = useParams<{
     grade?: string;
@@ -306,7 +308,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
   // Request AI Explanation or Question Generation & Save to DB
   const handleTriggerAiAction = async (action: 'EXPLAIN' | 'GENERATE_QUESTIONS', textToUse?: string) => {
     const targetText = (textToUse || selectedSnippet).trim();
-    if (!targetText) return;
+    if (!targetText || !canUseAi) return;
 
     setIsRightPanelOpen(true);
     setFloatingToolbar((prev) => ({ ...prev, visible: false }));
@@ -856,7 +858,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
                   </span>
                   <span className="text-slate-600">&bull;</span>
                   <span className="text-[11px] text-emerald-400">
-                    Highlight any line to trigger Easy Explain or MCQs
+                    {canUseAi ? 'Highlight any line to open Easy Explain or MCQs' : 'Select a passage to copy it into your notes'}
                   </span>
                 </div>
 
@@ -1251,7 +1253,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
               </div>
 
               {/* Action Buttons */}
-              <div className="grid grid-cols-2 gap-2 pt-0.5">
+              {canUseAi && <div className="grid grid-cols-2 gap-2 pt-0.5">
                 <button
                   disabled={!selectedSnippet.trim() || aiLoading}
                   onClick={() => handleTriggerAiAction('EXPLAIN')}
@@ -1268,7 +1270,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
                   <HelpCircle className="w-3 h-3 text-blue-200" />
                   <span>MCQ Test</span>
                 </button>
-              </div>
+              </div>}
             </div>
 
             {/* Loading shimmer when generating */}
@@ -1291,7 +1293,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
                 <Lightbulb className="w-6 h-6 mx-auto text-amber-400/80" />
                 <p className="font-semibold text-slate-300">No notes saved for this chapter yet.</p>
                 <p className="text-[11px] text-slate-500 leading-relaxed">
-                  Highlight sentences in the textbook and click <strong>Easy Explain</strong> or <strong>MCQ Test</strong>. All your takeaways will be saved here automatically!
+                  {canUseAi ? 'Highlight a passage to create an explanation or a practice question.' : 'Select a passage in the textbook to read or copy it.'}
                 </p>
               </div>
             ) : (
@@ -1423,7 +1425,7 @@ export const NcertExplorer: React.FC<NcertExplorerProps> = ({ onSelectTopicForAi
       {/* ========================================================================= */}
       {/* 3. FLOATING QUICK-ACTION TOOLBAR PILL (Appears right above cursor)       */}
       {/* ========================================================================= */}
-      {floatingToolbar.visible && selectedSnippet && (
+      {canUseAi && floatingToolbar.visible && selectedSnippet && (
         <div
           className="floating-selection-pill fixed z-50 flex items-center gap-1 p-1 bg-[#1E252B] text-white rounded-xl shadow-2xl border border-slate-700 backdrop-blur-md animate-in fade-in zoom-in-95 duration-150"
           style={{

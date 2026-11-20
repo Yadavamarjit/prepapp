@@ -1,18 +1,30 @@
 import { useRef, useState, type FormEvent } from 'react';
 import {
-  ArrowDown, ArrowRight, BookOpen, CalendarDays, Check, ChevronDown, CircleCheck, CircleX,
-  Layers3, ListChecks, Minus, PenLine, RotateCcw, SquareStack,
+  ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Calculator, Check, ChevronDown, CircleX,
+  Clock3, Compass, Layers3, ListChecks, Minus, Newspaper, PenLine, RotateCcw,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 import { APP_NAME } from '../data/brand';
 import { ARTICLE_33_QUESTION } from '../data/learningLibrary';
 import './HomePage.css';
 
-const planTasks = [
-  { title: 'Read about Fundamental Rights', time: '15 min' },
-  { title: 'Solve a Paper I question', time: '10 min' },
-  { title: 'Review yesterday’s notes', time: '5 min' },
+const studySessions = {
+  20: { learn: 8, practise: 8, revise: 4 },
+  45: { learn: 20, practise: 15, revise: 10 },
+  90: { learn: 40, practise: 30, revise: 20 },
+};
+
+const sessionTasks = [
+  { key: 'learn', title: 'Read a topic lesson', detail: 'Pick one concept and make a note in your own words.', icon: BookOpen, path: '/learning' },
+  { key: 'practise', title: 'Work through Paper I questions', detail: 'Rule out weak options and read the explanations.', icon: ListChecks, path: '/capf-elimination' },
+  { key: 'revise', title: 'Recall what you’ve studied', detail: 'Try your due cards or revisit a question you missed.', icon: RotateCcw, path: '/revision' },
+] as const;
+
+const resources = [
+  { title: 'CAPF syllabus', detail: 'See the exam scope and browse the chapter-by-chapter study guide.', icon: Compass, path: '/capf-syllabus' },
+  { title: 'NCERT library', detail: 'Read original textbooks and track the chapters you’ve covered.', icon: BookOpen, path: '/books' },
+  { title: 'Current affairs', detail: 'Read exam-relevant news and save key facts for recall.', icon: Newspaper, path: '/current-affairs' },
+  { title: 'Calculation Coach', detail: 'Build speed with focused arithmetic and mental maths drills.', icon: Calculator, path: '/calculation-coach' },
 ];
 
 function SampleQuestion() {
@@ -46,7 +58,7 @@ function SampleQuestion() {
       <header className="prep-quiz-header">
         <span className="prep-quiz-icon"><ListChecks size={21} aria-hidden="true" /></span>
         <div>
-          <h2 id="prep-question-heading" ref={questionHeading} tabIndex={-1}>Paper I practice</h2>
+          <h3 id="prep-question-heading" ref={questionHeading} tabIndex={-1}>Paper I practice</h3>
           <p>Indian Polity</p>
         </div>
         <span className="prep-quiz-label">Sample question</span>
@@ -121,145 +133,189 @@ function SampleQuestion() {
   );
 }
 
-function StudyPlanPreview() {
-  const [completed, setCompleted] = useState<string[]>([]);
+function SessionPlanner() {
+  const [budget, setBudget] = useState<keyof typeof studySessions>(45);
 
   return (
-    <div className="prep-plan">
-      <div className="prep-plan-heading">
-        <strong>Sample daily plan</strong>
-        <span aria-live="polite">{completed.length} of {planTasks.length} done</span>
-      </div>
-      <ul className="prep-plan-tasks">
-        {planTasks.map(({ title, time }) => (
-          <li key={title}>
-            <label>
-              <input
-                type="checkbox"
-                checked={completed.includes(title)}
-                onChange={(event) => {
-                  const isDone = event.currentTarget.checked;
-                  setCompleted((current) => isDone ? [...current, title] : current.filter((task) => task !== title));
-                }}
-              />
-              <span>{title}</span>
-              <small>{time}</small>
-            </label>
+    <div className="prep-session">
+      <header className="prep-session-top">
+        <div><Clock3 size={20} aria-hidden="true" /><h3>Plan a study session</h3></div>
+      </header>
+      <fieldset className="prep-session-time">
+        <legend>How much time do you have?</legend>
+        <div>
+          {([20, 45, 90] as const).map(minutes => (
+            <button key={minutes} type="button" aria-pressed={budget === minutes} onClick={() => setBudget(minutes)}>{minutes} min</button>
+          ))}
+        </div>
+      </fieldset>
+      <ol className="prep-session-tasks">
+        {sessionTasks.map(({ key, title, detail, icon: Icon, path }) => (
+          <li key={key}>
+            <Link to={path}>
+              <span className="prep-task-icon"><Icon size={19} aria-hidden="true" /></span>
+              <span className="prep-task-copy"><strong>{title}</strong><small>{detail}</small></span>
+              <span className="prep-task-time">{studySessions[budget][key]} min</span>
+              <ArrowUpRight className="prep-task-arrow" size={17} aria-hidden="true" />
+            </Link>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 }
 
 export function HomePage() {
-  const { signInAsGuest } = useAuth();
-  const navigate = useNavigate();
-  const [pending, setPending] = useState(false);
-  const [failedAt, setFailedAt] = useState<'hero' | 'footer' | null>(null);
-
-  async function startStudying(source: 'hero' | 'footer') {
-    setPending(true);
-    setFailedAt(null);
-    try {
-      await signInAsGuest('Guest');
-      navigate('/dashboard');
-    } catch {
-      setFailedAt(source);
-      setPending(false);
-    }
-  }
-
   return (
     <div className="prep-home">
       <a className="prep-skip" href="#home-content">Skip to content</a>
-      <div className="prep-hero-shell">
-        <header className="prep-header">
-          <nav className="prep-container prep-nav" aria-label="Main navigation">
-            <Link className="prep-brand" to="/"><span><Layers3 size={21} aria-hidden="true" /></span>{APP_NAME}</Link>
-            <div className="prep-nav-links">
-              <a className="prep-nav-features" href="#features">How it works</a>
-              <Link className="prep-sign-in" to="/login">Sign in <ArrowRight size={15} aria-hidden="true" /></Link>
-            </div>
-          </nav>
-        </header>
+      <header className="prep-header">
+        <nav className="prep-container prep-nav" aria-label="Main navigation">
+          <Link className="prep-brand" to="/"><span><Layers3 size={21} aria-hidden="true" /></span>{APP_NAME}</Link>
+          <div className="prep-nav-links">
+            <a href="#study-path">Study path</a>
+            <a href="#practice">Try practice</a>
+            <a href="#resources">Resources</a>
+          </div>
+          <Link className="prep-nav-cta" to="/dashboard">Open workspace <ArrowUpRight size={16} aria-hidden="true" /></Link>
+        </nav>
+      </header>
 
-        <main id="home-content" tabIndex={-1}>
-          <section className="prep-container prep-hero" aria-labelledby="prep-heading">
+      <main id="home-content" tabIndex={-1}>
+        <section className="prep-hero" aria-labelledby="prep-heading">
+          <picture className="prep-hero-media" aria-hidden="true">
+            <source media="(max-width: 43rem)" srcSet="/capf-study-hero-mobile.webp" />
+            <img src="/capf-study-hero.webp" alt="" width={1672} height={941} fetchPriority="high" />
+          </picture>
+          <div className="prep-container prep-hero-inner">
             <div className="prep-hero-copy">
               <p className="prep-eyebrow">UPSC CAPF (AC) preparation</p>
-              <h1 id="prep-heading">Know what to <em>study today.</em></h1>
-              <p className="prep-intro">Follow a daily plan for both CAPF papers. Build your fundamentals, practise under exam conditions, and turn mistakes into your next revision session.</p>
+              <h1 id="prep-heading">Prepare with <em>purpose.</em></h1>
+              <p className="prep-hero-intro">Study the syllabus, practise both papers and build a revision habit you can keep.</p>
               <div className="prep-actions">
-                <button className="prep-primary" type="button" disabled={pending} onClick={() => startStudying('hero')}>
-                  {pending ? 'Opening workspace…' : 'Start studying'} <ArrowRight size={18} aria-hidden="true" />
-                </button>
-                <a className="prep-secondary" href="#sample-question">Try a sample question <ArrowDown size={16} aria-hidden="true" /></a>
+                <Link className="prep-button prep-button-gold" to="/dashboard">Start studying <ArrowRight size={18} aria-hidden="true" /></Link>
+                <a className="prep-hero-link" href="#sample-question">Try a sample question <ArrowDown size={16} aria-hidden="true" /></a>
               </div>
-              <p className="prep-guest"><Check size={16} aria-hidden="true" /> Try it as a guest. No account required.</p>
-              {failedAt === 'hero' && <p className="prep-error" role="alert">Could not open your workspace. Please try again.</p>}
+              <p className="prep-no-account"><Check size={16} aria-hidden="true" /> No account needed</p>
             </div>
+            <a className="prep-scroll-link" href="#study-path"><ArrowDown size={17} aria-hidden="true" /> Explore the study path</a>
+          </div>
+        </section>
 
-            <div className="prep-quiz-stage">
-              <SampleQuestion />
-            </div>
-          </section>
+        <section className="prep-container prep-section prep-path" id="study-path" aria-labelledby="prep-path-heading">
+          <div className="prep-section-copy">
+            <p className="prep-eyebrow">Your study path</p>
+            <h2 id="prep-path-heading">Start with the time you have.</h2>
+            <p>Choose a session length and see how to divide it between learning, practice and recall. Open any task to get straight to work.</p>
+            <Link className="prep-text-link" to="/dashboard#daily-plan">Open your daily plan <ArrowUpRight size={16} aria-hidden="true" /></Link>
+          </div>
+          <SessionPlanner />
+        </section>
 
-          <section className="prep-features" id="features" aria-labelledby="prep-features-heading">
-            <div className="prep-container">
-              <h2 className="prep-section-title" id="prep-features-heading">What a study session looks like</h2>
-              <div className="prep-workflow">
-                <article className="prep-workflow-card">
-                  <span className="prep-workflow-icon"><CalendarDays size={21} aria-hidden="true" /></span>
-                  <h3>Plan your day</h3>
-                  <p>Break the CAPF syllabus into a few tasks you can finish today.</p>
-                  <StudyPlanPreview />
-                </article>
-                <article className="prep-workflow-card">
-                  <span className="prep-workflow-icon"><PenLine size={21} aria-hidden="true" /></span>
-                  <h3>Practise both papers</h3>
-                  <p>Work on Paper I elimination and build arguments for Paper II.</p>
-                  <div className="prep-card-demo">
-                    <span className="prep-demo-label">Paper II · Argument writing</span>
-                    <p>Should disaster preparedness be taught in every school?</p>
-                    <details>
-                      <summary><BookOpen size={16} aria-hidden="true" /> Show writing outline <ChevronDown size={16} aria-hidden="true" /></summary>
-                      <p>State your position, weigh a benefit against a practical concern, then propose a way forward.</p>
-                    </details>
-                  </div>
-                </article>
-                <article className="prep-workflow-card">
-                  <span className="prep-workflow-icon"><SquareStack size={21} aria-hidden="true" /></span>
-                  <h3>Review your mistakes</h3>
-                  <p>Use the Mistake Vault and recall cards to revisit what you missed.</p>
-                  <div className="prep-card-demo">
-                    <span className="prep-demo-label">Polity · Recall card</span>
-                    <p>Which article lets you approach the Supreme Court to enforce a Fundamental Right?</p>
-                    <details>
-                      <summary><CircleCheck size={16} aria-hidden="true" /> Reveal answer <ChevronDown size={16} aria-hidden="true" /></summary>
-                      <p><strong>Article 32.</strong> It guarantees the right to move the Supreme Court for enforcement of Fundamental Rights.</p>
-                    </details>
-                  </div>
-                </article>
+        <section className="prep-papers" id="practice" aria-labelledby="prep-papers-heading">
+          <div className="prep-container prep-section">
+            <header className="prep-section-copy prep-papers-heading">
+              <div>
+                <p className="prep-eyebrow">Exam practice</p>
+                <h2 id="prep-papers-heading">Two papers. Two different skills.</h2>
               </div>
-              <div className="prep-bottom">
-                <div>
-                  <h2>Ready for your first session?</h2>
-                  <p>Open your study plan and pick a task for today.</p>
+              <p>Learn to spot the wrong options in Paper I. In Paper II, turn what you know into a clear, well-structured answer.</p>
+            </header>
+            <div className="prep-papers-grid">
+              <div className="prep-paper-column">
+                <SampleQuestion />
+                <Link className="prep-text-link" to="/practice/capf-analytica">Open timed Paper I practice <ArrowUpRight size={16} aria-hidden="true" /></Link>
+              </div>
+              <article className="prep-writing">
+                <header>
+                  <span className="prep-quiz-icon"><PenLine size={21} aria-hidden="true" /></span>
+                  <div><h3>Paper II writing</h3><p>Argument writing</p></div>
+                  <span className="prep-quiz-label">Sample prompt</span>
+                </header>
+                <div className="prep-writing-body">
+                  <p className="prep-writing-prompt">Should disaster preparedness be taught in every school?</p>
+                  <p>Think of a benefit, a practical concern, and a way a school could address it.</p>
+                  <details className="prep-disclosure">
+                    <summary>Show writing outline <ChevronDown size={17} aria-hidden="true" /></summary>
+                    <ol>
+                      <li>State your position in one clear sentence.</li>
+                      <li>Weigh the value of early training against demands on the timetable.</li>
+                      <li>Propose a practical next step, such as including drills in existing lessons.</li>
+                    </ol>
+                  </details>
+                  <Link className="prep-button prep-button-dark" to="/paper-2">Open the writing desk <ArrowUpRight size={17} aria-hidden="true" /></Link>
                 </div>
-                <button className="prep-primary" type="button" disabled={pending} onClick={() => startStudying('footer')}>
-                  {pending ? 'Opening workspace…' : 'Start studying'} <ArrowRight size={18} aria-hidden="true" />
-                </button>
-                {failedAt === 'footer' && <p className="prep-error" role="alert">Could not open your workspace. Please try again.</p>}
-              </div>
+              </article>
             </div>
-          </section>
-        </main>
-      </div>
+          </div>
+        </section>
 
-      <footer className="prep-container prep-footer">
-        <Link className="prep-brand" to="/"><span><Layers3 size={18} aria-hidden="true" /></span>{APP_NAME}</Link>
-        <Link to="/login">Sign in</Link>
+        <section className="prep-container prep-section prep-revision" id="revision" aria-labelledby="prep-revision-heading">
+          <div className="prep-section-copy">
+            <p className="prep-eyebrow">Revision</p>
+            <h2 id="prep-revision-heading">Recall it before you reread it.</h2>
+            <p>Answer from memory, then check what you missed. CadetSlate turns completed lessons and practice into recall cards and gives your mistakes a place to revisit.</p>
+            <Link className="prep-text-link" to="/revision">Open revision tools <ArrowUpRight size={16} aria-hidden="true" /></Link>
+          </div>
+          <article className="prep-recall">
+            <header><RotateCcw size={20} aria-hidden="true" /> <h3>Recall card · Indian Polity</h3></header>
+            <p>Which article lets you approach the Supreme Court to enforce a Fundamental Right?</p>
+            <details className="prep-disclosure">
+              <summary><span className="prep-show-answer">Reveal answer</span><span className="prep-hide-answer">Hide answer</span><ChevronDown size={17} aria-hidden="true" /></summary>
+              <p><strong>Article 32.</strong> It guarantees the right to move the Supreme Court for enforcement of Fundamental Rights.</p>
+            </details>
+          </article>
+        </section>
+
+        <section className="prep-resources" id="resources" aria-labelledby="prep-resources-heading">
+          <div className="prep-container prep-section">
+            <header className="prep-section-copy">
+              <p className="prep-eyebrow">Study library</p>
+              <h2 id="prep-resources-heading">Go deeper on what you need.</h2>
+            </header>
+            <div className="prep-resource-list">
+              {resources.map(({ title, detail, icon: Icon, path }) => (
+                <Link className="prep-resource" key={path} to={path}>
+                  <span className="prep-task-icon"><Icon size={23} aria-hidden="true" /></span>
+                  <span><strong>{title}</strong><small>{detail}</small></span>
+                  <ArrowUpRight size={20} aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="prep-container prep-section prep-faq" aria-labelledby="prep-faq-heading">
+          <h2 id="prep-faq-heading">Before you start</h2>
+          <div>
+            <details className="prep-disclosure">
+              <summary>Do I need an account? <ChevronDown size={17} aria-hidden="true" /></summary>
+              <p>Open the workspace, library, practice and revision tools directly. Your study progress is saved in this browser.</p>
+            </details>
+            <details className="prep-disclosure">
+              <summary>Where should I start if I’m new to CAPF? <ChevronDown size={17} aria-hidden="true" /></summary>
+              <p>Read the <Link to="/capf-syllabus">CAPF syllabus</Link> to get familiar with both papers, then try a short session from the <a href="#study-path">study path</a>.</p>
+            </details>
+          </div>
+        </section>
+
+        <section className="prep-close" aria-labelledby="prep-close-heading">
+          <div className="prep-container prep-section">
+            <h2 id="prep-close-heading">Make today a study day.</h2>
+            <Link className="prep-button prep-button-gold" to="/dashboard">Open your workspace <ArrowRight size={18} aria-hidden="true" /></Link>
+          </div>
+        </section>
+      </main>
+
+      <footer className="prep-footer">
+        <div className="prep-container">
+          <Link className="prep-brand" to="/"><span><Layers3 size={19} aria-hidden="true" /></span>{APP_NAME}</Link>
+          <nav aria-label="Footer navigation">
+            <Link to="/capf-syllabus">Syllabus</Link>
+            <Link to="/practice">Practice</Link>
+            <Link to="/dashboard">Workspace</Link>
+          </nav>
+        </div>
       </footer>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, ChevronRight, BookOpen, PenLine, CalendarDays, RotateCcw } from 'lucide-react';
 import { useSyllabus } from '../context/SyllabusContext';
 import { DailyPlan } from './DailyPlan';
@@ -17,6 +17,7 @@ interface Props {
 }
 
 export function OverviewDashboard({ chapterProgress, dueCount, reviewedToday, questions, mistakes }: Props) {
+  const { hash } = useLocation();
   const { user } = useAuth();
   const key = attemptKey(user?.uid || '');
   const [book, setBook] = useState(() => loadAttemptBook(key));
@@ -67,7 +68,7 @@ export function OverviewDashboard({ chapterProgress, dueCount, reviewedToday, qu
         <Icon size={20} strokeWidth={1.6} aria-hidden="true"/><span className="flex-1"><strong className="block font-semibold">{title}</strong><span className="mt-1 block text-sm opacity-75">{detail}</span></span><ChevronRight size={16}/>
       </Link>)}</div>
     </div>
-    <details className="my-6 border-y border-current/20"><summary className="cursor-pointer py-4 font-semibold"><CalendarDays className="mr-2 inline" size={18}/>Plan my day</summary>
+    <details id="daily-plan" open={hash === '#daily-plan' ? true : undefined} className="my-6 scroll-mt-24 border-y border-current/20"><summary className="cursor-pointer py-4 font-semibold"><CalendarDays className="mr-2 inline" size={18}/>Plan my day</summary>
       <div className="pb-4"><DailyPlan chapterProgress={chapterProgress} questions={questions} mistakes={mistakes} dueCount={dueCount}/></div></details>
     <nav aria-label="Study resources" className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">{[['/current-affairs','Current affairs'],['/capf-syllabus','CAPF syllabus'],['/analytics','Your progress']].map(([to,label]) => <Link key={to} to={to} className="inline-flex min-h-11 items-center gap-1 hover:underline">{label}<ChevronRight size={14}/></Link>)}</nav>
   </div>;

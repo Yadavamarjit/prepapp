@@ -1,4 +1,5 @@
 import { apiFetch } from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 import React, { useState } from 'react';
 import { 
   Archive, 
@@ -38,6 +39,7 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
   onClearMistake,
   onSelectTopicForAi,
 }) => {
+  const { canUseAi } = useAuth();
   const [activeFilter, setActiveFilter] = useState<MistakeVaultFilter>('ALL');
   const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<string>('ALL');
   
@@ -329,14 +331,14 @@ export const MistakeVault: React.FC<MistakeVaultProps> = ({
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <button
+                    {canUseAi && <button
                       onClick={() => handleDiagnoseMistake(record, question)}
                       disabled={diagnosingId === record.id}
                       className="px-3 py-1.5 rounded-lg border border-[#36624B]/30 hover:bg-[#E3EFE8]/50 text-[#36624B] dark:text-[#88D4A8] text-xs font-semibold flex items-center gap-1.5 transition-all"
                     >
                       <Brain className="w-3.5 h-3.5" />
                       <span>{diagnosingId === record.id ? 'Diagnosing...' : 'AI Mistake Diagnosis'}</span>
-                    </button>
+                    </button>}
 
                     {onSelectTopicForAi && (
                       <button

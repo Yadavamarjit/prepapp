@@ -45,6 +45,6 @@ export async function saveBookStudyDraft(draft: StudyDraft, request: typeof fetc
   const response = await request('/api/ncert/notes', { method: 'POST', signal,
     headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(draft) });
   const data = await response.json();
-  if (!response.ok || !data.success || !data.note?.id) throw new Error('Generated, but saving failed. Keep this page open and retry saving below.');
+  if (!response.ok || !data.success || !data.note?.id) throw new Error('Study material saving failed. Keep this page open and retry below.');
   return data.note;
 }
